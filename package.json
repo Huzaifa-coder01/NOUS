@@ -1,0 +1,50 @@
+{
+  "name": "nous",
+  "author": "NOUS",
+  "version": "1.0.0",
+  "description": "NOUS - organized learning platform for CA & ACCA",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3031",
+    "dev:host": "vite --host",
+    "build": "vite build",
+    "start": "vite preview",
+    "fm:check": "prettier --check \"src/**/*.{js,jsx}\"",
+    "fm:fix": "prettier --write \"src/**/*.{js,jsx}\"",
+    "rm:all": "rm -rf node_modules dist",
+    "re:build": "npm run rm:all && npm install && npm run build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/barlow": "5.3.0",
+    "@fontsource/public-sans": "5.3.0",
+    "@hookform/resolvers": "^3.10.0",
+    "@iconify/react": "^5.0.1",
+    "@mui/lab": "5.0.0-alpha.170",
+    "@mui/material": "^5.15.20",
+    "@reduxjs/toolkit": "^2.12.0",
+    "apexcharts": "3.49.1",
+    "dayjs": "^1.11.23",
+    "framer-motion": "11.18.2",
+    "nprogress": "^0.2.0",
+    "react": "^18.3.1",
+    "react-apexcharts": "1.4.1",
+    "react-dom": "^18.3.1",
+    "react-helmet-async": "^2.0.5",
+    "react-hook-form": "^7.87.0",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^6.23.1",
+    "redux-persist": "^6.0.0",
+    "simplebar-react": "3.3.2",
+    "sonner": "1.7.4",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "prettier": "^3.3.2",
+    "vite": "^5.3.0",
+    "vite-plugin-checker": "^0.6.4"
+  }
+}

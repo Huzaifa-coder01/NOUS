@@ -1,0 +1,130 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build files
+dist/
+build/
+out/
+
+# Development
+.vite/
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Storybook
+storybook-static/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Package manager lock files (choose one based on your team's preference)
+# Uncomment the ones you DON'T use:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Miscellaneous
+*.swp
+*.swo
+*~
+.project
+.settings
+.classpath
+
+# Next.js (in case you add SSR later)
+.next/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+
+# Local development
+.local
+
+# Sentry
+.sentryclirc
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Claude
+CLAUDE.md
+
+# Context notes
+# NOTE: a blanket `context/` rule used to live here. It silently excluded
+# src/auth/context/ (the JWT provider) and every other React context folder
+# from version control, so a fresh clone was missing the auth layer.
