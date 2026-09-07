@@ -120,11 +120,3 @@ firebase-debug.log
 
 # Turbo
 .turbo
-
-# Claude
-CLAUDE.md
-
-# Context notes
-# NOTE: a blanket `context/` rule used to live here. It silently excluded
-# src/auth/context/ (the JWT provider) and every other React context folder
-# from version control, so a fresh clone was missing the auth layer.
