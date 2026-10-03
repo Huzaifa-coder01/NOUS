@@ -1,24 +1,18 @@
-// ----------------------------------------------------------------------
-
 const ROOTS = {
   AUTH: '/auth',
   ADMIN: '/admin',
   COURSES: '/courses',
 };
 
-/** Chapter sections, as they appear in the url. */
 export const SECTION_SEGMENTS = {
   syllabus: 'syllabus',
   notes: 'notes',
   pastPapers: 'past-papers',
 };
 
-// ----------------------------------------------------------------------
-
 export const paths = {
   page404: '/404',
 
-  // Student site
   nous: {
     root: '/',
     courses: ROOTS.COURSES,
@@ -26,17 +20,14 @@ export const paths = {
     level: (courseId, levelId) => `${ROOTS.COURSES}/${courseId}/${levelId}`,
     subject: (courseId, levelId, subjectId) =>
       `${ROOTS.COURSES}/${courseId}/${levelId}/${subjectId}`,
-    // past papers straight off the subject: course + level + subject
     subjectPastPapers: (courseId, levelId, subjectId) =>
       `${ROOTS.COURSES}/${courseId}/${levelId}/${subjectId}/${SECTION_SEGMENTS.pastPapers}`,
     chapter: (courseId, levelId, subjectId, chapterId) =>
       `${ROOTS.COURSES}/${courseId}/${levelId}/${subjectId}/${chapterId}`,
-    // syllabus | notes | past-papers inside a chapter
     section: (courseId, levelId, subjectId, chapterId, sectionId) =>
       `${ROOTS.COURSES}/${courseId}/${levelId}/${subjectId}/${chapterId}/${sectionId}`,
   },
 
-  // Auth
   auth: {
     jwt: {
       signIn: `${ROOTS.AUTH}/sign-in`,
@@ -48,7 +39,6 @@ export const paths = {
     },
   },
 
-  // Admin panel
   admin: {
     root: ROOTS.ADMIN,
     users: `${ROOTS.ADMIN}/users`,

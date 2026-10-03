@@ -1,7 +1,5 @@
 import { ChapterCardRoot } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function ChapterCard({ href, chapter, index }) {
   return (
     <ChapterCardRoot href={href}>

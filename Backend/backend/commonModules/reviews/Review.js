@@ -13,7 +13,7 @@ const answerSchema = new Schema({
   },
   selectedOption: [
     { type: Schema.Types.ObjectId, ref: "ReviewTemplate.options" },
-  ], // selected by user
+  ],
 });
 const reviewSchema = new mongoose.Schema(
   {
@@ -37,7 +37,7 @@ const reviewSchema = new mongoose.Schema(
       ref: "Bookings",
       required: true,
     },
-    subject: {// current user
+    subject: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

@@ -2,12 +2,7 @@ import { accordionClasses } from '@mui/material/Accordion';
 import { typographyClasses } from '@mui/material/Typography';
 import { accordionSummaryClasses } from '@mui/material/AccordionSummary';
 
-// ----------------------------------------------------------------------
-
 const MuiAccordion = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       backgroundColor: 'transparent',
@@ -21,12 +16,7 @@ const MuiAccordion = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiAccordionSummary = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       paddingLeft: theme.spacing(2),
@@ -40,7 +30,5 @@ const MuiAccordionSummary = {
     expandIconWrapper: { color: 'inherit' },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const accordion = { MuiAccordion, MuiAccordionSummary };

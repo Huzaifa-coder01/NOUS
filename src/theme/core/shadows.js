@@ -1,8 +1,6 @@
 import { varAlpha } from '../styles';
 import { grey, common } from './palette';
 
-// ----------------------------------------------------------------------
-
 export function shadows(colorScheme) {
   const colorChannel = colorScheme === 'light' ? grey['500Channel'] : common.blackChannel;
 

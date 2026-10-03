@@ -13,10 +13,6 @@ const months = [
   "Dec",
 ];
 
-/**
- * Build month-wise user growth array
- * @param {Array} rows - [{ month: 1, totalUsers: 10 }, ...]
- */
 const buildMonthlyUsers = (rows = []) => {
   const map = {};
 
@@ -30,9 +26,6 @@ const buildMonthlyUsers = (rows = []) => {
   }));
 };
 
-/**
- * Final response formatter
- */
 const buildUserGrowthOverTime = (data = {}) => {
   return {
     coachGrowth: buildMonthlyUsers(data.coachGrowth),

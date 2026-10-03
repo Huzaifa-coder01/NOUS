@@ -7,13 +7,6 @@ import { CONFIG } from 'src/config-global';
 
 import { remToPx, varAlpha, mediaQueries } from './utils';
 
-// ----------------------------------------------------------------------
-
-/**
- * Usage:
- * ...hideScrollX,
- * ...hideScrollY,
- */
 export const hideScrollX = {
   msOverflowStyle: 'none',
   scrollbarWidth: 'none',
@@ -28,10 +21,6 @@ export const hideScrollY = {
   '&::-webkit-scrollbar': { display: 'none' },
 };
 
-/**
- * Usage:
- * ...textGradient(`to right, ${theme.vars.palette.text.primary}, ${alpha(theme.vars.palette.text.primary, 0.2)}`
- */
 export function textGradient(color) {
   return {
     background: `linear-gradient(${color})`,
@@ -43,10 +32,6 @@ export function textGradient(color) {
   };
 }
 
-/**
- * Usage:
- * ...borderGradient({ color: `to right, ${theme.vars.palette.text.primary}, ${alpha(theme.vars.palette.text.primary, 0.2)}`, padding: '4px' }),
- */
 export function borderGradient(props) {
   return {
     inset: 0,
@@ -57,7 +42,6 @@ export function borderGradient(props) {
     position: 'absolute',
     borderRadius: 'inherit',
     padding: props?.padding ?? '2px',
-    //
     mask: 'linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0)',
     WebkitMask: 'linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0)',
     maskComposite: 'exclude',
@@ -68,10 +52,6 @@ export function borderGradient(props) {
   };
 }
 
-/**
- * Usage:
- * ...bgGradient({ color: `to right, ${theme.vars.palette.grey[900]} 25%, ${varAlpha(theme.vars.palette.primary.darkerChannel, 0.88)}`, imgUrl: '/assets/background/overlay.png' }),
- */
 export function bgGradient({ color, imgUrl }) {
   if (imgUrl) {
     return {
@@ -84,10 +64,6 @@ export function bgGradient({ color, imgUrl }) {
   return { background: `linear-gradient(${color})` };
 }
 
-/**
- * Usage:
- * ...bgBlur({ color: `varAlpha(theme.vars.palette.background.paperChannel, 0.8)`, imgUrl: '/assets/background/overlay.png', blur: 6 }),
- */
 export function bgBlur({ color, blur = 6, imgUrl }) {
   if (imgUrl) {
     return {
@@ -114,10 +90,6 @@ export function bgBlur({ color, blur = 6, imgUrl }) {
   };
 }
 
-/**
- * Usage:
- * ...maxLine({ line: 2, persistent: theme.typography.caption }),
- */
 function getFontSize(fontSize) {
   return typeof fontSize === 'string' ? remToPx(fontSize) : fontSize;
 }
@@ -166,10 +138,6 @@ export function maxLine({ line, persistent }) {
   return baseStyles;
 }
 
-/**
- * Usage:
- * ...paper({ theme, color: varAlpha(theme.vars.palette.background.paperChannel, 0.9), dropdown: true }),
- */
 export function paper({ theme, color, dropdown }) {
   return {
     ...bgBlur({
@@ -191,10 +159,6 @@ export function paper({ theme, color, dropdown }) {
   };
 }
 
-/**
- * Usage:
- * ...menuItem(theme)
- */
 export function menuItem(theme) {
   return {
     ...theme.typography.body2,

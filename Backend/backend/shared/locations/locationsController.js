@@ -2,10 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { sendResponse } = require("../../helperUtils/responseUtil");
 
-// Path to the JSON file
 const countriesFilePath = path.join(__dirname, "../../assets/countries.json");
 
-// Function to read the JSON file and parse it
 const readJSONFile = (filePath) => {
   try {
     const data = fs.readFileSync(filePath, "utf8");
@@ -16,17 +14,14 @@ const readJSONFile = (filePath) => {
   }
 };
 
-// Read the countries data at startup
 const countriesData = readJSONFile(countriesFilePath);
 
-// Controller method to get all countries
 const getCountries = (req, res) => {
   if (countriesData) {
     const countries = countriesData.map((country) => ({
       id: country.id,
       name: country.name,
     }));
-    //sort by name
     countries.sort((a, b) => a.name.localeCompare(b.name));
     return sendResponse({
       res,
@@ -43,12 +38,10 @@ const getCountries = (req, res) => {
   }
 };
 
-// Controller method to get states by country ID
 const getStatesByCountryId = (req, res) => {
   const countryId = parseInt(req.params.countryId);
   const country = countriesData.find((country) => country.id === countryId);
 
-  //sort states by name
   if (country && country.states) {
     country.states.sort((a, b) => a.name.localeCompare(b.name));
   }
@@ -70,7 +63,6 @@ const getStatesByCountryId = (req, res) => {
   }
 };
 
-// Controller method to get cities by state ID
 const getCitiesByStateId = (req, res) => {
   const stateId = parseInt(req.params.stateId);
   let state;
@@ -83,7 +75,6 @@ const getCitiesByStateId = (req, res) => {
   });
 
   if (state) {
-    //sort cities by name
     if (state.cities) {
       state.cities.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -111,7 +102,6 @@ const getCitiesByCountryId = (req, res) => {
     const cities = country.states.reduce((acc, state) => {
       return acc.concat(state.cities || []);
     }, []);
-    //sort cities by name
     cities.sort((a, b) => a.name.localeCompare(b.name));
     return sendResponse({
       res,

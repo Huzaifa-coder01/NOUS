@@ -1,6 +1,5 @@
 const { getFullImageUrl } = require("@helperUtils/imageHelper");
 
-//Single item formatter
 const formatOnboardingResponse = (item) => {
   if (!item) return null;
 
@@ -16,7 +15,6 @@ const formatOnboardingResponse = (item) => {
 return obj;
 };
 
-// List formatter
 const formatOnboardingResponses = (data = []) => {
   if (!Array.isArray(data)) return [];
   return data.map(formatOnboardingResponse);

@@ -11,8 +11,6 @@ import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
-// ----------------------------------------------------------------------
-
 function Row({ item }) {
   return (
     <Box
@@ -72,12 +70,6 @@ function Row({ item }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-/**
- * A list of things worth clicking through to. Every row is a real link into the
- * catalog, so the dashboard is a way in rather than a dead end.
- */
 export function AnalyticsLinkList({
   title,
   subheader,

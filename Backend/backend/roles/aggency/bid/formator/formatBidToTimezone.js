@@ -7,7 +7,6 @@ const formatBidToTimezone = (job, timezone) => {
   if (!job) return job;
 
   const formatShift = (shift) => {
-    // date-only portion of the shift date, used to anchor the HH:mm times
     const datePart = moment.utc(shift.date).format("YYYY-MM-DD");
 
     const startUtc = `${datePart}T${shift.startTime}:00.000Z`;

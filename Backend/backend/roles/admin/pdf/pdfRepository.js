@@ -121,7 +121,6 @@ const getPdfs = async ({
   const pdfs = result[0]?.data || [];
   const totalFiltered = result[0]?.totalFiltered?.[0]?.count || 0;
 
-  // Counts stay inside the same type(s) and the same node the list is filtered by
   const countFilter = { type: typeMatch };
   if (courseId) countFilter.course = new mongoose.Types.ObjectId(courseId);
   if (levelId) countFilter.level = new mongoose.Types.ObjectId(levelId);

@@ -5,8 +5,6 @@ import { menuItemClasses } from '@mui/material/MenuItem';
 import { StyledArrow } from './styles';
 import { calculateAnchorOrigin } from './utils';
 
-// ----------------------------------------------------------------------
-
 export function CustomPopover({ open, onClose, children, anchorEl, slotProps, ...other }) {
   const arrowPlacement = slotProps?.arrow?.placement ?? 'top-right';
 

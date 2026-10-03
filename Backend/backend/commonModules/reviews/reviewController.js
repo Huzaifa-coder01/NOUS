@@ -15,7 +15,6 @@ const resolveError = (error) => {
 };
 
 const createReview = async (req, res) => {
-  // Validate basic fields
   if (
     !validateParams(req, res, {
       rawData: ["reviewType", "objectId",  "rating"],
@@ -38,7 +37,6 @@ const createReview = async (req, res) => {
   } = req.body;
   const currentUserId = req.user._id;
 
-  // Validate rating
   if (typeof rating !== "number" || rating < 1 || rating > 5) {
     return sendResponse({
       res,
@@ -47,7 +45,6 @@ const createReview = async (req, res) => {
     });
   }
 
-  // Validate reviewTemplate
   if (!Array.isArray(reviewTemplate) || reviewTemplate.length === 0) {
     return sendResponse({
       res,
@@ -56,7 +53,6 @@ const createReview = async (req, res) => {
     });
   }
 
-  // Normalize and validate each question
   const normalizedAnswers = [];
   for (const ans of reviewTemplate) {
     const { question, type,  selectedOption = [] } = ans;

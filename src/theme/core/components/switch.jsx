@@ -2,12 +2,7 @@ import { switchClasses } from '@mui/material/Switch';
 
 import { varAlpha, stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const MuiSwitch = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: { alignItems: 'center' },
     switchBase: ({ ownerState, theme }) => ({
@@ -47,7 +42,5 @@ const MuiSwitch = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const switches = { MuiSwitch };

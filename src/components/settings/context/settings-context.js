@@ -1,7 +1,5 @@
 import { useContext, createContext } from 'react';
 
-// ----------------------------------------------------------------------
-
 export const SettingsContext = createContext(undefined);
 
 export const SettingsConsumer = SettingsContext.Consumer;

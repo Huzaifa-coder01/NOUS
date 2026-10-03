@@ -5,8 +5,6 @@ import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
-// ----------------------------------------------------------------------
-
 const visuallyHidden = {
   border: 0,
   margin: -1,
@@ -18,8 +16,6 @@ const visuallyHidden = {
   whiteSpace: 'nowrap',
   clip: 'rect(0 0 0 0)',
 };
-
-// ----------------------------------------------------------------------
 
 export function TableHeadCustom({
   sx,

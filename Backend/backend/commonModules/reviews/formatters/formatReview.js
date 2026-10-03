@@ -1,40 +1,15 @@
 const moment = require("moment-timezone");
 const { getFullImageUrl } = require("@helperUtils/imageHelper");
 
-// const formatReview = (review, timezone = "UTC") => {
-//   if (!review) return null;
-
-//   const reviewObject = review.toObject ? review.toObject() : { ...review };
-//   reviewObject.timesince = moment(reviewObject.createdAt)
-//     .tz(timezone)
-//     .fromNow();
-
-//   if (reviewObject.subject) {
-//     reviewObject.subject.profileIcon = getFullImageUrl(
-//       reviewObject.subject.profileIcon ?? "",
-//     );
-//   }
-
-//   if (reviewObject.objectUser) {
-//     reviewObject.objectUser.profileIcon = getFullImageUrl(
-//       reviewObject.objectUser.profileIcon ?? "",
-//     );
-//   }
-
-//   return reviewObject;
-// };
 const formatReview = (reviews, timezone = "UTC") => {
 
   return reviews.map((review) => {
-    // Convert Mongoose document to plain object if needed
     const reviewObject = review.toObject ? review.toObject() : { ...review };
 
-    // Compute timesince
     reviewObject.timesince = moment(reviewObject.createdAt)
       .tz(timezone)
       .fromNow();
 
-    // Format profile icons
     if (reviewObject.subject) {
       reviewObject.subject.profileIcon = getFullImageUrl(
         reviewObject.subject.profileIcon ?? "",
@@ -46,21 +21,18 @@ const formatReview = (reviews, timezone = "UTC") => {
       );
     }
 
-    // Format each question in reviewTemplate
     const formattedTemplate = (reviewObject.reviewTemplate || []).map((ans) => {
       const question = ans.question || {};
 
-      // Map all options with labels/values
       const allOptions = (ans.option || []).map((optId) => {
         const opt = question.options?.find(
           (o) => o._id.toString() === optId.toString(),
         );
         return opt
           ? { _id: opt._id, label: opt.label, value: opt.value }
-          : { _id: optId }; // fallback
+          : { _id: optId };
       });
 
-      // Map selected options with labels/values
       const selectedOptions = (ans.selectedOption || []).map((optId) => {
         const opt = question.options?.find(
           (o) => o._id.toString() === optId.toString(),
@@ -143,7 +115,6 @@ const getReviewTemplateScoring = (reviews = []) => {
     "goalAlignment",
   ];
 
-  // initialize all categories with 0
   const categoryCounts = ALL_CATEGORIES.reduce((acc, cat) => {
     acc[cat] = 0;
     return acc;
@@ -162,7 +133,6 @@ const getReviewTemplateScoring = (reviews = []) => {
       if (categoryCounts.hasOwnProperty(category)) {
         categoryCounts[category] += 1;
       } else {
-        // optional fallback for unknown categories
         categoryCounts["uncategorized"] =
           (categoryCounts["uncategorized"] || 0) + 1;
       }

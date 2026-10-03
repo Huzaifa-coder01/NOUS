@@ -70,7 +70,6 @@ const createChapter = async (data) => {
       return { error: "subject_not_found" };
     }
 
-    // A child added under a node that is not active starts out inactive too
     if (subject.status !== "active") {
       data.status = "inactive";
     }
@@ -95,7 +94,6 @@ const createChapter = async (data) => {
   }
 };
 
-// Pulls the parent subject with its level and, nested inside that, the course
 const subjectLookupStage = {
   $lookup: {
     from: "subjects",
@@ -236,7 +234,6 @@ const getChapter = async ({
     },
   });
 
-  // A student only sees chapters whose whole chain is active
   if (onlyActiveParents) {
     pipeline.push({
       $match: {
@@ -260,7 +257,6 @@ const getChapter = async ({
     }
   }
 
-  // Chapters read in their own order, newest first only breaks ties
   pipeline.push({
     $sort: {
       chapterNumber: 1,
@@ -284,7 +280,6 @@ const getChapter = async ({
   const chapter = result[0]?.data || [];
   const totalFiltered = result[0]?.totalFiltered?.[0]?.count || 0;
 
-  // Counts stay scoped to the subject when the list is filtered by one
   const countFilter = {
     ...(subjectId && { subject: new mongoose.Types.ObjectId(subjectId) }),
   };

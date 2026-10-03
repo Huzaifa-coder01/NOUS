@@ -10,8 +10,6 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 
 import { fDateTime } from 'src/utils/format-time';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsOrderTimeline({ title, subheader, list, ...other }) {
   return (
     <Card {...other}>

@@ -11,16 +11,6 @@ import { varAlpha, bgGradient } from 'src/theme/styles';
 
 import { SvgColor } from 'src/components/svg-color';
 
-// ----------------------------------------------------------------------
-
-/**
- * A catalog counter: how many records of one kind are live, out of how many
- * exist.
- *
- * The template's summary widget pairs a number with a percentage delta and a
- * sparkline, but nothing here is measured over time - there is no history to
- * chart - so this shows the one ratio that is real instead of inventing a trend.
- */
 export function AnalyticsStatTile({
   title,
   active,

@@ -7,8 +7,6 @@ import { documentHooks, useUploadFileMutation } from 'src/store';
 import { EntityList } from '../components/entity-list';
 import { nameColumn, fileColumn, uploadedColumn } from '../components/doc-columns';
 
-// ----------------------------------------------------------------------
-
 const NAME_FIELD = {
   name: 'name',
   label: 'PDF name',
@@ -28,16 +26,6 @@ function fieldsFor(isEdit) {
   ];
 }
 
-// ----------------------------------------------------------------------
-
-/**
- * One scoped PDF list: a subject's past papers, or the syllabus / notes / past
- * papers of one chapter. `filters` narrows the endpoint, `parentIds` is what a
- * create needs.
- *
- * Notes have no create button - students upload those, an admin only manages
- * them afterwards.
- */
 export function AdminDocsView({ kind, heading, links, filters, parentIds }) {
   const hooks = documentHooks[kind];
 
@@ -48,7 +36,6 @@ export function AdminDocsView({ kind, heading, links, filters, parentIds }) {
   const [update] = hooks.useUpdate();
   const [remove] = hooks.useDelete();
 
-  /** Uploads the chosen file, if any; nothing chosen means keep the current one. */
   const fileFields = async (values) => {
     if (!values.file) return {};
 
@@ -88,9 +75,6 @@ export function AdminDocsView({ kind, heading, links, filters, parentIds }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-/** Breadcrumb trail shared by the scoped document screens. */
 export function docLinks({ course, level, subject, chapter, current }) {
   const courseId = idOf(course);
   const levelId = idOf(level);

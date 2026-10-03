@@ -5,13 +5,6 @@ import { hexToRgbChannel, createPaletteChannel } from '../styles';
 import { grey as coreGreyPalette, primary as corePrimaryPalette } from '../core/palette';
 import { createShadowColor, customShadows as coreCustomShadows } from '../core/custom-shadows';
 
-// ----------------------------------------------------------------------
-
-/**
- * [1] settings @primaryColor
- * [2] settings @contrast
- */
-
 export function updateCoreWithSettings(theme, settings) {
   const { colorSchemes, customShadows } = theme;
 
@@ -22,9 +15,7 @@ export function updateCoreWithSettings(theme, settings) {
       light: {
         palette: {
           ...colorSchemes?.light?.palette,
-          /** [1] */
           primary: getPalettePrimary(settings.primaryColor),
-          /** [2] */
           background: {
             ...colorSchemes?.light?.palette?.background,
             default: getBackgroundDefault(settings.contrast),
@@ -35,14 +26,12 @@ export function updateCoreWithSettings(theme, settings) {
       dark: {
         palette: {
           ...colorSchemes?.dark?.palette,
-          /** [1] */
           primary: getPalettePrimary(settings.primaryColor),
         },
       },
     },
     customShadows: {
       ...customShadows,
-      /** [1] */
       primary:
         settings.primaryColor === 'default'
           ? coreCustomShadows('light').primary
@@ -51,12 +40,9 @@ export function updateCoreWithSettings(theme, settings) {
   };
 }
 
-// ----------------------------------------------------------------------
-
 export function updateComponentsWithSettings(settings) {
   const components = {};
 
-  /** [2] */
   if (settings.contrast === 'hight') {
     const MuiCard = {
       styleOverrides: {
@@ -84,8 +70,6 @@ export function updateComponentsWithSettings(settings) {
   return { components };
 }
 
-// ----------------------------------------------------------------------
-
 const PRIMARY_COLORS = {
   default: COLORS.primary,
   cyan: PRIMARY_COLOR.cyan,
@@ -96,7 +80,6 @@ const PRIMARY_COLORS = {
 };
 
 function getPalettePrimary(primaryColorName) {
-  /** [1] */
   const selectedPrimaryColor = PRIMARY_COLORS[primaryColorName];
   const updatedPrimaryPalette = createPaletteChannel(selectedPrimaryColor);
 
@@ -104,6 +87,5 @@ function getPalettePrimary(primaryColorName) {
 }
 
 function getBackgroundDefault(contrast) {
-  /** [2] */
   return contrast === 'default' ? '#FFFFFF' : coreGreyPalette[200];
 }

@@ -3,17 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Past papers - the only PDF that may sit on a subject.
-//
-// `/past-papers?courseId&levelId&subjectId` is the subject screen's list and
-// includes papers tagged to a chapter; adding `chapterId` narrows it to that
-// chapter only. Leaving `chapterId` off a create puts the paper on the subject.//
-// A PDF is created by uploading the file first (see `uploads.js`) and passing
-// the returned `file` key and `fileUrl` here. Names are unique across every PDF
-// in the system, which is the 409 these mutations most often surface.
-// ----------------------------------------------------------------------
-
 export const pastPapersApi = createApi({
   reducerPath: 'pastPapers',
   baseQuery: createCustomFetchBaseQuery(),
@@ -51,7 +40,6 @@ export const pastPapersApi = createApi({
       invalidatesTags: ['PastPapers'],
     }),
 
-    /** `status` accepts active | inactive; `deleted` is what DELETE sets. */
     updatePastPaper: builder.mutation({
       query: ({ id, ...body }) => ({
         url: API_ROUTES.PAST_PAPERS.UPDATE(id),

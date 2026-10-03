@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 
 import { svgColorClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export const SvgColor = forwardRef(({ src, className, sx, ...other }, ref) => (
   <Box
     ref={ref}

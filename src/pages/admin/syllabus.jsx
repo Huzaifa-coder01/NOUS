@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { AdminAllDocsView } from 'src/sections/admin/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   return (
     <>

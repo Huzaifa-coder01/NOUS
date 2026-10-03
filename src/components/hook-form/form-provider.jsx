@@ -1,7 +1,5 @@
 import { FormProvider as RHFForm } from 'react-hook-form';
 
-// ----------------------------------------------------------------------
-
 export function Form({ children, onSubmit, methods }) {
   return (
     <RHFForm {...methods}>

@@ -8,8 +8,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { usePopover, CustomPopover } from '../custom-popover';
 
-// ----------------------------------------------------------------------
-
 export function ChartSelect({ options, value, onChange, slotProps, ...other }) {
   const popover = usePopover();
 

@@ -1,12 +1,3 @@
-/**
- * Calculates distance between two coordinates using Haversine formula.
- * @param {number} lat1 - Latitude of point 1
- * @param {number} lon1 - Longitude of point 1
- * @param {number} lat2 - Latitude of point 2
- * @param {number} lon2 - Longitude of point 2
- * @param {string} unit - "km" or "mi"
- * @returns {number} - Distance in given unit
- */
 function calculateDistance(
   lat1,
   lng1,
@@ -16,16 +7,11 @@ function calculateDistance(
 ) {
   const toRad = (value) => (value * Math.PI) / 180;
 
-  // -----------------------------
-  // 🔒 Normalize coordinates
-  // -----------------------------
   const normalize = (lat, lng) => {
-    // Detect swapped values (very common)
     if (Math.abs(lat) > 90 && Math.abs(lng) <= 90) {
       [lat, lng] = [lng, lat];
     }
 
-    // Hard validation
     if (
       typeof lat !== "number" ||
       typeof lng !== "number" ||
@@ -48,9 +34,6 @@ function calculateDistance(
     };
   }
 
-  // -----------------------------
-  // 🌍 Haversine calculation
-  // -----------------------------
   const R = unit === "mile" ? 3958.8 : 6371.0;
 
   const dLat = toRad(p2.lat - p1.lat);
@@ -84,5 +67,3 @@ const isNullLocationCoordinates = (coords = []) => {
 };
 
 module.exports = { calculateDistance, isNullLocationCoordinates };
-
-  

@@ -5,9 +5,7 @@ const { flushEngagementBuffer } = require("./engagement/flushEngagementBuffer");
 const updateBookingStatuses = require("./booking/updateBooking");
 
 const startCrons = () => {
-  // cron.schedule("*/5 * * * * *", async () => { //5 seconds for testing
   cron.schedule("0 */1 * * *", async () => {
-    //every 1 hour
     const lockKey = "cron:engagement-buffer-flush";
     const lock = await acquireLock(lockKey, 120);
 
@@ -22,13 +20,7 @@ const startCrons = () => {
     }
   });
 
-  //booking
-
-  // cron.schedule("*/5 * * * * *", async () => { //5 seconds for testing
-  // cron.schedule("0 */1 * * *", async () => {
     cron.schedule("*/10 * * * *", async () => {
-      //every 10 minutes
-      //every 1 hour
       const lockKey = "cron:booking-status-update";
       const lock = await acquireLock(lockKey, 120);
 

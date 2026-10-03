@@ -90,10 +90,6 @@ const updateHelpCenter = async (id, data) => {
     return { error: "HelpCenter_not_found" };
   }
 
-  // -----------------------------
-  // VALIDATIONS
-  // -----------------------------
-
   if (data.discountType) {
     if (HelpCenter.discountType !== data.discountType) {
       if (!data.discountValue) {
@@ -102,14 +98,8 @@ const updateHelpCenter = async (id, data) => {
     }
   }
 
-  // -----------------------------
-  // ALLOWED FIELDS
-  // -----------------------------
   const allowedFields = ["image", "title", "article", "type"];
 
-  // -----------------------------
-  // APPLY UPDATE FIELDS
-  // -----------------------------
   const updateData = {};
   for (const key of allowedFields) {
     if (data[key] !== undefined) {

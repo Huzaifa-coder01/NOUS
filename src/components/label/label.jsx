@@ -6,8 +6,6 @@ import { useTheme } from '@mui/material/styles';
 import { StyledLabel } from './styles';
 import { labelClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export const Label = forwardRef(
   ({ children, color = 'default', variant = 'soft', startIcon, endIcon, sx, ...other }, ref) => {
     const theme = useTheme();
@@ -49,8 +47,6 @@ export const Label = forwardRef(
     );
   }
 );
-
-// ----------------------------------------------------------------------
 
 function sentenceCase(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

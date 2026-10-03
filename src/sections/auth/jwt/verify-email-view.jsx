@@ -19,8 +19,6 @@ import { Form, Field } from 'src/components/hook-form';
 import { useAuthContext } from 'src/auth/hooks';
 import { getPendingSignUp, resendSignUpOtp, verifySignUpOtp } from 'src/auth/context/jwt';
 
-// ----------------------------------------------------------------------
-
 export const VerifyEmailSchema = zod.object({
   otp: zod
     .string()
@@ -28,13 +26,6 @@ export const VerifyEmailSchema = zod.object({
     .max(6, { message: 'Code must be 4-6 digits!' }),
 });
 
-// ----------------------------------------------------------------------
-
-/**
- * The second half of sign up. `POST /auth/register` leaves the account pending
- * and emails an OTP; verifying it activates the account and returns the session
- * token, so this is where a new student actually gets signed in.
- */
 export function JwtVerifyEmailView() {
   const navigate = useNavigate();
 
@@ -62,7 +53,6 @@ export function JwtVerifyEmailView() {
 
       await checkUserSession();
 
-      // a fresh account is always a student
       const isAdmin = user?.accountState?.userType === 'admin';
 
       navigate(isAdmin ? paths.admin.root : paths.nous.root, { replace: true });
@@ -112,7 +102,6 @@ export function JwtVerifyEmailView() {
         </Typography>
       </Stack>
 
-      {/* on localhost the backend returns the OTP in the response body */}
       {!!pending.otp && (
         <Alert severity="info" sx={{ mb: 3 }}>
           Dev build — your code is <strong>{pending.otp}</strong>

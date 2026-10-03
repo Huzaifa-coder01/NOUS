@@ -9,21 +9,6 @@ import {
   useGetChapterQuery,
 } from 'src/store';
 
-// ----------------------------------------------------------------------
-
-/**
- * Resolves the `/:courseId/:levelId/:subjectId/:chapterId/:sectionId` url
- * segments into the records they name.
- *
- * List rows do carry their parent chain, but a detail GET is not documented to,
- * so each id in the url is fetched in its own right. RTK Query dedupes and
- * caches these, so walking down the tree costs one new request per level and
- * walking back up costs none.
- *
- * `notFound` covers both a missing record and one a student may not see - the
- * API answers 403/404 for an inactive branch, which is exactly when a student
- * should be redirected away.
- */
 export function useCatalogChain() {
   const { courseId, levelId, subjectId, chapterId, sectionId } = useParams();
 

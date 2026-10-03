@@ -4,8 +4,6 @@ import { Iconify } from '../iconify';
 import { StyledToaster } from './styles';
 import { toasterClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export function Snackbar() {
   return (
     <Portal>
@@ -22,15 +20,12 @@ export function Snackbar() {
           classNames: {
             toast: toasterClasses.toast,
             icon: toasterClasses.icon,
-            // content
             content: toasterClasses.content,
             title: toasterClasses.title,
             description: toasterClasses.description,
-            // button
             actionButton: toasterClasses.actionButton,
             cancelButton: toasterClasses.cancelButton,
             closeButton: toasterClasses.closeButton,
-            // state
             default: toasterClasses.default,
             info: toasterClasses.info,
             error: toasterClasses.error,

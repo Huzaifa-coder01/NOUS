@@ -6,9 +6,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { useAuthContext } from '../hooks';
 
-// ----------------------------------------------------------------------
-
-/** Requires a valid session AND one of `roles` (defaults to admin only). */
 export function RoleGuard({ children, roles = ['admin'] }) {
   const { loading, authenticated, role } = useAuthContext();
 

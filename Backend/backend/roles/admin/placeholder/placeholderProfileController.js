@@ -189,7 +189,6 @@ const getDateRange = ({
     throw new Error("Invalid range. Use day, week, or month.");
   }
 
-  // Custom date range
   if (startDate && endDate) {
     const start = moment.tz(startDate, timezone);
     const end = moment.tz(endDate, timezone);
@@ -208,7 +207,6 @@ const getDateRange = ({
     };
   }
 
-  // Single date range
   const selectedDate = date || new Date();
   const m = moment.tz(selectedDate, timezone);
 

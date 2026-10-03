@@ -9,21 +9,12 @@ import { STATUS } from 'src/constants/nous';
 import { toast } from 'src/components/snackbar';
 import { Label } from 'src/components/label';
 
-// ----------------------------------------------------------------------
-
 const COLORS = {
   [STATUS.active]: 'success',
   [STATUS.inactive]: 'default',
   [STATUS.deleted]: 'error',
 };
 
-/**
- * Active / inactive toggle. Deactivating cascades to every descendant server
- * side, so the confirmation says as much.
- *
- * A row that has been deleted shows its state and cannot be toggled - the API
- * only accepts active | inactive on an update, `deleted` is set by DELETE.
- */
 export function StatusSwitch({ row, onToggle, cascades = false }) {
   const [busy, setBusy] = useState(false);
 

@@ -2,8 +2,6 @@ import { paths } from 'src/routes/paths';
 
 import { SvgColor } from 'src/components/svg-color';
 
-// ----------------------------------------------------------------------
-
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} />;
 
 const ICONS = {
@@ -21,15 +19,6 @@ const ICONS = {
   external: icon('ic-external'),
 };
 
-// ----------------------------------------------------------------------
-
-/**
- * NOUS admin navigation.
- *
- * Catalog holds one entry per level of the hierarchy: Courses is the drill-down
- * starting point, and Levels / Subjects / Chapters are flat lists of everything
- * of that kind, wherever it sits.
- */
 export const navData = [
   {
     subheader: 'Overview',

@@ -1,4 +1,3 @@
-// middlewares/roleMiddleware.js
 const { sendResponse } = require("../helperUtils/responseUtil");
 
 const roleMiddleware = (allowedRoles) => (req, res, next) => {
@@ -15,4 +14,3 @@ const roleMiddleware = (allowedRoles) => (req, res, next) => {
 };
 
 module.exports = roleMiddleware;
-

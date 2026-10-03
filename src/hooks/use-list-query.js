@@ -2,18 +2,6 @@ import { useState, useCallback } from 'react';
 
 import { handleApiError } from 'src/store';
 
-// ----------------------------------------------------------------------
-
-/**
- * Adapts an RTK Query list hook to what the admin tables need.
- *
- * The server owns filtering and paging, so the only thing held locally is the
- * query itself - page, rows per page, keyword and status - which is fed
- * straight back into the hook as its argument. RTK Query caches per argument,
- * so paging back to a page already seen is instant and revalidates behind.
- *
- *   const list = useListQuery(useGetLevelsQuery, { courseId });
- */
 export function useListQuery(useQueryHook, extraArgs = {}, { limit = 10 } = {}) {
   const [query, setQuery] = useState({ page: 1, limit, keyword: '', status: '' });
 

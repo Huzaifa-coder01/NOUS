@@ -9,12 +9,8 @@ const {
   getUploadFolder,
 } = require("../config/cloudinary");
 
-// How many files go up at the same time
 const MAX_CONCURRENT_UPLOADS = 5;
 
-/**
- * Runs the tasks with a fixed number in flight, keeping the results in order.
- */
 const runWithConcurrency = async (tasks, concurrency) => {
   const results = new Array(tasks.length);
   let next = 0;
@@ -35,10 +31,6 @@ const runWithConcurrency = async (tasks, concurrency) => {
   return results;
 };
 
-/**
- * Uploads one buffer through Cloudinary's upload stream.
- * resource_type "auto" lets images, videos and raw files share the endpoint.
- */
 const uploadBuffer = (cloudinary, file, publicId, folder) =>
   new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
@@ -57,12 +49,6 @@ const uploadBuffer = (cloudinary, file, publicId, folder) =>
     stream.end(file.buffer);
   });
 
-/**
- * Uploads the multer files to Cloudinary.
- * Keeps the response shape the S3 uploader used, so clients do not change:
- *   fileName       stored file name, e.g. "nous/6f1e....png"
- *   fileExtension  ".png"
- */
 const uploadFilesToCloudinary = async (files) => {
   const cloudinary = getCloudinary();
   const folder = getUploadFolder();
@@ -91,7 +77,6 @@ const uploadFilesToCloudinary = async (files) => {
   return runWithConcurrency(tasks, MAX_CONCURRENT_UPLOADS);
 };
 
-// Function to handle file upload
 const uploadFiles = (req, res) => {
   if (!isCloudinaryConfigured()) {
     return sendResponse({
@@ -144,7 +129,6 @@ const uploadFiles = (req, res) => {
     try {
       const uploadedFiles = await uploadFilesToCloudinary(req.files);
 
-      // A single file answers with an object, many with an array
       const response =
         uploadedFiles.length === 1 ? uploadedFiles[0] : uploadedFiles;
 
@@ -168,16 +152,11 @@ const uploadFiles = (req, res) => {
   });
 };
 
-/**
- * Accepts what the upload returned: the relative key ("folder/id.png"),
- * the bare public id, or the full delivery URL.
- */
 const toPublicId = (fileKey) => {
   let key = String(fileKey).trim();
 
   if (key.startsWith("http")) {
     const withoutQuery = key.split("?")[0];
-    // .../upload/v1712345678/folder/id.png -> folder/id.png
     const afterUpload = withoutQuery.split("/upload/")[1] || "";
     key = afterUpload.replace(/^v\d+\//, "");
   }
@@ -189,7 +168,6 @@ const toPublicId = (fileKey) => {
 const deleteFileFromCloudinary = async (cloudinary, fileKey) => {
   const publicId = toPublicId(fileKey);
 
-  // The resource type is not in the key, so try each one the uploader can write
   for (const resourceType of ["image", "video", "raw"]) {
     const result = await cloudinary.uploader.destroy(publicId, {
       resource_type: resourceType,
@@ -203,9 +181,6 @@ const deleteFileFromCloudinary = async (cloudinary, fileKey) => {
   throw new Error(`Failed to delete file: ${publicId}`);
 };
 
-/* Request body format:
-For a single file: { "fileKey": "nous/6f1e....png" }
-For multiple files: { "fileKey": ["nous/a.png", "nous/b.mp4"] } */
 const deleteFiles = async (req, res) => {
   const { fileKey } = req.body;
 

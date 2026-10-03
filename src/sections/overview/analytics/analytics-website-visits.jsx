@@ -4,8 +4,6 @@ import { useTheme, alpha as hexAlpha } from '@mui/material/styles';
 
 import { Chart, useChart } from 'src/components/chart';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsWebsiteVisits({ title, subheader, chart, ...other }) {
   const theme = useTheme();
 

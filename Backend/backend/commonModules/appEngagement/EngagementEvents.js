@@ -41,12 +41,12 @@ const engagementEventSchema = new mongoose.Schema(
       required: true,
     },
 
-    userId: { // the user who performed the action (can be null for anonymous)
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
 
-    ownerUserId: { // the coach/user who owns the entity (e.g. coach whose profile was viewed)
+    ownerUserId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       index: true,
@@ -82,10 +82,6 @@ const engagementEventSchema = new mongoose.Schema(
   { timestamps: false },
 );
 
-/* =====================================================
-   INDEXES
-   ===================================================== */
-// Main analytics queries (filters by event + time)
 engagementEventSchema.index({
   entityType: 1,
   entityId: 1,
@@ -93,12 +89,10 @@ engagementEventSchema.index({
   createdAt: -1,
 });
 
-// Time-based aggregation (Today, 7D, 30D)
 engagementEventSchema.index({
   createdAt: -1,
 });
 
-// Unique save per user
 engagementEventSchema.index(
   { userId: 1, entityType: 1, entityId: 1, eventType: 1 },
   {
@@ -107,7 +101,6 @@ engagementEventSchema.index(
   },
 );
 
-// Enforce 1 event per hour for same user + entity + event type
 engagementEventSchema.index(
   {
     userId: 1,
@@ -125,13 +118,11 @@ engagementEventSchema.index(
   },
 );
 
-// Fast aggregation by entity
 engagementEventSchema.index({
   entityType: 1,
   entityId: 1,
 });
 
-// Fast lead queries by owner coach/user
 engagementEventSchema.index({
   ownerUserId: 1,
   eventType: 1,

@@ -5,7 +5,6 @@ const {
 const mongoose = require("mongoose");
 
 
-// GET notification preferences
 const getNotificationPreferences = async (req, res) => {
   try {
     const { _id: userId } = req.user;
@@ -37,7 +36,6 @@ const getNotificationPreferences = async (req, res) => {
 };
 
 
-// CREATE + UPDATE (UPSERT)
 const upsertNotificationPreferences = async (req, res) => {
   try {
     const { _id: userId } = req.user;
@@ -50,7 +48,6 @@ const upsertNotificationPreferences = async (req, res) => {
       "messageAlerts",
     ];
 
-    // sanitize input
     const updatePayload = {};
 
     for (const key of Object.keys(updates)) {
@@ -59,7 +56,6 @@ const upsertNotificationPreferences = async (req, res) => {
       }
     }
 
-    // optional: reject empty payload
     if (Object.keys(updatePayload).length === 0) {
       return sendResponse({
         res,
@@ -68,7 +64,6 @@ const upsertNotificationPreferences = async (req, res) => {
       });
     }
 
-    // UPSERT operation
     const prefs = await NotificationPreferences.findOneAndUpdate(
       { userId },
       {

@@ -6,7 +6,6 @@ const {
 
 const router = express.Router();
 
-// Route to upload a file
 router.post("/", uploadFiles);
 router.delete("/", deleteFiles);
 

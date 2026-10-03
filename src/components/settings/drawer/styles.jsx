@@ -5,8 +5,6 @@ import { varAlpha, stylesMode } from 'src/theme/styles';
 
 import { Iconify } from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export function Block({ title, tooltip, children, sx }) {
   return (
     <Box

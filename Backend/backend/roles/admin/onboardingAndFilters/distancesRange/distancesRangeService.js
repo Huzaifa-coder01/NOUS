@@ -3,7 +3,6 @@ const distancesRangeRepo = require("./distancesRangeRepository");
 const getDistanceRanges = async (filter = {}) => {
   const distanceRanges = await distancesRangeRepo.getDistanceRanges(filter);
   
-  // Separate numeric and non-numeric entries
   const nonNumeric = [];
   const numeric = [];
   
@@ -15,10 +14,8 @@ const getDistanceRanges = async (filter = {}) => {
     }
   });
   
-  // Sort numeric entries by their numeric value
   numeric.sort((a, b) => parseInt(a.title) - parseInt(b.title));
   
-  // Return non-numeric first (like "Any Distance"), then numeric in ascending order
   const sorted = [...nonNumeric, ...numeric];
   
   return {

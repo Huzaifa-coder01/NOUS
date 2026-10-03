@@ -2,7 +2,6 @@ const priceRangeRepo = require("./priceRangeRepository");
 
 const getPriceRanges = async (filter = {}) => {
   const priceRanges = await priceRangeRepo.getPriceRanges(filter);
-  //consider price ranges as number and sort them in ascending order before returning
   priceRanges.sort((a, b) => {
     const priceA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
     const priceB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));

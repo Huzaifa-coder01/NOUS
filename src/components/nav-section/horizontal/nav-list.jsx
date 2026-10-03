@@ -14,8 +14,6 @@ import { NavItem } from './nav-item';
 import { NavUl, NavLi } from '../styles';
 import { navSectionClasses } from '../classes';
 
-// ----------------------------------------------------------------------
-
 export function NavList({ data, depth, render, cssVars, slotProps, enabledRootRedirect }) {
   const theme = useTheme();
 
@@ -48,13 +46,11 @@ export function NavList({ data, depth, render, cssVars, slotProps, enabledRootRe
     <NavItem
       ref={navItemRef}
       render={render}
-      // slots
       title={data.title}
       path={data.path}
       icon={data.icon}
       info={data.info}
       caption={data.caption}
-      // state
       depth={depth}
       active={active}
       disabled={data.disabled}
@@ -62,22 +58,18 @@ export function NavList({ data, depth, render, cssVars, slotProps, enabledRootRe
       open={data.children && openMenu}
       externalLink={isExternalLink(data.path)}
       enabledRootRedirect={enabledRootRedirect}
-      // styles
       slotProps={depth === 1 ? slotProps?.rootItem : slotProps?.subItem}
-      // actions
       onMouseEnter={handleOpenMenu}
       onMouseLeave={handleCloseMenu}
     />
   );
 
-  // Hidden item by role
   if (data.roles && slotProps?.currentRole) {
     if (!data?.roles?.includes(slotProps?.currentRole)) {
       return null;
     }
   }
 
-  // Has children
   if (data.children) {
     return (
       <NavLi disabled={data.disabled}>
@@ -136,11 +128,8 @@ export function NavList({ data, depth, render, cssVars, slotProps, enabledRootRe
     );
   }
 
-  // Default
   return <NavLi disabled={data.disabled}>{renderNavItem}</NavLi>;
 }
-
-// ----------------------------------------------------------------------
 
 function NavSubList({ data, depth, render, cssVars, slotProps, enabledRootRedirect }) {
   return (

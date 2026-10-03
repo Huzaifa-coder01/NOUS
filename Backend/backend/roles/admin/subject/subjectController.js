@@ -73,7 +73,6 @@ const getSubject = async (req, res) => {
   )
     return;
 
-  // A student only ever sees the active subjects of an active level and course
   if (!isAdmin) {
     status = "active";
   }

@@ -3,12 +3,6 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 
 import { paper, varAlpha, menuItem } from '../../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Icons
- * https://icon-sets.iconify.design/eva/arrow-ios-downward-fill/
- */
 const ArrowDownIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -18,17 +12,9 @@ const ArrowDownIcon = (props) => (
   </SvgIcon>
 );
 
-// ----------------------------------------------------------------------
-
 const MuiAutocomplete = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { popupIcon: <ArrowDownIcon /> },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       [`& span.${autocompleteClasses.tag}`]: {
@@ -51,7 +37,5 @@ const MuiAutocomplete = {
     endAdornment: { [`& .${svgIconClasses.root}`]: { width: 18, height: 18 } },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const autocomplete = { MuiAutocomplete };

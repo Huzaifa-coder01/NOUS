@@ -1,7 +1,5 @@
 import { Hero as HeroRoot, HeroStats } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function Hero({ title, subtitle, stats = [] }) {
   return (
     <HeroRoot>

@@ -24,8 +24,6 @@ import { Label } from 'src/components/label';
 
 import { EntityList } from 'src/sections/admin/components/entity-list';
 
-// ----------------------------------------------------------------------
-
 const USER_TYPES = [
   { value: 'student', label: 'Students' },
   { value: 'admin', label: 'Admins' },
@@ -89,8 +87,6 @@ const COLUMNS = [
     ),
   },
 ];
-
-// ----------------------------------------------------------------------
 
 export function UserListView() {
   const [userType, setUserType] = useState('student');

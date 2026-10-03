@@ -3,16 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Syllabus PDFs - always attached to a chapter.
-//
-// Course, level and subject are derived from the chapter, so a create only
-// needs `chapterId`.//
-// A PDF is created by uploading the file first (see `uploads.js`) and passing
-// the returned `file` key and `fileUrl` here. Names are unique across every PDF
-// in the system, which is the 409 these mutations most often surface.
-// ----------------------------------------------------------------------
-
 export const syllabusApi = createApi({
   reducerPath: 'syllabus',
   baseQuery: createCustomFetchBaseQuery(),
@@ -44,7 +34,6 @@ export const syllabusApi = createApi({
       invalidatesTags: ['Syllabus'],
     }),
 
-    /** `status` accepts active | inactive; `deleted` is what DELETE sets. */
     updateSyllabus: builder.mutation({
       query: ({ id, ...body }) => ({
         url: API_ROUTES.SYLLABUS.UPDATE(id),

@@ -19,14 +19,6 @@ function resolveRateLimitKey(req) {
   return `ip:${req.ip}`;
 }
 
-/**
- * Create a rate limiter middleware for Express routes.
- * @param {string} endpoint - The name of the endpoint (for logging purposes).
- * @param {number} [timeWindow=15] - The time window in minutes.
- * @param {number} [maxRequests=5] - The maximum number of requests allowed.
- * @param {Object} [options={}] - Extra express-rate-limit options.
- * @returns {Function} Express middleware function for rate limiting.
- */
 function createRateLimiter(
   endpoint,
   timeWindow = 15,

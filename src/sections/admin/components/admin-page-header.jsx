@@ -4,9 +4,6 @@ import Typography from '@mui/material/Typography';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-// ----------------------------------------------------------------------
-
-/** Thin wrapper over the shared CustomBreadcrumbs, plus the admin page action. */
 export function AdminPageHeader({ title, subtitle, links = [], action }) {
   return (
     <>

@@ -8,8 +8,6 @@ import { navSectionClasses } from './classes';
 import { svgColorClasses } from '../svg-color';
 import { Iconify, iconifyClasses } from '../iconify';
 
-// ----------------------------------------------------------------------
-
 export function stateClasses({ open, active, disabled }) {
   let classes = navSectionClasses.item.root;
 
@@ -23,8 +21,6 @@ export function stateClasses({ open, active, disabled }) {
 
   return classes;
 }
-
-// ----------------------------------------------------------------------
 
 export const sharedStyles = {
   icon: {
@@ -64,8 +60,6 @@ export const sharedStyles = {
 
   disabled: { opacity: 0.48, pointerEvents: 'none' },
 };
-
-// ----------------------------------------------------------------------
 
 export function Subheader({ sx, open, children, ...other }) {
   return (
@@ -116,8 +110,6 @@ export function Subheader({ sx, open, children, ...other }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
 export function NavCollapse({ sx, depth, children, ...other }) {
   return (
     <Collapse
@@ -150,8 +142,6 @@ export function NavCollapse({ sx, depth, children, ...other }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
 export function NavLi({ sx, children, disabled, ...other }) {
   return (
     <Box
@@ -169,8 +159,6 @@ export function NavLi({ sx, children, disabled, ...other }) {
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function NavUl({ children, sx, ...other }) {
   return (

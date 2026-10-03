@@ -3,8 +3,6 @@ import { useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-// ----------------------------------------------------------------------
-
 export function useResponsive(query, start, end) {
   const theme = useTheme();
 
@@ -27,8 +25,6 @@ export function useResponsive(query, start, end) {
 
   return mediaQueryResult;
 }
-
-// ----------------------------------------------------------------------
 
 export function useWidth() {
   const theme = useTheme();

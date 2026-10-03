@@ -1,7 +1,3 @@
-/* ------------------------------------------
-   CONSTANTS
------------------------------------------- */
-
 const months = [
   "Jan","Feb","Mar","Apr","May","Jun",
   "Jul","Aug","Sep","Oct","Nov","Dec"
@@ -15,10 +11,6 @@ const ALL_REGIONS = [
   "Oceania",
   "Other"
 ];
-
-/* ------------------------------------------
-   HELPERS
------------------------------------------- */
 
 const timezoneToRegion = (tz = "") => {
   if (tz.startsWith("Asia/")) return "Asia";
@@ -35,14 +27,8 @@ const timezoneToRegion = (tz = "") => {
   return "Other";
 };
 
-/* ------------------------------------------
-   MAIN UTILITY
------------------------------------------- */
-
 const buildUserDashboardAnalytics = (users = []) => {
   const now = new Date();
-
-  /* -------- Initialize Buckets -------- */
 
   const ageBuckets = {
     "18-25": 0,
@@ -60,7 +46,6 @@ const buildUserDashboardAnalytics = (users = []) => {
 
   const userGrowth = Array(12).fill(0);
 
-  // Ensure ALL regions always exist
   const regionStats = {};
   ALL_REGIONS.forEach(region => {
     regionStats[region] = {
@@ -70,18 +55,12 @@ const buildUserDashboardAnalytics = (users = []) => {
     };
   });
 
-  /* ----------------------------------
-     SINGLE PASS OVER USERS
-  ---------------------------------- */
-
   for (const u of users) {
-    /* -------- Growth -------- */
     if (u.createdAt) {
       const m = new Date(u.createdAt).getMonth();
       if (m >= 0 && m < 12) userGrowth[m]++;
     }
 
-    /* -------- Gender Normalization -------- */
     const gender =
       u.gender === "Male" || u.gender === "Female" || u.gender === "Other"
         ? u.gender
@@ -91,7 +70,6 @@ const buildUserDashboardAnalytics = (users = []) => {
       genderCount[gender]++;
     }
 
-    /* -------- Age (DOB is STRING) -------- */
     if (u.dob && typeof u.dob === "string") {
       const dob = new Date(u.dob);
       if (!isNaN(dob)) {
@@ -107,33 +85,25 @@ const buildUserDashboardAnalytics = (users = []) => {
       }
     }
 
-    /* -------- Region (Timezone-based) -------- */
     const region = timezoneToRegion(u.timezone);
 
     if (gender === "Male") regionStats[region].males++;
     else if (gender === "Female") regionStats[region].females++;
     else if (gender === "Other") regionStats[region].others++;
     else {
-      // Unknown gender still counts toward region presence
       regionStats[region].others++;
     }
   }
-
-  /* ----------------------------------
-     FINAL SHAPING (UI-READY)
-  ---------------------------------- */
 
   const totalGender =
     genderCount.Male + genderCount.Female + genderCount.Other || 1;
 
   return {
-    /* -------- Age Demographics -------- */
     ageDemographics: Object.entries(ageBuckets).map(([ageGroup, total]) => ({
       ageGroup,
       total
     })),
 
-    /* -------- Gender Analytics -------- */
     genderAnalytics: [
       {
         name: "Males",
@@ -152,7 +122,6 @@ const buildUserDashboardAnalytics = (users = []) => {
       }
     ],
 
-    /* -------- Region Overview -------- */
     regionOverview: ALL_REGIONS.map(region => ({
       region,
       males: regionStats[region].males,
@@ -160,7 +129,6 @@ const buildUserDashboardAnalytics = (users = []) => {
       others: regionStats[region].others
     })),
 
-    /* -------- User Growth -------- */
     userGrowth: months.map((month, index) => ({
       month,
       total: userGrowth[index]

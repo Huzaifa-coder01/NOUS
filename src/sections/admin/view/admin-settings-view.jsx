@@ -23,8 +23,6 @@ import {
 
 import { AdminPageHeader } from '../components/admin-page-header';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   { name: 'terms_and_conditions', label: 'Terms and conditions' },
   { name: 'customer_terms_and_conditions', label: 'Customer terms and conditions' },
@@ -32,20 +30,12 @@ const FIELDS = [
   { name: 'about_us', label: 'About us' },
 ];
 
-// ----------------------------------------------------------------------
-
 export function AdminSettingsView() {
   const { showToast, showError, toastNode } = useToast();
 
   const [values, setValues] = useState({});
   const [saving, setSaving] = useState(false);
 
-  /**
-   * There is no single "get settings" endpoint - each document has its own GET
-   * - so the form is seeded from the four of them. RTK Query runs them in
-   * parallel and caches each one; the id that comes back decides create vs
-   * update.
-   */
   const terms = useGetTermsConditionsQuery();
   const customerTerms = useGetCustomerTermsConditionsQuery();
   const privacy = useGetPrivacyPolicyQuery();
@@ -149,8 +139,6 @@ export function AdminSettingsView() {
     </DashboardContent>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function Row({ label, value }) {
   return (

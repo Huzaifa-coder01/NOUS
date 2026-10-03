@@ -37,11 +37,6 @@ import {
   useDeletePastPaperMutation,
 } from './Reducer/past-papers';
 
-// ----------------------------------------------------------------------
-// The screens that are generic over a node type or a document kind pick their
-// hooks from here, so a view stays one component instead of four near copies.
-// ----------------------------------------------------------------------
-
 export const nodeHooks = {
   course: {
     useList: useGetCoursesQuery,

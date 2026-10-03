@@ -13,17 +13,13 @@ const months = [
   "Dec",
 ];
 
-/**
- * Build a month-wise revenue array from aggregated data
- * @param {Array} rows - array like [{ month: 1, totalRevenue: 20 }, ...]
- */
 const buildMonthlyRevenue = (rows = []) => {
   const map = {};
   let total = 0;
 
   rows.forEach((r) => {
-    map[r.month] = r.totalRevenue; // map month index to revenue
-    total += r.totalRevenue || 0; // sum total
+    map[r.month] = r.totalRevenue;
+    total += r.totalRevenue || 0;
   });
 
   const monthsArray = months.map((m, i) => ({
@@ -34,10 +30,6 @@ const buildMonthlyRevenue = (rows = []) => {
   return { monthsArray, total };
 };
 
-/**
- * Combine thisYearRevenue and lastYearRevenue, also calculate totals
- * @param {Object} data - { thisYearRevenue, lastYearRevenue }
- */
 const buildRevenueOverTime = (data = {}) => {
   const { monthsArray: thisYear, total: totalThisYear } = buildMonthlyRevenue(
     data.thisYearRevenue,

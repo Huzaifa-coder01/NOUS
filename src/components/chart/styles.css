@@ -1,7 +1,4 @@
 .apexcharts-canvas {
-  /**
-  * Tooltip
-  */
   .apexcharts-tooltip {
     min-width: 80px;
     border-radius: 10px;
@@ -30,18 +27,12 @@
     color: var(--palette-text-secondary);
     background-color: var(--palette-background-neutral);
   }
-  /**
-  * Tooltip: group
-  */
   .apexcharts-tooltip-series-group {
     padding: 4px 12px;
   }
   .apexcharts-tooltip-marker {
     margin-right: 8px;
   }
-  /**
-  * Legend
-  */
   .apexcharts-legend {
     padding: 0;
   }

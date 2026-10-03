@@ -3,12 +3,7 @@ import { tableCellClasses } from '@mui/material/TableCell';
 
 import { varAlpha } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const MuiTableContainer = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       position: 'relative',
@@ -18,23 +13,13 @@ const MuiTableContainer = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiTable = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({ '--palette-TableCell-border': theme.vars.palette.divider }),
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiTableRow = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       [`&.${tableRowClasses.selected}`]: {
@@ -46,12 +31,7 @@ const MuiTableRow = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiTableCell = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: { borderBottomStyle: 'dashed' },
     head: ({ theme }) => ({
@@ -68,21 +48,13 @@ const MuiTableCell = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiTablePagination = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: {
     backIconButtonProps: { size: 'small' },
     nextIconButtonProps: { size: 'small' },
     slotProps: { select: { name: 'table-pagination-select' } },
   },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: { width: '100%' },
     toolbar: { height: 64 },
@@ -99,8 +71,6 @@ const MuiTablePagination = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const table = {
   MuiTable,

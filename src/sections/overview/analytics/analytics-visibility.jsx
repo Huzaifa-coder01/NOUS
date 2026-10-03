@@ -7,17 +7,6 @@ import Typography from '@mui/material/Typography';
 
 import { fNumber } from 'src/utils/format-number';
 
-// ----------------------------------------------------------------------
-
-/**
- * The three mutually exclusive states a document can be in, as one segmented
- * bar plus a readout.
- *
- * A donut is the wrong shape here: most of the time everything is active, and a
- * single-slice donut is just a filled circle that says nothing. A bar still
- * reads correctly at 100/0/0 and names all three states so the difference
- * between "switched off" and "hidden by a parent" is on screen.
- */
 export function AnalyticsVisibility({ title, subheader, segments, ...other }) {
   const total = segments.reduce((sum, segment) => sum + segment.value, 0);
 

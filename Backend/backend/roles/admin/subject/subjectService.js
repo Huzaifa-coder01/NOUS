@@ -66,7 +66,6 @@ const updateSubject = async (id, data) => {
   Object.assign(subject, updateData);
   await subject.save();
 
-  // Turning a node off turns everything under it off as well
   if (updateData.status === "inactive") {
     await cascadeFromSubject(subject._id);
   }
@@ -81,7 +80,6 @@ const getSubjectDetails = async (id, { onlyActive = false } = {}) => {
     return null;
   }
 
-  // A student only sees an active subject under an active level and course
   if (onlyActive) {
     if (
       subject.status !== "active" ||
@@ -99,7 +97,6 @@ const deleteSubject = async (id) => {
   if (!id) throw new Error("Subject ID is required");
   const deleted = await SubjectRepo.deleteSubject(id);
 
-  // Children are kept, they just go inactive
   if (deleted) {
     await cascadeFromSubject(id);
   }

@@ -8,8 +8,6 @@ import { paths } from 'src/routes/paths';
 import { signOut } from 'src/auth/context/jwt';
 import { useAuthContext } from 'src/auth/hooks';
 
-// ----------------------------------------------------------------------
-
 export function SignOutButton({ onClose, ...other }) {
   const { checkUserSession } = useAuthContext();
 

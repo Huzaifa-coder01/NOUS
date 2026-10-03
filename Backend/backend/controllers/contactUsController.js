@@ -1,4 +1,3 @@
-// controllers/contactUsController.js
 const ContactUs = require("../models/ContactUs");
 const {
   sendResponse,
@@ -11,7 +10,6 @@ const { sendEmailViaBrevo } = require("../helperUtils/emailUtil");
 const { config } = require("dotenv");
 const { validatePhoneNumber } = require("../helperUtils/validationsUtil");
 
-// Create a new contact request
 const createContactRequest = async (req, res) => {
   const { name, subject, message } = req.body;
 
@@ -29,10 +27,9 @@ const createContactRequest = async (req, res) => {
       name,
       subject,
       message,
-      status: "pending", // Set the default status
+      status: "pending",
     });
 
-    // Send email within the transaction
     const emailSubject = "Contact Us Request by " + name;
     const emailMessage = `Name: ${name} \n Subject: ${subject} \n Message: ${message}`;
 
@@ -40,9 +37,6 @@ const createContactRequest = async (req, res) => {
 
     await Promise.all([
       contactRequest.save(),
-      //  sendEmailViaBrevo([supportEmail], subject, mDescription, {
-      // isHtml: false,
-      // }),
     ]);
 
     return sendResponse({
@@ -56,11 +50,10 @@ const createContactRequest = async (req, res) => {
       const errorMessages = Object.values(error.errors).map(
         (err) => err.message
       );
-      // Use the first error message key for translation
       return sendResponse({
         res,
         statusCode: 400,
-        translationKey: errorMessages[0], // Directly use the error key in the translationKey
+        translationKey: errorMessages[0],
         error: error,
       });
     }

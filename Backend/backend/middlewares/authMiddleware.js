@@ -35,10 +35,8 @@ const auth = async (req, res, next) => {
 
     const userId = decoded._id;
   
-    // Retrieve user from cache if available
     let user = userCache.get(userId);
 
-    // Check if the user object is missing required fields
     const requiredFields = [
       "name",
       "profileIcon",
@@ -75,27 +73,23 @@ const auth = async (req, res, next) => {
         });
       }
 
-      // Immediately convert user to a plain object for modification
       user = user.toObject();
       user.userType = user.accountState.userType;
       delete user.accountState;
 
-      // Update the cache with the modified user object
       userCache.set(userId, user);
     }
 
-    // Set the locale based on user's language
     i18nConfig.setLocale(req, user.language || "en");
     req.token = token;
     req.user = user;
 
-    // Override timezone with client-sent header if provided
     const clientTimezone = req.header("X-Timezone");
     if (clientTimezone) {
       req.user = { ...req.user, timezone: clientTimezone };
     }
 
-    next(); // Move to the next middleware/route handler
+    next();
   } catch (error) {
     return sendResponse({
       res,

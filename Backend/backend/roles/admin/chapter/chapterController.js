@@ -10,7 +10,6 @@ const {
   CHAPTER_UPDATABLE_STATUSES,
 } = require("./ChapterModel");
 
-// A chapter number is a whole number starting at 1
 const parseChapterNumber = (value) => {
   const parsed = Number(value);
   if (!Number.isInteger(parsed) || parsed < 1) {
@@ -91,7 +90,6 @@ const getChapter = async (req, res) => {
   )
     return;
 
-  // A student only ever sees active chapters under an active chain
   if (!isAdmin) {
     status = "active";
   }

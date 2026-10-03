@@ -4,14 +4,6 @@ import { idOf } from 'src/constants/nous';
 
 import { PageTitle, BackButton, Breadcrumbs, ScreenError, DocumentList } from '../components';
 
-// ----------------------------------------------------------------------
-
-/**
- * Past Papers reached straight from the subject page:
- * `GET /past-papers?courseId&levelId&subjectId`, with no chapter filter, which
- * the API documents as everything under that subject including chapter-tagged
- * papers.
- */
 export function NousSubjectPapersView({ course, level, subject, docs, error, onRetry }) {
   return (
     <>

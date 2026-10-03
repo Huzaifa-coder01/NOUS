@@ -1,8 +1,6 @@
 import SvgIcon from '@mui/material/SvgIcon';
 import IconButton from '@mui/material/IconButton';
 
-// ----------------------------------------------------------------------
-
 export function MenuButton({ sx, ...other }) {
   return (
     <IconButton sx={sx} {...other}>

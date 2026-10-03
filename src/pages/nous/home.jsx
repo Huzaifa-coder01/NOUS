@@ -9,8 +9,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { NousHomeView } from 'src/sections/nous/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   const { data, isLoading, error, refetch } = useGetCoursesQuery({ limit: 100 });
 

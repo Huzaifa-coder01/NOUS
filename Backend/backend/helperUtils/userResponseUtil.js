@@ -1,5 +1,3 @@
-// helperUtils/userResponseUtil.js
-
 const { notify } = require("@appEngagement/engagementEventsRoutes");
 const { createVerificationLink } = require("../models/UserModel");
 const { getFileName } = require("@helperUtils/imageHelper");
@@ -22,7 +20,6 @@ const formatUserResponse = (
         : null;
   const pIcon = getFileName(userObject?.profileIcon) || null;
   const userType = userObject.accountState?.userType;
-  // Construct basicInfo cleanly using conditionals
   const basicInfo = {
     _id: userObject._id,
     profileIcon: pIcon,
@@ -35,7 +32,6 @@ const formatUserResponse = (
   };
   const location = userObject.location || null;
 
-  // Main response object
   let response = {
     basicInfo,
     accountState: {
@@ -61,14 +57,9 @@ const formatUserResponse = (
   };
 
   if (userType == "user") {
-    // basicInfo.dob = userObject.dob || "";
-    // basicInfo.gender = userObject.gender || "";
-    // basicInfo.username = userObject.username || "";
   } else if (userType == "admin") {
-    // Removed location for admin userType
   }
 
-  // Include OTP info in dev only
   if (
     (process.env.NODE_ENV === "dev" ||
       process.env.NODE_ENV === "mobileapps" ||
@@ -79,7 +70,6 @@ const formatUserResponse = (
     response.otpInfo = userObject.otpInfo;
   }
 
-  // Include email verification info in dev only
   if (
     (process.env.NODE_ENV === "dev" ||
       process.env.NODE_ENV === "mobileapps" ||
@@ -91,17 +81,14 @@ const formatUserResponse = (
     );
   }
 
-  // Include resetToken if available
   if (userObject.resetToken) {
     response.resetToken = userObject.resetToken;
   }
 
-  // Add token if provided
   if (token) {
     response.token = token;
   }
 
-  // Handle includeFields
   if (includeFields.length > 0) {
     const filtered = {};
     includeFields.forEach((field) => {
@@ -112,7 +99,6 @@ const formatUserResponse = (
     return filtered;
   }
 
-  // Handle excludeFields
   if (excludeFields.length > 0) {
     excludeFields.forEach((fieldPath) => {
       const [mainField, subField] = fieldPath.split(".");

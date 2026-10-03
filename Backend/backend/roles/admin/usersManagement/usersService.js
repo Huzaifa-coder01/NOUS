@@ -1,4 +1,3 @@
-// services/userService.js
 const {
   generateMeta,
   sendResponse,
@@ -123,7 +122,6 @@ const getAllUsers = async ({ page, limit, keyword, status, userType }) => {
   const inactive = data.inactive?.[0]?.count || 0;
   const suspended = data.suspended?.[0]?.count || 0;
 
-  // Counts of every user of this type, not just the page
   const countFilter = userType
     ? { "accountState.userType": userType }
     : {};
@@ -153,7 +151,6 @@ const getAllUsers = async ({ page, limit, keyword, status, userType }) => {
 const updateUser = async (req, res, options = {}) => {
   const { userId } = options;
   const {
-    // email,
     permissions,
     validationDocument,
     companyName,
@@ -178,11 +175,9 @@ const updateUser = async (req, res, options = {}) => {
   session.startTransaction();
 
   try {
-    // Every user type lives on the single User model
     const user = await User.findById(userId).session(session);
     if (!user) throw new Error("User not found");
 
-    // Validate profileIcon
     if (profileIcon && profileIcon.startsWith("http")) {
       return {
         errorCode: 400,
@@ -191,25 +186,11 @@ const updateUser = async (req, res, options = {}) => {
       };
     }
 
-    /*   // Check if email exists
-      const existingUser = await User.findOne({ _id: { $ne: userId }, email: email.trim().toLowerCase() });
-      if (existingUser && existingUser.verificationStatus.email === "verified") {
-        sendResponse({
-          res,
-          statusCode: 400,
-          translationKey: "email_already",
-        });
-        return { responseSent: true };
-      }
-   */
-
-    // Validate phone number if provided
     if (phoneNumber) {
       if (
         typeof phoneNumber !== "object" ||
         !phoneNumber.code ||
         !phoneNumber.number
-        // !validatePhoneNumber(`${phoneNumber.code}${phoneNumber.number}`).valid
       ) {
         return { errorCode: 400, message: "invalid_phone" };
       }
@@ -293,12 +274,10 @@ const updateUser = async (req, res, options = {}) => {
 
     }
 
-    // Device handling
     if (deviceId && deviceType) {
       createOrSkipDevice(user._id, deviceId, deviceType);
     }
 
-    //if status is updated then send email to user
     if (status) {
       const mBody = accountStatusEmailTemplate(status, user.name);
       await sendEmailViaBrevo([user.email], "Account Status", mBody);
@@ -333,8 +312,6 @@ const getUserDetails = async (id) => {
 
 const getUserDetailsForQRService = async (id) => {
   let data = await userRepo.getUserDetailsForQRRepo(id);
-  // let formattedData = data?.toObject?.() ?? data;
-  // formattedData = ;
   return formatUserResponse(
     data,
     null,
@@ -343,11 +320,6 @@ const getUserDetailsForQRService = async (id) => {
   );
 };
 
-/**
- * Setup 2FA (Generate QR and Secret, but do not enable yet)
- * @param {string} userId
- * @returns {Promise<{ qrCodeDataURL: string, secret: string }>}
- */
 const setupTwoFA = async (userId) => {
   const user = await userRepo.findUserById(userId, { twoFA: 1, email: 1 });
 
@@ -369,12 +341,6 @@ const setupTwoFA = async (userId) => {
   return { qrCodeDataURL, secret };
 };
 
-/**
- * Confirm 2FA (Verify token and enable)
- * @param {string} userId
- * @param {string} token
- * @returns {Promise<boolean>}
- */
 const confirmTwoFA = async (userId, token) => {
   const user = await userRepo.findUserById(userId, { twoFA: 1 });
 
@@ -404,11 +370,6 @@ const confirmTwoFA = async (userId, token) => {
   };
 };
 
-/**
- * Disable 2FA
- * @param {string} userId
- * @returns {Promise<boolean>}
- */
 const disableTwoFA = async (userId) => {
   await userRepo.updateTwoFA(userId, {
     "twoFA.isEnabled": false,

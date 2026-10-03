@@ -24,16 +24,6 @@ import {
   HeaderActions,
 } from './styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * The account picture, falling back to the initial.
- *
- * An account keeps the storage key its picture was uploaded under, so it has to
- * be resolved to a url before the browser can load it. If that url does not
- * load - an old key, or no delivery prefix configured - the initial takes over
- * rather than leaving a broken image in the header.
- */
 function HeaderAvatar({ user }) {
   const photoURL = mediaUrl(user?.profileIcon);
 
@@ -51,8 +41,6 @@ function HeaderAvatar({ user }) {
     </Avatar>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function NousLayout({ children }) {
   const branding = CONFIG.branding;

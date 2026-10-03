@@ -8,8 +8,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { varHover, AnimateAvatar } from 'src/components/animate';
 
-// ----------------------------------------------------------------------
-
 export function AccountButton({ open, photoURL, displayName, sx, ...other }) {
   const theme = useTheme();
 

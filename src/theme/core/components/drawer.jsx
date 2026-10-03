@@ -1,11 +1,6 @@
 import { paper, varAlpha, stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const MuiDrawer = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     paperAnchorRight: ({ ownerState, theme }) => ({
       ...(ownerState.variant === 'temporary' && {
@@ -27,7 +22,5 @@ const MuiDrawer = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const drawer = { MuiDrawer };

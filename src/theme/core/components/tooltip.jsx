@@ -2,12 +2,7 @@ import { tooltipClasses } from '@mui/material/Tooltip';
 
 import { stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const MuiTooltip = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     tooltip: ({ theme }) => ({
       backgroundColor: theme.vars.palette.grey[800],
@@ -37,7 +32,5 @@ const MuiTooltip = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const tooltip = { MuiTooltip };

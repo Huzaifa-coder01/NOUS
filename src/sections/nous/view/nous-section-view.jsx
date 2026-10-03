@@ -11,8 +11,6 @@ import {
   DocumentList,
 } from '../components';
 
-// ----------------------------------------------------------------------
-
 const EMPTY_HINT = {
   syllabus: 'Syllabus PDFs for this chapter appear here once an administrator publishes them.',
   'past-paper':
@@ -20,12 +18,6 @@ const EMPTY_HINT = {
   note: 'Be the first to share your notes for this chapter - upload a PDF above.',
 };
 
-/**
- * Step 6: the PDFs behind one chapter section.
- *
- * Each section is its own endpoint, narrowed to course + level + subject +
- * chapter. Notes is the only one a student may add to.
- */
 export function NousSectionView({
   course,
   level,

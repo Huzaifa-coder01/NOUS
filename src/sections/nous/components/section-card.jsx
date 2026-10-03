@@ -1,8 +1,5 @@
 import { ResourceCardRoot } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/** One of the three chapter sections: Syllabus, Notes, Past Papers. */
 export function SectionCard({ href, icon, name, description, accent, count }) {
   return (
     <ResourceCardRoot href={href} accent={accent}>

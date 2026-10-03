@@ -70,7 +70,6 @@ const getLevel = async (req, res) => {
   )
     return;
 
-  // A student only ever sees the active levels of an active course
   if (!isAdmin) {
     status = "active";
   }

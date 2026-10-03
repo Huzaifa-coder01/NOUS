@@ -1,10 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const moment = require("moment-timezone");
 
-/* 
-Use numeric UTC minutes (simpler + faster queries)
-This is ideal if we’ll be doing lots of $gte / $lte comparisons.
-*/
 const timingSchema = new mongoose.Schema(
   {
     from: { type: Number, default: null },
@@ -30,11 +26,6 @@ const OperatingHoursSchema = new mongoose.Schema({
   { _id: false });
 
 
-
-/**
- * Converts local "HH:mm" string to UTC minutes (0–1439)
- * Example: "10:00" in Asia/Karachi → 300 (05:00 UTC)
- */
 
 function localTimeToUtcMinutes(timeStr, timezone) {
   if (!timeStr) return null;
@@ -64,7 +55,6 @@ function transformOperatingHoursToUtc(operatingHours, timezone = "Asia/Karachi")
   return converted;
 }
 
-//convert UTC minutes back to local "HH:mm" string
 function utcMinutesToLocalTime(utcMinutes, timezone) {
   if (utcMinutes === null || utcMinutes === undefined) return null;
   const utcMoment = moment.utc().startOf('day').add(utcMinutes, 'minutes');
@@ -82,7 +72,6 @@ function transformOperatingHoursToLocal(operatingHours, timezone = "Asia/Karachi
     const dayData = operatingHours[day] || {};
     const from = utcMinutesToLocalTime(dayData.from, timezone);
     const to = utcMinutesToLocalTime(dayData.to, timezone);
-    // If from or to is null, force isOpen to false
     const isOpen = (from !== null && to !== null) ? (dayData.isOpen ?? false) : false;
     converted[day] = {
       from,
@@ -120,15 +109,12 @@ function isOrganizationOpenNow(operatingHours, timezone = "Asia/Karachi") {
 
   if (from == null || to == null) return false;
 
-  // Case: normal day
   let isOpen = nowUtcMinutes >= from && nowUtcMinutes <= to;
 
-  // Case: overnight shift (e.g. 20:00 — 03:00)
   if (from > to) {
     isOpen = nowUtcMinutes >= from || nowUtcMinutes <= to;
   }
 
-  // Break window
   if (
     brk?.from != null &&
     brk?.to != null &&

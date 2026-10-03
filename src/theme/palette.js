@@ -1,7 +1,3 @@
-/**
- * The exact colour values from the original NOUS markup, kept in one place
- * so both the public site and the admin panel stay on the same palette.
- */
 export const NOUS_COLORS = {
   background: '#f5f7fb',
   paper: '#ffffff',
@@ -21,7 +17,6 @@ export const NOUS_COLORS = {
 
 export const NOUS_FONT = 'Arial, Helvetica, sans-serif';
 
-/** Accents used to tell courses, levels and chapter sections apart at a glance. */
 export const NOUS_ACCENTS = [
   { soft: '#eff6ff', mid: '#dbeafe', strong: '#2563eb' },
   { soft: '#f5f3ff', mid: '#ede9fe', strong: '#7c3aed' },

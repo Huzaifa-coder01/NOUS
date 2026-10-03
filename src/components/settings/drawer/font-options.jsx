@@ -7,8 +7,6 @@ import { setFont, varAlpha, stylesMode } from 'src/theme/styles';
 import { Block } from './styles';
 import { SvgColor } from '../../svg-color';
 
-// ----------------------------------------------------------------------
-
 export function FontOptions({ value, options, onClickOption }) {
   return (
     <Block title="Font">

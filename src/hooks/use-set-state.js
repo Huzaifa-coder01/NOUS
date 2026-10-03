@@ -2,8 +2,6 @@ import { useMemo, useState, useCallback } from 'react';
 
 import { isEqual } from 'src/utils/helper';
 
-// ----------------------------------------------------------------------
-
 export function useSetState(initialState) {
   const [state, set] = useState(initialState);
 

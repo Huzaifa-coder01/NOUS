@@ -60,31 +60,14 @@ const softVariant = {
   ],
 };
 
-// ----------------------------------------------------------------------
-
 const MuiButtonGroup = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { disableElevation: true },
 
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @variant soft
-     */
     ...[...softVariant.base, ...softVariant.colors],
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
-    /**
-     * @variant contained
-     */
     contained: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -108,9 +91,6 @@ const MuiButtonGroup = {
 
       return { ...styled.inheritColor, ...styled.colors, ...styled.disabled };
     },
-    /**
-     * @variant text
-     */
     text: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -136,7 +116,5 @@ const MuiButtonGroup = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const buttonGroup = { MuiButtonGroup };

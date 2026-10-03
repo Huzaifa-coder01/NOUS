@@ -3,8 +3,6 @@ import { m, animate, useInView, useTransform, useMotionValue } from 'framer-moti
 
 import Typography from '@mui/material/Typography';
 
-// ----------------------------------------------------------------------
-
 export function AnimateCountUp({
   to,
   sx,

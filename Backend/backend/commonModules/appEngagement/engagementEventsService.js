@@ -27,10 +27,6 @@ const getHourBucket = (date = new Date()) => {
   return bucket;
 };
 
-/**
- * Public API to log engagement
- * Controllers call THIS — never the repo directly
- */
 const logEngagementService = async ({
   entityType,
   entityId,
@@ -61,18 +57,13 @@ const logEngagementService = async ({
   };
 
   try {
-    // Push into Redis buffer
     await pushBuffer("engagement", payload);
     return true;
   } catch (err) {
-    // Fallback → direct Mongo insert
     return engagementRepo.logEngagement(payload);
   }
 };
 
-/**
- * Get trending entities (48h / 7d handled upstream)
- */
 const getTrendingService = async ({
   entityType,
   eventType,
@@ -88,9 +79,6 @@ const getTrendingService = async ({
   });
 };
 
-/**
- * Count engagement for analytics
- */
 const countEngagementService = async ({
   entityType,
   entityId,

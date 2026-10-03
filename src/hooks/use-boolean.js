@@ -1,7 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export function useBoolean(defaultValue = false) {
   const [value, setValue] = useState(defaultValue);
 

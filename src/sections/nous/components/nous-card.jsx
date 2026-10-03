@@ -1,7 +1,5 @@
 import { NavCard, CardIcon, CardMeta } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function NousCard({ href, icon, title, description, meta, accent, action = 'Open' }) {
   return (
     <NavCard href={href} accent={accent}>

@@ -1,16 +1,10 @@
-// ----------------------------------------------------------------------
-
 export function rowInPage(data, page, rowsPerPage) {
   return data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }
 
-// ----------------------------------------------------------------------
-
 export function emptyRows(page, rowsPerPage, arrayLength) {
   return page ? Math.max(0, (1 + page) * rowsPerPage - arrayLength) : 0;
 }
-
-// ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
   if (a[orderBy] === null) {
@@ -27,8 +21,6 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
-// ----------------------------------------------------------------------
 
 export function getComparator(order, orderBy) {
   return order === 'desc'

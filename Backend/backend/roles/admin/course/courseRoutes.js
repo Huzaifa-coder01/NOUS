@@ -14,14 +14,10 @@ const router = express.Router();
 
 router.use(auth);
 
-// Create a rate limiter for Courses
 const CourseRateLimiter = createRateLimiter("Course");
 
-// Routes for Course Management
-// Create a new Course
 router.post("/", roleMiddleware(["admin"]), CourseRateLimiter, createCourse);
 
-// Get all Courses with pagination
 router.get(
   "/",
   roleMiddleware(["admin", "student"]),
@@ -29,7 +25,6 @@ router.get(
   getCourse,
 );
 
-// Get a specific Course by ID
 router.get(
   "/:id",
   roleMiddleware(["admin", "student"]),
@@ -37,10 +32,8 @@ router.get(
   getCourseDetails,
 );
 
-// Update an existing Course
 router.put("/:id", roleMiddleware(["admin"]), updateCourse);
 
-// Delete a Course
 router.delete("/:id", roleMiddleware(["admin"]), deleteCourse);
 
 module.exports = router;

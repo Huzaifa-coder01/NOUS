@@ -12,8 +12,6 @@ import { Iconify } from '../../iconify';
 import { navSectionClasses } from '../classes';
 import { stateClasses, sharedStyles } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export const NavItem = forwardRef(
   (
     {
@@ -22,7 +20,6 @@ export const NavItem = forwardRef(
       info,
       title,
       caption,
-      //
       open,
       depth,
       render,
@@ -99,8 +96,6 @@ export const NavItem = forwardRef(
   }
 );
 
-// ----------------------------------------------------------------------
-
 const StyledNavItem = styled(ButtonBase, {
   shouldForwardProp: (prop) =>
     prop !== 'active' && prop !== 'open' && prop !== 'disabled' && prop !== 'depth',
@@ -138,9 +133,6 @@ const StyledNavItem = styled(ButtonBase, {
   };
 
   return {
-    /**
-     * Root item
-     */
     ...(rootItem && {
       ...baseStyles.item,
       textAlign: 'center',
@@ -171,7 +163,6 @@ const StyledNavItem = styled(ButtonBase, {
         position: 'absolute',
       },
       [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
-      // State
       ...(active && {
         color: 'var(--nav-item-root-active-color)',
         backgroundColor: 'var(--nav-item-root-active-bg)',
@@ -188,9 +179,6 @@ const StyledNavItem = styled(ButtonBase, {
       }),
     }),
 
-    /**
-     * Sub item
-     */
     ...(subItem && {
       ...baseStyles.item,
       color: theme.vars.palette.text.secondary,
@@ -214,7 +202,6 @@ const StyledNavItem = styled(ButtonBase, {
         marginRight: theme.spacing(-0.5),
       },
       [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
-      // State
       ...(active && {
         color: 'var(--nav-item-sub-active-color)',
         backgroundColor: 'var(--nav-item-sub-active-bg)',
@@ -225,7 +212,6 @@ const StyledNavItem = styled(ButtonBase, {
       }),
     }),
 
-    /* Disabled */
     ...(disabled && sharedStyles.disabled),
   };
 });

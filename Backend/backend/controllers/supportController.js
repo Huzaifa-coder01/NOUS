@@ -1,11 +1,9 @@
-// controllers/supportController.js
 const SupportRequest = require("../models/SupportRequest");
 const {
   sendResponse,
   validateParams,
 } = require("../helperUtils/responseUtil");
 
-// Create a new support request
 const createSupportRequest = async (req, res) => {
   const { name, subject, message } = req.body;
 
@@ -22,7 +20,7 @@ const createSupportRequest = async (req, res) => {
       name,
       subject,
       message,
-      status: "pending", // Set the default status
+      status: "pending",
       user: req.user._id
     });
 

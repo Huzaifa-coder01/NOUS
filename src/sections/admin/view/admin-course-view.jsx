@@ -19,8 +19,6 @@ import { Label } from 'src/components/label';
 
 import { EntityList } from '../components/entity-list';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   { name: 'name', label: 'Level name', required: true },
   {
@@ -58,8 +56,6 @@ const COLUMNS = [
 
 const DELETE_NOTE =
   'A soft delete: the level is marked deleted and its subjects, chapters and PDFs are switched to inactive.';
-
-// ----------------------------------------------------------------------
 
 export function AdminCourseView({ course }) {
   const navigate = useNavigate();

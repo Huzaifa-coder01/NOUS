@@ -13,18 +13,8 @@ import {
 
 import { UploadCard, UploadInput, FilePicker, DocButton } from '../styles';
 
-// ----------------------------------------------------------------------
-
 const MAX_MB = Math.round(MAX_FILE_SIZE / (1024 * 1024));
 
-/**
- * Uploading a note is the only write a student can make.
- *
- * Two calls, in the order the API expects: POST /upload/cloudinary for the
- * file, then POST /notes with the `file` key and `fileUrl` it returned. The
- * note is active immediately, and the `Note` cache tag it invalidates refreshes
- * the list behind this form on its own.
- */
 export function NoteUpload({ chapterId }) {
   const inputRef = useRef(null);
 
@@ -64,7 +54,6 @@ export function NoteUpload({ chapterId }) {
 
     setFile(picked);
 
-    // the file name is the obvious default title
     if (!name.trim()) setName(picked.name.replace(/\.pdf$/i, ''));
   };
 
@@ -97,7 +86,6 @@ export function NoteUpload({ chapterId }) {
       toast.success('Note uploaded - every student can see it now');
       reset();
     } catch (uploadError) {
-      // most often the unique-name rule
       setError(handleApiError(uploadError, 'Could not upload this note'));
     } finally {
       setSaving(false);

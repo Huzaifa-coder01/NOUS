@@ -3,12 +3,6 @@ const Subject = require("../../roles/admin/subject/SubjectModel");
 const Chapter = require("../../roles/admin/chapter/ChapterModel");
 const Pdf = require("../../roles/admin/pdf/PdfModel");
 
-/**
- * Making a node inactive, or deleting it, pushes every descendant to inactive.
- * Descendants are never deleted, and records already deleted are left alone so
- * a delete stays undoable at the row level.
- */
-
 const INACTIVATE = { status: "inactive" };
 const ONLY_ACTIVE = { status: "active" };
 
@@ -19,10 +13,6 @@ const inactivate = async (model, filter) => {
   return res.modifiedCount || 0;
 };
 
-/**
- * PDFs carry course/level/subject/chapter directly, so one update per ancestor
- * field is enough, no need to walk the tree for them.
- */
 const cascadeFromCourse = async (courseId) => {
   const levels = await Level.find({ course: courseId }).select("_id").lean();
   const levelIds = idsOf(levels);

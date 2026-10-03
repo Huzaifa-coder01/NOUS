@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export function useTable(props) {
   const [dense, setDense] = useState(!!props?.defaultDense);
 
@@ -101,11 +99,9 @@ export function useTable(props) {
     page,
     orderBy,
     rowsPerPage,
-    //
     selected,
     onSelectRow,
     onSelectAllRows,
-    //
     onSort,
     onChangePage,
     onChangeDense,
@@ -113,7 +109,6 @@ export function useTable(props) {
     onChangeRowsPerPage,
     onUpdatePageDeleteRow,
     onUpdatePageDeleteRows,
-    //
     setPage,
     setDense,
     setOrder,

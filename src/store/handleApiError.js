@@ -1,10 +1,3 @@
-/**
- * A readable message out of an RTK Query error, whatever the server sent.
- *
- * The NOUS backend answers `{ "message": "..." }` on every failure. `status` is
- * a number for an HTTP error, or FETCH_ERROR / TIMEOUT_ERROR / PARSING_ERROR
- * when the request never completed.
- */
 export function handleApiError(error, fallback = 'An error occurred. Please try again.') {
   if (!error) return null;
 
@@ -28,7 +21,6 @@ export function handleApiError(error, fallback = 'An error occurred. Please try 
     body?.message ||
     inner.message ||
     (typeof body?.error === 'string' ? body.error : null) ||
-    // validation failures usually arrive as a list
     (Array.isArray(body?.errors) && (body.errors[0]?.message || body.errors[0])) ||
     null;
 
@@ -41,7 +33,6 @@ export function handleApiError(error, fallback = 'An error occurred. Please try 
   return fallback;
 }
 
-/** Same message, as something you can throw from a plain async function. */
 export class ApiError extends Error {
   constructor(error, fallback) {
     super(handleApiError(error, fallback));

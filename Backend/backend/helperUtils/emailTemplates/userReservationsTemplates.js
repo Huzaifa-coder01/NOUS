@@ -1,6 +1,5 @@
-// emailTemplate.js
-const APP_NAME = "CoachCritic App"; // Define the app name as a constant at the top
-const currentYear = new Date().getFullYear(); // Dynamically get the current year
+const APP_NAME = "CoachCritic App";
+const currentYear = new Date().getFullYear();
 
 const reservationConfirmationEmailTemplate = ({
   userName,
@@ -12,9 +11,6 @@ const reservationConfirmationEmailTemplate = ({
   const formatPrice = (amount) =>
     `${currency} ${Number(amount || 0).toFixed(2)}`;
 
-  /* ----------------------------------
-     🕒 Timing Slots (Already formatted)
-  ---------------------------------- */
   let timingHtml = "";
 
   if (reservation.timingSlots?.dateTimeSlots?.length) {
@@ -45,9 +41,6 @@ const reservationConfirmationEmailTemplate = ({
     `;
   }
 
-  /* ----------------------------------
-     🍽 Pre-Order Items
-  ---------------------------------- */
   let preorderHtml = "";
 
   if (reservation.preOrderMenuItemsOrder?.items?.length) {
@@ -73,9 +66,6 @@ const reservationConfirmationEmailTemplate = ({
     `;
   }
 
-  /* ----------------------------------
-     🎯 Loyalty Points
-  ---------------------------------- */
   let loyaltyHtml = "";
 
   if (reservation.transactions?.company?.points) {
@@ -178,9 +168,6 @@ const reservationCancelledEmailTemplate = ({
   const formatPrice = (amount) =>
     `${currency} ${Number(amount || 0).toFixed(2)}`;
 
-  /* ----------------------------------
-     🕒 Timing Slots
-  ---------------------------------- */
   let timingHtml = "";
 
   if (reservation.timingSlots?.dateTimeSlots?.length) {
@@ -211,9 +198,6 @@ const reservationCancelledEmailTemplate = ({
     `;
   }
 
-  /* ----------------------------------
-     🍽 Pre-Order Items
-  ---------------------------------- */
   let preorderHtml = "";
 
   if (reservation.preOrderMenuItemsOrder?.items?.length) {
@@ -332,7 +316,6 @@ const reservationCancelledEmailTemplate = ({
   </html>
   `;
 };
-// Export both functions
 module.exports = {
   reservationConfirmationEmailTemplate,
   reservationCancelledEmailTemplate,

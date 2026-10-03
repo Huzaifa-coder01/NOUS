@@ -3,12 +3,6 @@ import { alertClasses } from '@mui/material/Alert';
 
 import { varAlpha, stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Icons
- */
-/* https://icon-sets.iconify.design/solar/info-circle-bold/ */
 const AlertInfoIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -20,7 +14,6 @@ const AlertInfoIcon = (props) => (
   </SvgIcon>
 );
 
-/* https://icon-sets.iconify.design/solar/check-circle-bold/ */
 const AlertSuccessIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -32,7 +25,6 @@ const AlertSuccessIcon = (props) => (
   </SvgIcon>
 );
 
-/* https:// icon-sets.iconify.design/solar/danger-triangle-bold/ */
 const AlertWarningIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -44,7 +36,6 @@ const AlertWarningIcon = (props) => (
   </SvgIcon>
 );
 
-/* https://icon-sets.iconify.design/solar/danger-bold/ */
 const AlertErrorIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -55,8 +46,6 @@ const AlertErrorIcon = (props) => (
     />
   </SvgIcon>
 );
-
-// ----------------------------------------------------------------------
 
 const COLORS = ['info', 'success', 'warning', 'error'];
 
@@ -71,12 +60,7 @@ function styleColors(ownerState, styles) {
   return outputStyle;
 }
 
-// ----------------------------------------------------------------------
-
 const MuiAlert = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: {
     iconMapping: {
       error: <AlertErrorIcon />,
@@ -86,14 +70,8 @@ const MuiAlert = {
     },
   },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     icon: { opacity: 1 },
-    /**
-     * @variant standard
-     */
     standard: ({ ownerState, theme }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -112,9 +90,6 @@ const MuiAlert = {
 
       return { ...styled.colors };
     },
-    /**
-     * @variant filled
-     */
     filled: ({ ownerState, theme }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -124,9 +99,6 @@ const MuiAlert = {
 
       return { ...styled.colors };
     },
-    /**
-     * @variant outlined
-     */
     outlined: ({ ownerState, theme }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -143,12 +115,7 @@ const MuiAlert = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiAlertTitle = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       marginBottom: theme.spacing(0.5),
@@ -156,7 +123,5 @@ const MuiAlertTitle = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const alert = { MuiAlert, MuiAlertTitle };

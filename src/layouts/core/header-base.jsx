@@ -20,8 +20,6 @@ import { SignInButton } from '../components/sign-in-button';
 import { AccountDrawer } from '../components/account-drawer';
 import { SettingsButton } from '../components/settings-button';
 
-// ----------------------------------------------------------------------
-
 const StyledDivider = styled('span')(({ theme }) => ({
   width: 1,
   height: 10,
@@ -46,8 +44,6 @@ const StyledDivider = styled('span')(({ theme }) => ({
   },
   '&::after': { bottom: -5, top: 'auto' },
 }));
-
-// ----------------------------------------------------------------------
 
 export function HeaderBase({
   sx,
@@ -89,7 +85,6 @@ export function HeaderBase({
           <>
             {slots?.leftAreaStart}
 
-            {/* -- Menu button -- */}
             {menuButton && (
               <MenuButton
                 data-slot="menu-button"
@@ -102,16 +97,10 @@ export function HeaderBase({
               />
             )}
 
-            {/* -- Logo -- */}
             <Logo data-slot="logo" />
 
-            {/* -- Divider -- */}
             <StyledDivider data-slot="divider" />
 
-            {/* -- Workspace popover -- */}
-            {/* {workspaces && <WorkspacesPopover data-slot="workspaces" data={data?.workspaces} />} */}
-
-            {/* {slots?.leftAreaEnd} */}
           </>
         ),
         rightArea: (
@@ -126,26 +115,7 @@ export function HeaderBase({
                 gap: { xs: 1, sm: 1.5 },
               }}
             >
-              {/* -- Help link -- */}
-              {/* {helpLink && (
-                <Link data-slot="help-link" href={paths.faqs} component={RouterLink} color="inherit" sx={{ typography: 'subtitle2' }}>
-                  Need help?
-                </Link>
-              )} */}
 
-              {/* -- Searchbar -- */}
-              {/* {searchbar && <Searchbar data-slot="searchbar" data={data?.nav} />} */}
-
-              {/* -- Language popover -- */}
-              {/* {localization && <LanguagePopover data-slot="localization" data={data?.langs} />} */}
-
-              {/* -- Notifications popover -- */}
-              {/* {notifications && <NotificationsDrawer data-slot="notifications" data={data?.notifications} sx={{ mr: 0, ml: 1 }} />} */}
-
-              {/* -- Contacts popover -- */}
-              {/* {contacts && <ContactsPopover data-slot="contacts" data={data?.contacts} />} */}
-
-              {/* -- Dark/light mode toggle -- */}
               <IconButton
                 data-slot="color-scheme-toggle"
                 aria-label="Toggle color scheme"
@@ -162,35 +132,10 @@ export function HeaderBase({
                 )}
               </IconButton>
 
-              {/* -- Nav color toggle (integrate / apparent) -- */}
-              {/* {navColorToggle && (
-                <IconButton
-                  data-slot="nav-color-toggle"
-                  aria-label="Toggle sidebar color style"
-                  sx={{ mr: 1 }}
-                  onClick={() => {
-                    const nextNavColor =
-                      settingsCtx.navColor === 'integrate' ? 'apparent' : 'integrate';
-                    settingsCtx.onUpdateField('navColor', nextNavColor);
-                  }}
-                >
-                  <SvgColor
-                    src={`${CONFIG.site.basePath}/assets/icons/setting/ic-sidebar-${settingsCtx.navColor === 'integrate' ? 'outline' : 'filled'}.svg`}
-                    sx={{ width: { xs: 20, sm: 24 }, height: { xs: 20, sm: 24 } }}
-                  />
-                </IconButton>
-              )} */}
-
-              {/* -- Settings button -- */}
-              {/* <Box sx={{ pr: 1.5 }}>{settings && <SettingsButton data-slot="settings" />}</Box> */}
-
-              {/* -- Account drawer -- */}
               {account && <AccountDrawer data-slot="account" data={data?.account} />}
 
-              {/* -- Sign in button -- */}
               {signIn && <SignInButton />}
 
-              {/* -- Purchase button -- */}
               {purchase && (
                 <Button
                   data-slot="purchase"

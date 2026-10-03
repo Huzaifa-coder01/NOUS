@@ -169,15 +169,11 @@ const findByIdAndUpdate = async (userId, permissions) => {
 
 
 const deleteSubAdmin = async (id) => {
-  // Find subadmin first
-
   const subAdmin = await SubAdmin.findById(id);
 
   if (!subAdmin) {
     throw new Error("Sub Admin not found");
   }
-
-  // Update user status to inactive
 
   await User.findByIdAndUpdate(
     { _id: new mongoose.Types.ObjectId(subAdmin.user) },
@@ -188,8 +184,6 @@ const deleteSubAdmin = async (id) => {
     },
     { new: true },
   );
-
-  // Delete subadmin record
 
   return await SubAdmin.findByIdAndDelete(id);
 };

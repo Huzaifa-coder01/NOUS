@@ -1,6 +1,5 @@
-// emailTemplate.js
-const APP_NAME = "CoachCritic App"; // Define the app name as a constant at the top
-const currentYear = new Date().getFullYear(); // Dynamically get the current year
+const APP_NAME = "CoachCritic App";
+const currentYear = new Date().getFullYear();
 
 const OTP_PURPOSE_CONFIG = {
   signup: {
@@ -26,7 +25,6 @@ const OTP_PURPOSE_CONFIG = {
 };
 
 
-// Function to generate Registration link email template
 const registrationViaLinkEmailTemplate = (verificationLink) => `
  <!DOCTYPE html>
 <html>
@@ -163,7 +161,6 @@ const registrationViaOtpEmailTemplate = (otp) => `
 `;
 
 
-// Function to generate Forgot Password Verification Link email template
 const forgotPasswordViaLinkEmailTemplate = (resetLink) => `
 <!DOCTYPE html>
 <html>
@@ -360,16 +357,6 @@ const otpEmailTemplate = ({ otp, title, message }) => `
 `;
 
 
-
-/**
- * Generates an account status email template based on user status.
- * @param {string} status - One of: pending, active, rejected, suspended, deleted
- * @param {string} userName - The user's name
- * @returns {string} - HTML email template
- */
-
-// const html = accountStatusEmailTemplate('active', 'John Doe');
-// then send `html` via your email service
 
 
 const accountStatusEmailTemplate = (status, userName) => {
@@ -674,7 +661,6 @@ const menuOrderConfirmationEmailTemplate = ({
   `;
 };
 
-// Export both functions
 module.exports = {
   registrationViaLinkEmailTemplate,
   registrationViaOtpEmailTemplate,

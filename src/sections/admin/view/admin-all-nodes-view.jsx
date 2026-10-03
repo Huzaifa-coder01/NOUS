@@ -15,14 +15,10 @@ import { Label } from 'src/components/label';
 
 import { EntityList } from '../components/entity-list';
 
-// ----------------------------------------------------------------------
-
-/** A parent relation comes back populated on these list rows. */
 function relation(value) {
   return value && typeof value === 'object' ? value : null;
 }
 
-/** Walks whatever part of the chain a row carries. */
 function chainOf(row) {
   const subject = relation(row.subject ?? row.subjectId);
   const level = relation(row.level ?? row.levelId) ?? relation(subject?.level ?? subject?.levelId);
@@ -75,8 +71,6 @@ const countsColumn = (label, width, fields) => ({
     <Label color="info">{fields.map((field) => contentCount(row, field)).join(' · ')}</Label>
   ),
 });
-
-// ----------------------------------------------------------------------
 
 const CONFIG = {
   level: {
@@ -188,17 +182,6 @@ const CONFIG = {
   },
 };
 
-// ----------------------------------------------------------------------
-
-/**
- * One node type listed across the whole catalog, with the course / level /
- * subject it belongs to. The list endpoints already page, search and filter by
- * status server side, and their rows carry the parent chain, so these screens
- * are the same call the scoped screens make minus the parent filter.
- *
- * Creating is deliberately absent: a new level, subject or chapter needs a
- * parent, so it is added from that parent's page.
- */
 export function AdminAllNodesView({ type }) {
   const navigate = useNavigate();
 

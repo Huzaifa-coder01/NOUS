@@ -3,14 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Dashboard and engagement.
-//
-// The collection does not document the shape `GET /dashboard` returns, so
-// nothing in the UI depends on a particular field - the admin dashboard builds
-// its numbers from the `meta` counters the list endpoints already send.
-// ----------------------------------------------------------------------
-
 export const dashboardApi = createApi({
   reducerPath: 'dashboard',
   baseQuery: createCustomFetchBaseQuery(),

@@ -15,8 +15,6 @@ import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/component
 
 import { AuthProvider } from 'src/auth/context/jwt';
 
-// ----------------------------------------------------------------------
-
 export default function App() {
   return (
     <ReduxProvider store={store}>

@@ -7,8 +7,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { GuestGuard } from 'src/auth/guard';
 
-// ----------------------------------------------------------------------
-
 const SignInPage = lazy(() => import('src/pages/auth/sign-in'));
 const SignUpPage = lazy(() => import('src/pages/auth/sign-up'));
 const VerifyEmailPage = lazy(() => import('src/pages/auth/verify-email'));
@@ -16,9 +14,6 @@ const ForgetPasswordPage = lazy(() => import('src/pages/auth/forget-password'));
 const VerifyPasswordPage = lazy(() => import('src/pages/auth/verify-password'));
 const ResetPasswordPage = lazy(() => import('src/pages/auth/reset-password'));
 
-// ----------------------------------------------------------------------
-
-/** Wraps a page in the split layout, with copy for the decorative half. */
 function withLayout(element, section) {
   return (
     <AuthSplitLayout section={section}>

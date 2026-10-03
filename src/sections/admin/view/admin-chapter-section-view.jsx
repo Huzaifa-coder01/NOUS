@@ -2,15 +2,6 @@ import { idOf } from 'src/constants/nous';
 
 import { AdminDocsView, docLinks } from './admin-docs-view';
 
-// ----------------------------------------------------------------------
-
-/**
- * The syllabus / notes / past papers of one chapter, narrowed to course, level,
- * subject and chapter.
- *
- * A past paper created here carries both `subjectId` and `chapterId`; syllabus
- * and notes only ever need the chapter.
- */
 export function AdminChapterSectionView({ course, level, subject, chapter, section }) {
   const subjectId = idOf(subject);
   const chapterId = idOf(chapter);

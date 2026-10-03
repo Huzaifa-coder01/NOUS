@@ -13,14 +13,6 @@ import {
 } from '../components';
 import { CardsGrid, EmptyState, ListHeading } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Step 4: `GET /chapters?subjectId=`, plus the Past Papers entry.
- *
- * Past Papers here is the subject-wide list (`/past-papers?courseId&levelId&
- * subjectId`), which per the API includes papers tagged to a chapter.
- */
 export function NousSubjectView({ course, level, subject, chapters, error, onRetry }) {
   const papers = contentCount(subject, 'activePastPapers');
 

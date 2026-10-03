@@ -11,8 +11,6 @@ import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { Chart, useChart } from 'src/components/chart';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsWidgetSummary({
   icon,
   title,

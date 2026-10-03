@@ -9,11 +9,8 @@ import { openFile, fileUrlOf, downloadFile, formatFileSize } from 'src/store';
 
 import { DocList as DocListRoot, DocItem, DocButton, EmptyState } from '../styles';
 
-// ----------------------------------------------------------------------
-
 const ICONS = { 'past-paper': '\u{1F4C4}', syllabus: '\u{1F4CB}', note: '\u{1F4DD}' };
 
-/** The uploader is populated on notes; past papers and syllabus are admin owned. */
 function describe(doc) {
   const parts = [];
 
@@ -27,8 +24,6 @@ function describe(doc) {
 
   return parts.join(' \u00b7 ');
 }
-
-// ----------------------------------------------------------------------
 
 function DocRow({ doc }) {
   const [busy, setBusy] = useState(false);
@@ -75,9 +70,6 @@ function DocRow({ doc }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-/** `docs` is whatever the API returned - a student only ever gets active rows. */
 export function DocumentList({ docs, emptyTitle, emptyHint }) {
   if (!docs.length) {
     return (

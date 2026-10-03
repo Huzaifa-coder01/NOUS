@@ -10,8 +10,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { AdminLevelView } from 'src/sections/admin/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   const { course, level, loading, notFound } = useCatalogChain();
 

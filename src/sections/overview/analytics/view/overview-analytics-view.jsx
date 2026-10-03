@@ -31,16 +31,6 @@ import { AnalyticsVisibility } from '../analytics-visibility';
 import { AnalyticsOrderTimeline } from '../analytics-order-timeline';
 import { AnalyticsWebsiteVisits } from '../analytics-website-visits';
 
-// ----------------------------------------------------------------------
-
-/**
- * Every list endpoint returns a `meta.<x>Count` with totalRecord / active /
- * inactive / deleted, so a page-of-one query per resource is enough to build
- * the whole dashboard - no client-side aggregation of the catalog.
- *
- * `GET /dashboard` also exists but its response shape is not documented in the
- * collection, so nothing here depends on it.
- */
 const HEAD = { page: 1, limit: 1 };
 
 const EMPTY = { total: 0, active: 0, inactive: 0, deleted: 0 };
@@ -57,8 +47,6 @@ function sum(...groups) {
   );
 }
 
-// ----------------------------------------------------------------------
-
 export function OverviewAnalyticsView() {
   const theme = useTheme();
 
@@ -74,10 +62,8 @@ export function OverviewAnalyticsView() {
 
   const users = useGetUsersQuery({ page: 1, limit: 5, userType: 'student' });
 
-  /** The newest student uploads - the one thing students can add. */
   const recentNotes = useGetNotesQuery({ page: 1, limit: 6 });
 
-  /** Chapters with nothing published yet, straight from `contentCount`. */
   const emptyChapters = useGetChaptersQuery({ page: 1, limit: 100, status: STATUS.active });
 
   const firstError =

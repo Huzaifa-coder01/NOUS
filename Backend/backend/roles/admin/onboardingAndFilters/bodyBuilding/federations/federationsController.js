@@ -8,10 +8,10 @@ const {
 const getFederations = async (req, res) => {
   const { status } = req.query;
 
-  let filter = { status: { $eq: "active" } }; // Default to active
+  let filter = { status: { $eq: "active" } };
 
   if (req.user && req.user.userType === "admin" && status) {
-    filter.status = status; // Allow admin to filter by status
+    filter.status = status;
   }
 
   try {

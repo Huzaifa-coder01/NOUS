@@ -3,8 +3,6 @@ import TableCell from '@mui/material/TableCell';
 
 import { EmptyContent } from '../empty-content';
 
-// ----------------------------------------------------------------------
-
 export function TableNoData({ notFound, sx }) {
   return (
     <TableRow>

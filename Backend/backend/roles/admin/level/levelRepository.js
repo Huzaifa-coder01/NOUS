@@ -12,7 +12,6 @@ const {
   attachContentCount,
 } = require("../../../shared/courseContent/contentCounts");
 
-// Active subjects of a level, plus the active chapters under those subjects
 const withContentCount = async (levels) => {
   const ids = levels.map((level) => level._id);
 
@@ -49,7 +48,6 @@ const createLevel = async (data) => {
       return { error: "course_not_found" };
     }
 
-    // A child added under a node that is not active starts out inactive too
     if (course.status !== "active") {
       data.status = "inactive";
     }
@@ -132,7 +130,6 @@ const getLevel = async ({
     },
   });
 
-  // A student only sees the levels that sit under an active course
   if (onlyActiveCourse) {
     pipeline.push({
       $match: {
@@ -176,7 +173,6 @@ const getLevel = async ({
   const level = result[0]?.data || [];
   const totalFiltered = result[0]?.totalFiltered?.[0]?.count || 0;
 
-  // Counts stay scoped to the course when the list is filtered by one
   const countFilter = {
     ...(courseId && { course: new mongoose.Types.ObjectId(courseId) }),
   };

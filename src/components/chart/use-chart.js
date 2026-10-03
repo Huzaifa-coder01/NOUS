@@ -2,8 +2,6 @@ import { useTheme } from '@mui/material/styles';
 
 import { varAlpha } from 'src/theme/styles';
 
-// ----------------------------------------------------------------------
-
 export function useChart(options) {
   const theme = useTheme();
 
@@ -24,7 +22,7 @@ export function useChart(options) {
 
   const RESPONSIVE = [
     {
-      breakpoint: theme.breakpoints.values.sm, // sm ~ 600
+      breakpoint: theme.breakpoints.values.sm,
       options: {
         plotOptions: {
           bar: {
@@ -35,7 +33,7 @@ export function useChart(options) {
       },
     },
     {
-      breakpoint: theme.breakpoints.values.md, // md ~ 900
+      breakpoint: theme.breakpoints.values.md,
       options: {
         plotOptions: {
           bar: {
@@ -50,9 +48,6 @@ export function useChart(options) {
   return {
     ...options,
 
-    /** **************************************
-     * Chart
-     *************************************** */
     chart: {
       toolbar: {
         show: false,
@@ -73,9 +68,6 @@ export function useChart(options) {
       },
     },
 
-    /** **************************************
-     * Colors
-     *************************************** */
     colors: options?.colors ?? [
       theme.palette.primary.main,
       theme.palette.warning.main,
@@ -88,9 +80,6 @@ export function useChart(options) {
       theme.palette.info.darker,
     ],
 
-    /** **************************************
-     * States
-     *************************************** */
     states: {
       ...options?.states,
       hover: {
@@ -111,9 +100,6 @@ export function useChart(options) {
       },
     },
 
-    /** **************************************
-     * Fill
-     *************************************** */
     fill: {
       opacity: 1,
       ...options?.fill,
@@ -127,17 +113,11 @@ export function useChart(options) {
       },
     },
 
-    /** **************************************
-     * Data labels
-     *************************************** */
     dataLabels: {
       enabled: false,
       ...options?.dataLabels,
     },
 
-    /** **************************************
-     * Stroke
-     *************************************** */
     stroke: {
       width: 2.5,
       curve: 'smooth',
@@ -145,9 +125,6 @@ export function useChart(options) {
       ...options?.stroke,
     },
 
-    /** **************************************
-     * Grid
-     *************************************** */
     grid: {
       strokeDashArray: 3,
       borderColor: theme.vars.palette.divider,
@@ -166,9 +143,6 @@ export function useChart(options) {
       },
     },
 
-    /** **************************************
-     * Axis
-     *************************************** */
     xaxis: {
       axisBorder: {
         show: false,
@@ -183,18 +157,12 @@ export function useChart(options) {
       ...options?.yaxis,
     },
 
-    /** **************************************
-     * Markers
-     *************************************** */
     markers: {
       size: 0,
       strokeColors: theme.vars.palette.background.paper,
       ...options?.markers,
     },
 
-    /** **************************************
-     * Tooltip
-     *************************************** */
     tooltip: {
       theme: 'false',
       fillSeriesColor: false,
@@ -204,9 +172,6 @@ export function useChart(options) {
       ...options?.tooltip,
     },
 
-    /** **************************************
-     * Legend
-     *************************************** */
     legend: {
       show: false,
       position: 'top',
@@ -225,12 +190,8 @@ export function useChart(options) {
       },
     },
 
-    /** **************************************
-     * plotOptions
-     *************************************** */
     plotOptions: {
       ...options?.plotOptions,
-      // plotOptions: Bar
       bar: {
         borderRadius: 4,
         columnWidth: '48%',
@@ -238,7 +199,6 @@ export function useChart(options) {
         ...options?.plotOptions?.bar,
       },
 
-      // plotOptions: Pie + Donut
       pie: {
         ...options?.plotOptions?.pie,
         donut: {
@@ -258,7 +218,6 @@ export function useChart(options) {
         },
       },
 
-      // plotOptions: Radialbar
       radialBar: {
         ...options?.plotOptions?.radialBar,
         hollow: {
@@ -285,7 +244,6 @@ export function useChart(options) {
         },
       },
 
-      // plotOptions: Radar
       radar: {
         ...options?.plotOptions?.radar,
         polygons: {
@@ -298,7 +256,6 @@ export function useChart(options) {
         },
       },
 
-      // plotOptions: polarArea
       polarArea: {
         rings: {
           strokeColor: theme.vars.palette.divider,
@@ -309,16 +266,12 @@ export function useChart(options) {
         ...options?.plotOptions?.polarArea,
       },
 
-      // plotOptions: heatmap
       heatmap: {
         distributed: true,
         ...options?.plotOptions?.heatmap,
       },
     },
 
-    /** **************************************
-     * Responsive
-     *************************************** */
     responsive: RESPONSIVE.reduce((acc, cur) => {
       if (!acc.some((item) => item.breakpoint === cur.breakpoint)) {
         acc.push(cur);

@@ -3,12 +3,6 @@ import { useState, useCallback } from 'react';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-// ----------------------------------------------------------------------
-
-/**
- * Small feedback helper for the admin screens.
- * Returns `showToast(message, severity)` plus the node to render once per page.
- */
 export function useToast() {
   const [toast, setToast] = useState(null);
 

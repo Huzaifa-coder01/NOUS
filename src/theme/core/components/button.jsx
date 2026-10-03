@@ -16,16 +16,9 @@ function styleColors(ownerState, styles) {
   return outputStyle;
 }
 
-// ----------------------------------------------------------------------
-
 const MuiButtonBase = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: { root: ({ theme }) => ({ fontFamily: theme.typography.fontFamily }) },
 };
-
-// ----------------------------------------------------------------------
 
 const softVariant = {
   colors: COLORS.map((color) => ({
@@ -59,28 +52,13 @@ const softVariant = {
 };
 
 const MuiButton = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { color: 'inherit', disableElevation: true },
 
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @variant soft
-     */
     ...[...softVariant.base, ...softVariant.colors],
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
-    /**
-     * @variant contained
-     */
     contained: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -105,9 +83,6 @@ const MuiButton = {
       };
       return { ...styled.inheritColor, ...styled.colors };
     },
-    /**
-     * @variant outlined
-     */
     outlined: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
@@ -126,9 +101,6 @@ const MuiButton = {
       };
       return { ...styled.base, ...styled.inheritColor, ...styled.colors };
     },
-    /**
-     * @variant text
-     */
     text: ({ ownerState, theme }) => {
       const styled = {
         inheritColor: {
@@ -140,9 +112,6 @@ const MuiButton = {
       };
       return { ...styled.inheritColor };
     },
-    /**
-     * @size
-     */
     sizeSmall: ({ ownerState }) => ({
       height: 30,
       ...(ownerState.variant === 'text'
@@ -162,7 +131,5 @@ const MuiButton = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const button = { MuiButtonBase, MuiButton };

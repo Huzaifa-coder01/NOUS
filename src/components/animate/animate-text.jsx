@@ -6,8 +6,6 @@ import Typography from '@mui/material/Typography';
 
 import { varFade, varContainer } from './variants';
 
-// ----------------------------------------------------------------------
-
 export const animateTextClasses = {
   root: 'animate-text-root',
   lines: 'animate-text-lines',
@@ -26,7 +24,7 @@ export function AnimateText({
   once = true,
   amount = 1 / 3,
   component = 'p',
-  repeatDelay = 500, // 1000 = 1s
+  repeatDelay = 500,
   ...other
 }) {
   const ref = useRef(null);
@@ -67,10 +65,6 @@ export function AnimateText({
       sx={{
         p: 0,
         m: 0,
-        /**
-         * Utilities for improving accessibility with screen readers.
-         * https://v1.tailwindcss.com/docs/screen-readers
-         */
         [`& .${animateTextClasses.srOnly}`]: {
           p: 0,
           width: '1px',

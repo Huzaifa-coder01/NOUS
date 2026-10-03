@@ -16,8 +16,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { MAX_FILE_SIZE, formatFileSize } from 'src/store';
 
-// ----------------------------------------------------------------------
-
 const MAX_MB = Math.round(MAX_FILE_SIZE / (1024 * 1024));
 
 function FilePickerField({ field, value, error, onChange }) {
@@ -47,13 +45,6 @@ function FilePickerField({ field, value, error, onChange }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-/**
- * Generic create/edit dialog driven by a field config:
- * `[{ name, label, type?: 'text' | 'number' | 'select' | 'multiline' | 'file',
- *     options?, required?, helperText? }]`
- */
 export function EntityDialog({
   open,
   title,
@@ -98,7 +89,6 @@ export function EntityDialog({
 
     setValues((prev) => ({ ...prev, [field.name]: file }));
 
-    // the file name is the obvious default title
     if (file && !String(values.name ?? '').trim()) {
       setValues((prev) => ({ ...prev, name: file.name.replace(/\.pdf$/i, '') }));
     }

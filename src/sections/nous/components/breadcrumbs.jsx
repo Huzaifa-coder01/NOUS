@@ -2,9 +2,6 @@ import { RouterLink } from 'src/routes/components';
 
 import { Crumbs } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/** `links` is `[{ name, href? }]`; the last entry renders as the current page. */
 export function Breadcrumbs({ links }) {
   return (
     <Crumbs aria-label="Breadcrumb">

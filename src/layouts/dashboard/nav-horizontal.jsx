@@ -5,8 +5,6 @@ import { varAlpha } from 'src/theme/styles';
 
 import { NavSectionHorizontal } from 'src/components/nav-section';
 
-// ----------------------------------------------------------------------
-
 export function NavHorizontal({ data, layoutQuery, sx, ...other }) {
   return (
     <Box

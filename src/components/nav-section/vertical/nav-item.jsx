@@ -12,8 +12,6 @@ import { Iconify } from '../../iconify';
 import { navSectionClasses } from '../classes';
 import { stateClasses, sharedStyles } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export const NavItem = forwardRef(
   (
     {
@@ -22,7 +20,6 @@ export const NavItem = forwardRef(
       info,
       title,
       caption,
-      //
       open,
       depth,
       render,
@@ -107,8 +104,6 @@ export const NavItem = forwardRef(
   }
 );
 
-// ----------------------------------------------------------------------
-
 const StyledNavItem = styled(ButtonBase, {
   shouldForwardProp: (prop) =>
     prop !== 'active' && prop !== 'open' && prop !== 'disabled' && prop !== 'depth',
@@ -157,9 +152,6 @@ const StyledNavItem = styled(ButtonBase, {
   };
 
   return {
-    /**
-     * Root item
-     */
     ...(rootItem && {
       ...baseStyles.item,
       minHeight: 'var(--nav-item-root-height)',
@@ -169,7 +161,6 @@ const StyledNavItem = styled(ButtonBase, {
       [`& .${navSectionClasses.item.caption}`]: { ...baseStyles.caption },
       [`& .${navSectionClasses.item.arrow}`]: { ...baseStyles.arrow },
       [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
-      // State
       ...(active && {
         color: 'var(--nav-item-root-active-color)',
         backgroundColor: 'var(--nav-item-root-active-bg)',
@@ -185,9 +176,6 @@ const StyledNavItem = styled(ButtonBase, {
         backgroundColor: 'var(--nav-item-root-open-bg)',
       }),
     }),
-    /**
-     * Sub item
-     */
     ...(subItem && {
       ...baseStyles.item,
       minHeight: 'var(--nav-item-sub-height)',
@@ -197,7 +185,6 @@ const StyledNavItem = styled(ButtonBase, {
       [`& .${navSectionClasses.item.caption}`]: { ...baseStyles.caption },
       [`& .${navSectionClasses.item.arrow}`]: { ...baseStyles.arrow },
       [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
-      // Shape
       '&::before': {
         left: 0,
         content: '""',
@@ -213,7 +200,6 @@ const StyledNavItem = styled(ButtonBase, {
           backgroundColor: 'var(--nav-bullet-dark-color)',
         },
       },
-      // State
       ...(active && {
         color: 'var(--nav-item-sub-active-color)',
         backgroundColor: 'var(--nav-item-sub-active-bg)',
@@ -223,9 +209,6 @@ const StyledNavItem = styled(ButtonBase, {
         backgroundColor: 'var(--nav-item-sub-open-bg)',
       }),
     }),
-    /**
-     * Disabled
-     */
     ...(disabled && sharedStyles.disabled),
   };
 });

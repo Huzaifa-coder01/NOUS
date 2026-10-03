@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { AdminSettingsView } from 'src/sections/admin/view';
 
-// ----------------------------------------------------------------------
-
 const metadata = { title: `Settings - ${CONFIG.site.name}` };
 
 export default function Page() {

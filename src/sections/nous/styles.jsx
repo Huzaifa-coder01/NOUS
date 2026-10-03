@@ -4,20 +4,10 @@ import { RouterLink } from 'src/routes/components';
 
 import { NOUS_FONT, NOUS_COLORS } from 'src/theme/palette';
 
-/**
- * The student site. It keeps the original NOUS structure and palette
- * (dark header, white cards on #f5f7fb, blue accents) with a lighter coat of
- * polish: a gradient hero, softer shadows, accent-tinted icons and hover states.
- */
-
 const MOBILE = '@media (max-width: 700px)';
 
 const SHADOW_SOFT = '0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06)';
 const SHADOW_LIFT = '0 12px 32px rgba(16, 24, 40, 0.10)';
-
-// ----------------------------------------------------------------------
-// Shell
-// ----------------------------------------------------------------------
 
 export const AppRoot = styled('div')({
   minHeight: '100%',
@@ -75,10 +65,6 @@ export const AppFooter = styled('footer')({
   borderTop: `1px solid ${NOUS_COLORS.border}`,
 });
 
-// ----------------------------------------------------------------------
-// Hero + page title
-// ----------------------------------------------------------------------
-
 export const Hero = styled('div')({
   position: 'relative',
   overflow: 'hidden',
@@ -97,7 +83,6 @@ export const Hero = styled('div')({
     [MOBILE]: { fontSize: 25 },
   },
   '& p': { margin: 0, color: 'rgba(255, 255, 255, 0.82)', fontSize: 15, maxWidth: 560 },
-  // decorative rings, echoing the sign-in artwork
   '&::before, &::after': {
     content: '""',
     position: 'absolute',
@@ -136,10 +121,6 @@ export const PageTitleRoot = styled('div')({
   '& p': { color: NOUS_COLORS.textMuted, margin: 0, fontSize: 15 },
 });
 
-// ----------------------------------------------------------------------
-// Breadcrumbs
-// ----------------------------------------------------------------------
-
 export const Crumbs = styled('nav')({
   display: 'flex',
   flexWrap: 'wrap',
@@ -156,10 +137,6 @@ export const Crumbs = styled('nav')({
   '& .sep': { color: '#cbd5e1' },
   '& .current': { color: NOUS_COLORS.text, fontWeight: 'bold' },
 });
-
-// ----------------------------------------------------------------------
-// Cards
-// ----------------------------------------------------------------------
 
 export const CardsGrid = styled('div')({
   display: 'grid',
@@ -184,12 +161,10 @@ const cardBase = {
   '& p': { color: NOUS_COLORS.textMuted, fontSize: 14, margin: 0, lineHeight: 1.5 },
 };
 
-/** Clickable card (program / level / subject). */
 export const NavCard = styled(RouterLink, {
   shouldForwardProp: (prop) => prop !== 'accent',
 })(({ accent }) => ({
   ...cardBase,
-  // a thin accent rail that fills in on hover
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -209,7 +184,6 @@ export const NavCard = styled(RouterLink, {
   '&:hover::before': { opacity: 1 },
 }));
 
-/** Same card, non interactive - used for the resource content panel. */
 export const StaticCard = styled('div')({
   ...cardBase,
   cursor: 'default',
@@ -244,10 +218,6 @@ export const CardMeta = styled('div')({
   '& .go': { color: NOUS_COLORS.accent, fontWeight: 'bold' },
 });
 
-// ----------------------------------------------------------------------
-// Back button
-// ----------------------------------------------------------------------
-
 export const BackButtonRoot = styled('button')({
   fontFamily: NOUS_FONT,
   fontSize: 14,
@@ -265,10 +235,6 @@ export const BackButtonRoot = styled('button')({
   transition: 'background .2s ease, border-color .2s ease',
   '&:hover': { background: NOUS_COLORS.rowHover, borderColor: NOUS_COLORS.borderHover },
 });
-
-// ----------------------------------------------------------------------
-// Chapters
-// ----------------------------------------------------------------------
 
 export const ChapterCardRoot = styled(RouterLink)({
   background: NOUS_COLORS.paper,
@@ -307,10 +273,6 @@ export const ChapterCardRoot = styled(RouterLink)({
   '& strong': { fontWeight: 'bold', display: 'block', marginTop: 2 },
   '& .chapter-go': { color: NOUS_COLORS.textMuted, fontSize: 18 },
 });
-
-// ----------------------------------------------------------------------
-// Resources
-// ----------------------------------------------------------------------
 
 export const ResourcesGrid = styled('div')({
   display: 'grid',
@@ -363,10 +325,6 @@ export const ResourceCardRoot = styled(RouterLink, {
   },
 }));
 
-// ----------------------------------------------------------------------
-// Header account area
-// ----------------------------------------------------------------------
-
 export const HeaderActions = styled('div')({
   display: 'flex',
   alignItems: 'center',
@@ -417,7 +375,6 @@ export const Avatar = styled('span')({
   overflow: 'hidden',
   flexShrink: 0,
   background: `linear-gradient(135deg, ${NOUS_COLORS.accent} 0%, ${NOUS_COLORS.accentLight} 100%)`,
-  // a profile picture fills the circle; without one the initial shows through
   '& img': { width: '100%', height: '100%', objectFit: 'cover', display: 'block' },
 });
 
@@ -426,10 +383,6 @@ export const HeaderText = styled('span')({
   color: 'rgba(255, 255, 255, 0.85)',
   [MOBILE]: { display: 'none' },
 });
-
-// ----------------------------------------------------------------------
-// Documents (past papers / syllabus / notes)
-// ----------------------------------------------------------------------
 
 export const DocList = styled('div')({
   display: 'flex',
@@ -505,10 +458,6 @@ export const EmptyState = styled('div')({
   fontSize: 14,
   '& strong': { display: 'block', color: NOUS_COLORS.text, fontSize: 16, marginBottom: 6 },
 });
-
-// ----------------------------------------------------------------------
-// Notes upload (the only thing a student may add)
-// ----------------------------------------------------------------------
 
 export const UploadCard = styled('form')({
   background: NOUS_COLORS.paper,

@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 
-/**
- * Counts of the active content sitting under a course / level / subject.
- * Every helper takes the ids of one page of parents and returns a plain
- * object keyed by parent id, so a list needs one extra query per depth.
- */
-
 const toObjectIds = (ids) =>
   ids
     .filter((id) => mongoose.Types.ObjectId.isValid(id))
@@ -17,10 +11,6 @@ const rowsToMap = (rows) =>
     return acc;
   }, {});
 
-/**
- * Active direct children per parent, e.g. active levels of a course.
- * extraMatch narrows the children further, e.g. { type: "syllabus" } for PDFs.
- */
 const activeChildCounts = async (
   childModel,
   parentField,
@@ -49,11 +39,6 @@ const activeChildCounts = async (
   return rowsToMap(rows);
 };
 
-/**
- * Active grandchildren per parent, e.g. active subjects of a course.
- * Walks down from the middle model so it can use its indexed parent field,
- * and skips anything hanging under a deleted middle record.
- */
 const activeGrandchildCounts = async (
   middleModel,
   middleParentField,
@@ -106,9 +91,6 @@ const activeGrandchildCounts = async (
   return rowsToMap(rows);
 };
 
-/**
- * Hangs a contentCount object on each record, defaulting every count to 0.
- */
 const attachContentCount = (records, countMaps) => {
   return records.map((record) => {
     const contentCount = {};

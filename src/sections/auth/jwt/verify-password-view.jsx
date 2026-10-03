@@ -17,8 +17,6 @@ import { Form, Field } from 'src/components/hook-form';
 
 import { getPendingReset, verifyResetCode } from 'src/auth/context/jwt';
 
-// ----------------------------------------------------------------------
-
 export const OtpVerifySchema = zod.object({
   otp: zod
     .string()
@@ -26,14 +24,11 @@ export const OtpVerifySchema = zod.object({
     .max(6, { message: 'OTP must be 4-6 digits!' }),
 });
 
-// ----------------------------------------------------------------------
-
 export function JwtVerifyPasswordView() {
   const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState('');
 
-  // on localhost the backend returns the OTP in the response body
   const pending = getPendingReset();
 
   const methods = useForm({

@@ -1,5 +1,3 @@
-// dashboardKeyMap.js
-
 const DASHBOARD_KEYS = {
   totalCoaches: {
     title: "Total Coaches",

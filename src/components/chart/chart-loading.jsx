@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 
-// ----------------------------------------------------------------------
-
 export function ChartLoading({ sx, type, ...other }) {
   const circularTypes = ['donut', 'radialBar', 'pie', 'polarArea'];
 

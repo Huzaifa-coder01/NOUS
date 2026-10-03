@@ -6,9 +6,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { useAuthContext } from '../hooks';
 
-// ----------------------------------------------------------------------
-
-/** Requires a valid session; bounces to sign in and remembers where to return. */
 export function AuthGuard({ children }) {
   const { loading, authenticated } = useAuthContext();
 

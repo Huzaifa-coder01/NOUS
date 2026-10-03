@@ -16,8 +16,6 @@ const colorByName = (name) => {
   return 'default';
 };
 
-// ----------------------------------------------------------------------
-
 const avatarColors = {
   colors: COLORS.map((color) => ({
     props: ({ ownerState }) => ownerState.color === color,
@@ -38,14 +36,8 @@ const avatarColors = {
 };
 
 const MuiAvatar = {
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [...[...avatarColors.defaultColor, ...avatarColors.colors]],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     rounded: ({ theme }) => ({ borderRadius: theme.shape.borderRadius * 1.5 }),
     colorDefault: ({ ownerState, theme }) => {
@@ -68,17 +60,9 @@ const MuiAvatar = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiAvatarGroup = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { max: 4 },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ ownerState }) => ({
       justifyContent: 'flex-end',
@@ -107,7 +91,5 @@ const MuiAvatarGroup = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const avatar = { MuiAvatar, MuiAvatarGroup };

@@ -7,8 +7,6 @@ import { CONFIG } from 'src/config-global';
 import { Block } from './styles';
 import { SvgColor } from '../../svg-color';
 
-// ----------------------------------------------------------------------
-
 export function PresetsOptions({ value, options, onClickOption }) {
   return (
     <Block title="Presets">

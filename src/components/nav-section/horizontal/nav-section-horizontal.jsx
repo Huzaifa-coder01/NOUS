@@ -7,8 +7,6 @@ import { Scrollbar } from '../../scrollbar';
 import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 
-// ----------------------------------------------------------------------
-
 export function NavSectionHorizontal({
   sx,
   data,
@@ -60,8 +58,6 @@ export function NavSectionHorizontal({
     </Scrollbar>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function Group({ items, render, slotProps, enabledRootRedirect, cssVars }) {
   return (

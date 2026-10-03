@@ -6,8 +6,6 @@ import { varAlpha } from 'src/theme/styles';
 
 import { toasterClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export const StyledToaster = styled(Toaster)(({ theme }) => {
   const baseStyles = {
     toastDefault: {
@@ -64,9 +62,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
       borderRadius: 12,
       alignItems: 'center',
     },
-    /*
-     * Content
-     */
     [`& .${toasterClasses.content}`]: {
       gap: 0,
       flex: '1 1 auto',
@@ -78,9 +73,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
       ...theme.typography.caption,
       opacity: 0.64,
     },
-    /*
-     * Buttons
-     */
     [`& .${toasterClasses.actionButton}`]: {},
     [`& .${toasterClasses.cancelButton}`]: {},
     [`& .${toasterClasses.closeButton}`]: {
@@ -97,9 +89,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
         backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
       },
     },
-    /*
-     * Icon
-     */
     [`& .${toasterClasses.icon}`]: {
       margin: 0,
       width: 48,
@@ -115,9 +104,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
       },
     },
 
-    /*
-     * Default
-     */
     '@keyframes rotate': { to: { transform: 'rotate(1turn)' } },
 
     [`& .${toasterClasses.default}`]: {
@@ -128,15 +114,9 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
         },
       },
       [`&:has(.${toasterClasses.loader})`]: baseStyles.toastLoader,
-      /*
-       * With loader
-       */
       [`&:has(.${toasterClasses.loader})`]: baseStyles.toastLoader,
       [`& .${toasterClasses.loader}`]: loadingStyles,
     },
-    /*
-     * Error
-     */
     [`& .${toasterClasses.error}`]: {
       ...baseStyles.toastColor,
       [`& .${toasterClasses.icon}`]: {
@@ -144,9 +124,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
         backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
       },
     },
-    /*
-     * Success
-     */
     [`& .${toasterClasses.success}`]: {
       ...baseStyles.toastColor,
       [`& .${toasterClasses.icon}`]: {
@@ -154,9 +131,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
         backgroundColor: varAlpha(theme.vars.palette.success.mainChannel, 0.08),
       },
     },
-    /*
-     * Warning
-     */
     [`& .${toasterClasses.warning}`]: {
       ...baseStyles.toastColor,
       [`& .${toasterClasses.icon}`]: {
@@ -164,9 +138,6 @@ export const StyledToaster = styled(Toaster)(({ theme }) => {
         backgroundColor: varAlpha(theme.vars.palette.warning.mainChannel, 0.08),
       },
     },
-    /*
-     * Info
-     */
     [`& .${toasterClasses.info}`]: {
       ...baseStyles.toastColor,
       [`& .${toasterClasses.icon}`]: {

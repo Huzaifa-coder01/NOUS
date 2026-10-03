@@ -15,8 +15,6 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsTasks({ title, subheader, list, ...other }) {
   const [selected, setSelected] = useState(['2']);
 

@@ -4,7 +4,6 @@ const updateBookingStatuses = async () => {
   try {
     const now = new Date();
 
-    // 1️ Complete ongoing bookings that have ended
     const completedBookingIds = await Bookings.find({
       bookingStatus: "ongoing",
       bookingEndDate: { $lte: now },
@@ -17,7 +16,6 @@ const updateBookingStatuses = async () => {
       );
     }
 
-    // 2️ Expire bookings that are not already finalized
     const expireBookingIds = await Bookings.find({
       bookingStatus: {
         $nin: [

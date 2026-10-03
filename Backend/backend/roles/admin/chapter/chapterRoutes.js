@@ -14,14 +14,10 @@ const router = express.Router();
 
 router.use(auth);
 
-// Create a rate limiter for Chapters
 const ChapterRateLimiter = createRateLimiter("Chapter");
 
-// Routes for Chapter Management
-// Create a new Chapter
 router.post("/", roleMiddleware(["admin"]), ChapterRateLimiter, createChapter);
 
-// Get all Chapters with pagination
 router.get(
   "/",
   roleMiddleware(["admin", "student"]),
@@ -29,7 +25,6 @@ router.get(
   getChapter,
 );
 
-// Get a specific Chapter by ID
 router.get(
   "/:id",
   roleMiddleware(["admin", "student"]),
@@ -37,10 +32,8 @@ router.get(
   getChapterDetails,
 );
 
-// Update an existing Chapter
 router.put("/:id", roleMiddleware(["admin"]), updateChapter);
 
-// Delete a Chapter
 router.delete("/:id", roleMiddleware(["admin"]), deleteChapter);
 
 module.exports = router;

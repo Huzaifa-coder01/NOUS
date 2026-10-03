@@ -37,7 +37,7 @@ const usersOnboardingResponses = new mongoose.Schema(
       type: LocationSchema,
       default: {
         type: "Point",
-        coordinates: [0, 0], // VALID but meaningless
+        coordinates: [0, 0],
       },
     },
 
@@ -167,7 +167,6 @@ const usersOnboardingResponses = new mongoose.Schema(
         ref: "athleteTypes",
       },
     ],
-    //check onboarding completed
     isOnboardingCompleted: {
       type: Boolean,
       default: false,
@@ -176,7 +175,6 @@ const usersOnboardingResponses = new mongoose.Schema(
   { timestamps: true }
 );
 
-//here users means Athletes
 const UsersOnboardingResponsesModel = mongoose.model("usersOnboardingResponses", usersOnboardingResponses);
 
 module.exports = UsersOnboardingResponsesModel;

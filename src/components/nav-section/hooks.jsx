@@ -2,8 +2,6 @@ import { cloneElement } from 'react';
 
 import { RouterLink } from 'src/routes/components';
 
-// ----------------------------------------------------------------------
-
 export function useNavItem({
   path,
   icon,
@@ -26,9 +24,6 @@ export function useNavItem({
 
   const baseProps = hasChild && !enabledRootRedirect ? { component: 'div' } : linkProps;
 
-  /**
-   * Render @icon
-   */
   let renderIcon = null;
 
   if (icon && render?.navIcon && typeof icon === 'string') {
@@ -37,9 +32,6 @@ export function useNavItem({
     renderIcon = icon;
   }
 
-  /**
-   * Render @info
-   */
   let renderInfo = null;
 
   if (info && render?.navInfo && Array.isArray(info)) {

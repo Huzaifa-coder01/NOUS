@@ -3,8 +3,6 @@ import { useTheme } from '@mui/material/styles';
 
 import { layoutClasses } from 'src/layouts/classes';
 
-// ----------------------------------------------------------------------
-
 export function Main({ sx, children, layoutQuery, ...other }) {
   const theme = useTheme();
 
@@ -27,8 +25,6 @@ export function Main({ sx, children, layoutQuery, ...other }) {
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function Content({ sx, children, layoutQuery, ...other }) {
   const theme = useTheme();

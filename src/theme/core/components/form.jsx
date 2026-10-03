@@ -1,11 +1,6 @@
 import { inputLabelClasses } from '@mui/material/InputLabel';
 
-// ----------------------------------------------------------------------
-
 const MuiFormLabel = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       ...theme.typography.body2,
@@ -23,29 +18,14 @@ const MuiFormLabel = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiFormHelperText = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { component: 'div' },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: { root: ({ theme }) => ({ marginTop: theme.spacing(1) }) },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiFormControlLabel = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: { label: ({ theme }) => ({ ...theme.typography.body2 }) },
 };
-
-// ----------------------------------------------------------------------
 
 export const form = { MuiFormLabel, MuiFormHelperText, MuiFormControlLabel };

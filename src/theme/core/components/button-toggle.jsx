@@ -2,8 +2,6 @@ import { toggleButtonClasses } from '@mui/material/ToggleButton';
 
 import { varAlpha } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 
 function styleColors(ownerState, styles) {
@@ -17,12 +15,7 @@ function styleColors(ownerState, styles) {
   return outputStyle;
 }
 
-// ----------------------------------------------------------------------
-
 const MuiToggleButton = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme, ownerState }) => {
       const styled = {
@@ -57,12 +50,7 @@ const MuiToggleButton = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiToggleButtonGroup = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       gap: 4,
@@ -75,7 +63,5 @@ const MuiToggleButtonGroup = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const toggleButton = { MuiToggleButton, MuiToggleButtonGroup };

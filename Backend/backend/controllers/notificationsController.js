@@ -77,7 +77,6 @@ const getNotifications = async (req, res) => {
 
 
 
-// Mark a notification as read by ID
 const readNotification = async (req, res) => {
   try {
     const notification = await NotificationExp.findByIdAndUpdate(
@@ -89,13 +88,13 @@ const readNotification = async (req, res) => {
       return sendResponse({
         res,
         statusCode: 404,
-        translationKey: "notification_not_found", // Use translation key
+        translationKey: "notification_not_found",
       });
     }
     return sendResponse({
       res,
       statusCode: 200,
-      translationKey: "notification_marked_read_success", // Use translation key
+      translationKey: "notification_marked_read_success",
       data: notification,
     });
   } catch (error) {
@@ -103,7 +102,7 @@ const readNotification = async (req, res) => {
     return sendResponse({
       res,
       statusCode: 500,
-      translationKey: "notification_mark_read_error", // Use translation key
+      translationKey: "notification_mark_read_error",
       error,
     });
   }

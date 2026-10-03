@@ -1,5 +1,3 @@
-
-
 const { validateParams, sendResponse, getReadableErrorMessage } = require("../helperUtils/responseUtil");
 const { formatUserResponse } = require("../helperUtils/userResponseUtil");
 const { createOrSkipDevice } = require("../models/Devices");
@@ -10,11 +8,10 @@ const { registrationViaLinkEmailTemplate, registrationViaOtpEmailTemplate } = re
 const { defaultSetNotificationPreferences } = require("./notificationPreferencesController");
 
 
-// Main utility function
 const registerUserUtility = async (req, res, options = {}) => {
   const {
-    autoVerify = false, // true if created by admin, false if app user
-    allowAdminCreation = true, // 🔒 internal only
+    autoVerify = false,
+    allowAdminCreation = true,
 
   } = options;
 
@@ -34,8 +31,6 @@ const registerUserUtility = async (req, res, options = {}) => {
     location,
   } = req.body;
 
-  // The account only becomes active once the email is verified,
-  // admin created accounts (autoVerify) are active right away.
   const accountStatus = autoVerify ? "active" : "pending";
 
   try {
@@ -43,7 +38,6 @@ const registerUserUtility = async (req, res, options = {}) => {
     let objectIdFields = [];
     let dateFields = {};
 
-    // Only the user types the app supports, admin is internal only
     const allowedUserTypes = USER_TYPES.filter((type) => type !== "admin");
 
     if (options.allowAdminCreation) {
@@ -63,10 +57,9 @@ const registerUserUtility = async (req, res, options = {}) => {
     };
 
     if (!validateParams(req, res, validationOptions)) {
-      return { responseSent: true }; // Mark that response is already sent
+      return { responseSent: true };
     }
 
-    // Validate profile icon
     if (profileIcon && profileIcon.startsWith("http")) {
       sendResponse({
         res,
@@ -78,7 +71,6 @@ const registerUserUtility = async (req, res, options = {}) => {
       return { responseSent: true };
     }
 
-    // Admin token check for guest creation
     if (userType === "guest") {
       const adminToken = req.header("x-admin-access-token");
       if (adminToken !== process.env.ADMIN_ACCESS_TOKEN) {
@@ -92,7 +84,6 @@ const registerUserUtility = async (req, res, options = {}) => {
       }
     }
 
-    // 🔒 ADMIN CAN ONLY BE CREATED INTERNALLY
     if (req.body.userType === "admin") {
       const adminToken = req.header("x-admin-access-token");
       if (
@@ -110,7 +101,6 @@ const registerUserUtility = async (req, res, options = {}) => {
     }
 
 
-    // Check if email exists
     const existingUser = await User.findOne({ email: email.trim().toLowerCase() });
     if (existingUser && existingUser.verificationStatus.email === "verified") {
       sendResponse({
@@ -121,7 +111,6 @@ const registerUserUtility = async (req, res, options = {}) => {
       return { responseSent: true };
     }
 
-    // Validate phone number
     if (phoneNumber) {
       if (
         typeof phoneNumber !== "object" ||
@@ -148,7 +137,6 @@ const registerUserUtility = async (req, res, options = {}) => {
       }
     }
 
-    // Every user type lives on the single User model
     let user = existingUser || new User();
 
     Object.assign(user, {
@@ -169,10 +157,8 @@ const registerUserUtility = async (req, res, options = {}) => {
       },
     });
 
-    // Generate email verification token if not auto-verified
     let emailVerificationLink = null;
     if (!autoVerify) {
-      //send otp
       const otp = user.generateOtp("email", user.timezone);
       const mBody = registrationViaOtpEmailTemplate(otp);
       await sendEmailViaBrevo([user.email], "Email Verification", mBody);
@@ -183,7 +169,6 @@ const registerUserUtility = async (req, res, options = {}) => {
     defaultSetNotificationPreferences(user._id);
 
 
-    // Optional device handling
     if (deviceId && deviceType && deviceId !== "test") {
       createOrSkipDevice(user._id, deviceId, deviceType);
     }

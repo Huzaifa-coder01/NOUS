@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { BackButtonRoot } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function BackButton({ href }) {
   const navigate = useNavigate();
 

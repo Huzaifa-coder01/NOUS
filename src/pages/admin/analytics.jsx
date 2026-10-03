@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { OverviewAnalyticsView } from 'src/sections/overview/analytics/view';
 
-// ----------------------------------------------------------------------
-
 const metadata = { title: `Analytics - ${CONFIG.site.name}` };
 
 export default function Page() {

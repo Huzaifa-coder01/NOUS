@@ -1,4 +1,3 @@
-// controllers/supportController.js
 const SupportRequest = require("@SupportRequestModel");
 const {
   sendResponse,
@@ -85,7 +84,7 @@ const getSupportRequest = async (req, res) => {
   }
 };
 const deleteSupportRequest = async (req, res) => {
-  const { id } = req.params; // Assume the ID of the support request is passed as a URL parameter
+  const { id } = req.params;
 
   if (!id) {
     return sendResponse({
@@ -126,7 +125,7 @@ const deleteSupportRequest = async (req, res) => {
   }
 };
 const updateSupportRequest = async (req, res) => {
-  const { id } = req.params; // Assume the ID of the support request is passed as a URL parameter
+  const { id } = req.params;
   const { response, status = "closed" } = req.body;
   if (!id) {
     return sendResponse({

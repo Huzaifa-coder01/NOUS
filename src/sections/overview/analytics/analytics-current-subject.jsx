@@ -5,8 +5,6 @@ import CardHeader from '@mui/material/CardHeader';
 
 import { Chart, useChart, ChartLegends } from 'src/components/chart';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsCurrentSubject({ title, subheader, chart, ...other }) {
   const theme = useTheme();
 
