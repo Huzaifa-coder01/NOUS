@@ -36,7 +36,7 @@ const getUsersOnboardingResponseById = async (req, res) => {
                 translationKey: "users_onboarding_response_not_found",
             });
         }
-        response.name = name; // Include user name in the response
+        response.name = name;
 
         return sendResponse({
             res,
@@ -54,7 +54,6 @@ const getUsersOnboardingResponseById = async (req, res) => {
     }
 };
 
-// Upsert route: create or update by user
 const upsertUsersOnboardingResponse = async (req, res) => {
     try {
         if (!req.body || Object.keys(req.body).length === 0) {
@@ -66,7 +65,6 @@ const upsertUsersOnboardingResponse = async (req, res) => {
         }
         let { _id: userId } = req.user || {};
         req.body.user = userId;
-        // Upsert by user
         const saved = await usersOnboardingResponsesService.upsertUsersOnboardingResponseByUser(userId, req.body);
         return sendResponse({
             res,

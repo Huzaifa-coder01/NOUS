@@ -21,7 +21,7 @@ const DevicesSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    devices: [DeviceSchema], // Array of device objects
+    devices: [DeviceSchema],
   },
   {
     timestamps: true,
@@ -30,7 +30,6 @@ const DevicesSchema = mongoose.Schema(
 
 const Devices = mongoose.model("device", DevicesSchema);
 
-// Function to add a device after checking for duplicate deviceId
 function createOrSkipDevice(userId, deviceId, deviceType) {
   setImmediate(async () => {
     try {
@@ -41,14 +40,13 @@ function createOrSkipDevice(userId, deviceId, deviceType) {
       });
 
       if (userDevice) {
-        return; // Device already exists, so skip adding it
+        return;
       }
 
-      // If the deviceId doesn't exist, push the new device into the array
       await Devices.updateOne(
-        { userId: userId }, // Find the user by userId
-        { $push: { devices: { deviceId: deviceId, deviceType: deviceType } } }, // Add the new device
-        { upsert: true } // Use upsert to create a new user document if not found
+        { userId: userId },
+        { $push: { devices: { deviceId: deviceId, deviceType: deviceType } } },
+        { upsert: true }
       );
     } catch (error) {
       console.error("Error adding device:", error);

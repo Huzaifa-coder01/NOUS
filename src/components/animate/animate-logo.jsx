@@ -6,8 +6,6 @@ import { varAlpha } from 'src/theme/styles';
 
 import { Logo } from '../logo';
 
-// ----------------------------------------------------------------------
-
 export function AnimateLogo1({ logo, sx, ...other }) {
   return (
     <Box
@@ -72,8 +70,6 @@ export function AnimateLogo1({ logo, sx, ...other }) {
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function AnimateLogo2({ logo, sx, ...other }) {
   return (

@@ -2,18 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const logger = require("./helperUtils/logger");
 
-// Path to base language file
 const baseLangFile = path.join(__dirname, "assets", "locales", "en.json");
 
-// Paths to output files
 const missingFile = path.join(__dirname, "missingTranslations.json");
 const extraFile = path.join(__dirname, "extraTranslations.json");
 
-// Root folder to scan for translationKey usage
 const rootDir = __dirname;
 const modelsDir = path.join(__dirname, "models");
 
-// Load base translations JSON (en.json)
 let baseTranslations = {};
 try {
   baseTranslations = JSON.parse(fs.readFileSync(baseLangFile, "utf-8"));
@@ -22,7 +18,6 @@ try {
   process.exit(1);
 }
 
-// Helper: Recursively scan files in directory
 function scanFiles(dir) {
   let results = [];
   const files = fs.readdirSync(dir, { withFileTypes: true });
@@ -40,18 +35,15 @@ function scanFiles(dir) {
   return results;
 }
 
-// Extract translation keys used via translationKey: "key" or translationKey = "key"
 function extractTranslationKeys(content) {
   const keys = new Set();
 
-  // Match translationKey: "key" or translationKey: 'key'
   const colonRegex = /translationKey\s*:\s*['"]([^'"]+)['"]/g;
   let match;
   while ((match = colonRegex.exec(content)) !== null) {
     keys.add(match[1]);
   }
 
-  // Match translationKey = "key" or translationKey = 'key'
   const equalsRegex = /translationKey\s*=\s*['"]([^'"]+)['"]/g;
   while ((match = equalsRegex.exec(content)) !== null) {
     keys.add(match[1]);
@@ -60,7 +52,6 @@ function extractTranslationKeys(content) {
   return Array.from(keys);
 }
 
-// Extract message keys like: required: [true, "email_required"] or message: "email_invalid"
 function extractSchemaValidationKeys(content) {
   const keys = new Set();
   const requiredRegex = /required\s*:\s*\[\s*true\s*,\s*["']([^"']+)["']\s*\]/g;
@@ -77,7 +68,6 @@ function extractSchemaValidationKeys(content) {
   return Array.from(keys);
 }
 
-// Helper: Convert key to readable default translation
 function keyToReadableText(key) {
   const withSpaces = key.replace(/[_\.]+/g, " ");
   return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
@@ -93,10 +83,8 @@ function keyToReadableText(key) {
     try {
       const content = fs.readFileSync(filePath, "utf-8");
 
-      // Extract translationKey values
       extractTranslationKeys(content).forEach((k) => foundKeys.add(k));
 
-      // Only apply schema validation extraction to files in models folder
       if (filePath.startsWith(modelsDir)) {
         extractSchemaValidationKeys(content).forEach((k) => foundKeys.add(k));
       }
@@ -107,7 +95,6 @@ function keyToReadableText(key) {
 
   logger.log(`Total translation keys found: ${foundKeys.size}`);
 
-  // Find missing keys
   const missingKeys = {};
   foundKeys.forEach((key) => {
     if (!(key in baseTranslations)) {
@@ -116,7 +103,6 @@ function keyToReadableText(key) {
     }
   });
 
-  // Find extra keys
   const extraKeys = {};
   Object.keys(baseTranslations).forEach((key) => {
     if (!foundKeys.has(key)) {
@@ -125,7 +111,6 @@ function keyToReadableText(key) {
     }
   });
 
-  // Write updates
   fs.writeFileSync(baseLangFile, JSON.stringify(baseTranslations, null, 2), "utf-8");
   fs.writeFileSync(missingFile, JSON.stringify(missingKeys, null, 2), "utf-8");
   fs.writeFileSync(extraFile, JSON.stringify(extraKeys, null, 2), "utf-8");

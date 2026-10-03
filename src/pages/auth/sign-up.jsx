@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { JwtSignUpView } from 'src/sections/auth';
 
-// ----------------------------------------------------------------------
-
 const metadata = { title: `Sign up - ${CONFIG.site.name}` };
 
 export default function Page() {

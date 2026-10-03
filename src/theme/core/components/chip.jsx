@@ -3,12 +3,6 @@ import { chipClasses } from '@mui/material/Chip';
 
 import { varAlpha, stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Icons
- * https://icon-sets.iconify.design/solar/close-circle-bold
- */
 export const ChipDeleteIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -21,8 +15,6 @@ export const ChipDeleteIcon = (props) => (
 );
 
 const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
-
-// ----------------------------------------------------------------------
 
 function styleColors(ownerState, styles) {
   const outputStyle = COLORS.reduce((acc, color) => {
@@ -57,27 +49,13 @@ const softVariant = {
   ],
 };
 
-// ----------------------------------------------------------------------
-
 const MuiChip = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { deleteIcon: <ChipDeleteIcon /> },
 
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @variant soft
-     */
     ...[...softVariant.inheritColor, ...softVariant.colors],
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ ownerState, theme }) => {
       const styled = {
@@ -117,9 +95,6 @@ const MuiChip = {
     },
     sizeMedium: ({ theme }) => ({ borderRadius: theme.shape.borderRadius * 1.25 }),
     sizeSmall: ({ theme }) => ({ borderRadius: theme.shape.borderRadius }),
-    /**
-     * @variant filled
-     */
     filled: ({ ownerState, theme }) => {
       const styled = {
         defaultColor: {
@@ -138,9 +113,6 @@ const MuiChip = {
       };
       return { ...styled.defaultColor };
     },
-    /**
-     * @variant outlined
-     */
     outlined: ({ ownerState, theme }) => {
       const styled = {
         defaultColor: {
@@ -154,7 +126,5 @@ const MuiChip = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const chip = { MuiChip };

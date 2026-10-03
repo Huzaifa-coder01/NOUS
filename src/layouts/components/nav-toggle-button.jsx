@@ -3,8 +3,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { varAlpha } from 'src/theme/styles';
 
-// ----------------------------------------------------------------------
-
 export function NavToggleButton({ isNavMini, sx, ...other }) {
   return (
     <IconButton
@@ -41,7 +39,6 @@ export function NavToggleButton({ isNavMini, sx, ...other }) {
           }),
         }}
       >
-        {/* https://icon-sets.iconify.design/eva/arrow-ios-back-fill/ */}
         <path
           fill="currentColor"
           d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64"

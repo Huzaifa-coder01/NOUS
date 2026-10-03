@@ -32,14 +32,10 @@ import { useAuthContext } from 'src/auth/hooks';
 
 import { ProfileCover } from '../profile-cover';
 
-// ----------------------------------------------------------------------
-
 const TABS = [
   { value: 'profile', label: 'Profile', icon: <Iconify icon="solar:user-id-bold" width={24} /> },
   { value: 'catalog', label: 'Catalog', icon: <Iconify icon="solar:notebook-bold" width={24} /> },
 ];
-
-// ----------------------------------------------------------------------
 
 function InfoRow({ icon, label, value }) {
   return (
@@ -67,8 +63,6 @@ function StatCard({ label, value }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
 export function UserProfileView() {
   const { user } = useAuthContext();
 
@@ -76,7 +70,6 @@ export function UserProfileView() {
 
   const courses = useGetCoursesQuery({ page: 1, limit: 50 });
 
-  // one page-of-one query per resource is enough: the counters live in `meta`
   const head = { page: 1, limit: 1 };
 
   const courseHead = useGetCoursesQuery(head);

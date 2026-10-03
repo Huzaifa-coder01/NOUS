@@ -5,19 +5,8 @@ import { CONFIG } from 'src/config-global';
 import { API_ROUTES } from '../apiRoutes';
 import { unwrap, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Auth.
-//
-// Sign up is register -> OTP by email -> verify: register leaves the account
-// `pending` and only a verified account may log in. An admin login also needs
-// the `x-admin-access-token` header.
-//
-// `deviceId` / `deviceType` are required on register, login and logout.
-// ----------------------------------------------------------------------
-
 const ADMIN_ACCESS_TOKEN = CONFIG.api.adminAccessToken;
 
-/** A stable per-browser id; the backend keys its session records on it. */
 export function getDeviceId() {
   const key = 'nous.deviceId';
 
@@ -38,17 +27,11 @@ export function getDeviceId() {
 
 const device = () => ({ deviceId: getDeviceId(), deviceType: CONFIG.api.deviceType });
 
-/**
- * The admin gate header. The backend rejects an admin login without it and
- * ignores it for a student, so it goes on every login and one form serves both
- * roles.
- */
 const adminHeaders = () =>
   ADMIN_ACCESS_TOKEN ? { 'x-admin-access-token': ADMIN_ACCESS_TOKEN } : undefined;
 
 const asEmail = (value) => String(value).trim().toLowerCase();
 
-/** Register rejects an account with no picture, so one stands in for it. */
 const DEFAULT_PROFILE_ICON = 'nous/dev/sample.png';
 
 export const authApi = createApi({
@@ -56,10 +39,6 @@ export const authApi = createApi({
   baseQuery: createCustomFetchBaseQuery(),
   tagTypes: ['Profile'],
   endpoints: (builder) => ({
-    /**
-     * `profileIcon` is required by the backend, so a default key is sent when
-     * the form does not collect one.
-     */
     register: builder.mutation({
       query: ({ name, email, password, profileIcon }) => ({
         url: API_ROUTES.AUTH.REGISTER,
@@ -76,7 +55,6 @@ export const authApi = createApi({
       transformResponse: unwrap,
     }),
 
-    /** In dev the backend returns the OTP in the body, which the UI shows. */
     resendEmailOtp: builder.mutation({
       query: ({ email, purpose = 'generic' }) => ({
         url: API_ROUTES.AUTH.RESEND_OTP_EMAIL,
@@ -86,7 +64,6 @@ export const authApi = createApi({
       transformResponse: unwrap,
     }),
 
-    /** Verifies the email, activates the account and returns a token. */
     verifyEmailOtp: builder.mutation({
       query: ({ email, otp }) => ({
         url: API_ROUTES.AUTH.VERIFY_OTP_EMAIL,
@@ -97,7 +74,6 @@ export const authApi = createApi({
       invalidatesTags: ['Profile'],
     }),
 
-    /** Returns the whole account record with `token` on it. */
     login: builder.mutation({
       query: ({ email, password }) => ({
         url: API_ROUTES.AUTH.LOGIN,
@@ -133,7 +109,6 @@ export const authApi = createApi({
       transformResponse: unwrap,
     }),
 
-    /** `resetToken` is what verifying the OTP returned. */
     resetPassword: builder.mutation({
       query: ({ email, newPassword, resetToken }) => ({
         url: API_ROUTES.AUTH.RESET_PASSWORD,

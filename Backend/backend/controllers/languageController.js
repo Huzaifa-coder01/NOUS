@@ -8,12 +8,10 @@ const {
 } = require("../helperUtils/responseUtil");
 const { userCache } = require("../config/nodeCache");
 
-// Create a new language
 const createLanguage = async (req, res) => {
   const { title, transliteration, flag, code, status = "active" } = req.body;
 
   try {
-    //validate params
     const validationOptions = {
       rawData: ["title", "transliteration", "code"],
     };
@@ -28,7 +26,7 @@ const createLanguage = async (req, res) => {
     return sendResponse({
       res,
       statusCode: 201,
-      translationKey: "language_created_successfully", // Translation key for success
+      translationKey: "language_created_successfully",
       data: language,
     });
   } catch (error) {
@@ -36,7 +34,7 @@ const createLanguage = async (req, res) => {
       return sendResponse({
         res,
         statusCode: 400,
-        translationKey: "language_code_unique_violation", // Custom translation key for duplicate language code
+        translationKey: "language_code_unique_violation",
         error,
       });
     }
@@ -49,7 +47,6 @@ const createLanguage = async (req, res) => {
   }
 };
 
-// Get all languages with pagination
 const getLanguages = async (req, res) => {
   const { page, limit } = parsePaginationParams(req);
 
@@ -64,7 +61,6 @@ const getLanguages = async (req, res) => {
     } else {
       queryConditions.status = { $ne: "deleted" };
     }
-    // If a keyword is provided, apply a search filter on multiple fields
     if (keyword) {
       queryConditions.$or = [
         { title: { $regex: keyword, $options: "i" } },
@@ -81,13 +77,13 @@ const getLanguages = async (req, res) => {
       inactive,
     ] = await Promise.all([
       Language.find(queryConditions)
-        .sort({ title: 1 }) // Sort by title in alphabetical order
+        .sort({ title: 1 })
         .skip(mLimit === 0 ? 0 : (page - 1) * limit)
         .limit(mLimit === 0 ? 0 : limit),
-      Language.countDocuments(queryConditions), // Count filtered languages
-      Language.countDocuments({ status: { $ne: "deleted" } }), // Count all languages
-      Language.countDocuments({ status: "active" }), // Count active languages
-      Language.countDocuments({ status: "inactive" }), // Count inactive languages
+      Language.countDocuments(queryConditions),
+      Language.countDocuments({ status: { $ne: "deleted" } }),
+      Language.countDocuments({ status: "active" }),
+      Language.countDocuments({ status: "inactive" }),
     ]);
 
     let meta = generateMeta(page, limit, totalLanguages);
@@ -100,7 +96,7 @@ const getLanguages = async (req, res) => {
     return sendResponse({
       res,
       statusCode: 200,
-      translationKey: "languages_fetched_successfully", // Translation key for success
+      translationKey: "languages_fetched_successfully",
       data: languages,
       meta,
     });
@@ -114,7 +110,6 @@ const getLanguages = async (req, res) => {
   }
 };
 
-// Update an existing language
 const updateLanguage = async (req, res) => {
   const { id } = req.params;
   const { title, transliteration, flag, code, status } = req.body;
@@ -154,7 +149,6 @@ const updateLanguage = async (req, res) => {
       data: language,
     });
   } catch (error) {
-    // Handle validation errors from Mongoose
     const statusCode = error.name === "ValidationError" ? 400 : 500;
     const translationKey =
       error.name === "ValidationError"
@@ -170,7 +164,6 @@ const updateLanguage = async (req, res) => {
   }
 };
 
-// Delete a language by ID
 const deleteLanguage = async (req, res) => {
   const { id } = req.params;
 
@@ -210,7 +203,6 @@ const deleteLanguage = async (req, res) => {
   }
 };
 
-// Update a user's preferred language
 const updateUserLanguage = async (req, res) => {
   const { _id: userId } = req.user;
   const { languageId } = req.body;

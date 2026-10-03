@@ -147,7 +147,6 @@ const getReviewsByType = async ({
 
   return {
     reviews,
-    // reviews: formatReview(reviews, timezone),
     meta: {
       ...generateMeta(page, limit, total),
       ratingStats: {
@@ -253,7 +252,6 @@ const getReview = async ({
 
   return {
     reviews,
-    // reviews: formatReview(reviews, timezone),
     meta: {
       ...generateMeta(page, limit, total),
       reviewTemplateScoring,
@@ -276,7 +274,6 @@ const getallReview = async ({ page = 1, limit = 10, timezone = "UTC",keyword }) 
 
   return {
     reviews,
-    // reviews: formatReview(reviews, timezone),
     meta: {
       ...generateMeta(page, limit, total),
       ratingStats: {

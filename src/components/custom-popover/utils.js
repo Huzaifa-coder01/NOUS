@@ -1,14 +1,9 @@
-// ----------------------------------------------------------------------
-
 const POPOVER_DISTANCE = 0.75;
 
 export function calculateAnchorOrigin(arrow) {
   let props;
 
   switch (arrow) {
-    /**
-     * top-*
-     */
     case 'top-left':
       props = {
         paperStyles: { ml: -POPOVER_DISTANCE },
@@ -30,9 +25,6 @@ export function calculateAnchorOrigin(arrow) {
         transformOrigin: { vertical: 'top', horizontal: 'right' },
       };
       break;
-    /**
-     * bottom-*
-     */
     case 'bottom-left':
       props = {
         paperStyles: { ml: -POPOVER_DISTANCE },
@@ -54,9 +46,6 @@ export function calculateAnchorOrigin(arrow) {
         transformOrigin: { vertical: 'bottom', horizontal: 'right' },
       };
       break;
-    /**
-     * left-*
-     */
     case 'left-top':
       props = {
         paperStyles: { mt: -POPOVER_DISTANCE },
@@ -78,9 +67,6 @@ export function calculateAnchorOrigin(arrow) {
         transformOrigin: { vertical: 'bottom', horizontal: 'left' },
       };
       break;
-    /**
-     * right-*
-     */
     case 'right-top':
       props = {
         paperStyles: { mt: -POPOVER_DISTANCE },
@@ -103,7 +89,6 @@ export function calculateAnchorOrigin(arrow) {
       };
       break;
 
-    // top-right
     default:
       props = {
         paperStyles: { ml: POPOVER_DISTANCE },

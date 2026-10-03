@@ -6,12 +6,6 @@ const mongoose = require("mongoose");
 
 const engagementService = require("./engagementEventsService");
 
-/**
- * -------------------------------------------------------
- * LOG ENGAGEMENT
- * POST /api/v1/app/engagement/log
- * -------------------------------------------------------
- */
 const logEngagement = async (req, res) => {
   try {
     const {
@@ -57,12 +51,6 @@ const logEngagement = async (req, res) => {
   }
 };
 
-/**
- * -------------------------------------------------------
- * TRENDING
- * GET /api/v1/app/engagement/trending
- * -------------------------------------------------------
- */
 const getTrending = async (req, res) => {
   try {
     const {
@@ -114,12 +102,6 @@ const getTrending = async (req, res) => {
   }
 };
 
-/**
- * -------------------------------------------------------
- * LEADS (OWNER-BASED)
- * GET /api/v1/app/engagement/leads
- * -------------------------------------------------------
- */
 const getLeads = async (req, res) => {
   try {
     const {

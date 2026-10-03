@@ -6,12 +6,9 @@ import { useSettingsContext } from 'src/components/settings';
 import { createTheme } from './create-theme';
 import { schemeConfig } from './color-scheme-script';
 
-// ----------------------------------------------------------------------
-
 export function ThemeProvider({ children }) {
   const settings = useSettingsContext();
 
-  // `localeComponents` (2nd arg) carried the MUI i18n bundle; NOUS ships en only
   const theme = createTheme(undefined, settings);
 
   return (

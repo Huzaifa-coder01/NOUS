@@ -3,17 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Student notes - the one thing a student may upload.
-//
-// A new note is active straight away, so every student browsing the chapter
-// sees it, not just the uploader. `?mine=true` narrows the list to the signed
-// in student's own uploads; only an admin may rename, deactivate or delete.//
-// A PDF is created by uploading the file first (see `uploads.js`) and passing
-// the returned `file` key and `fileUrl` here. Names are unique across every PDF
-// in the system, which is the 409 these mutations most often surface.
-// ----------------------------------------------------------------------
-
 export const notesApi = createApi({
   reducerPath: 'notes',
   baseQuery: createCustomFetchBaseQuery(),
@@ -45,7 +34,6 @@ export const notesApi = createApi({
       invalidatesTags: ['Notes'],
     }),
 
-    /** `status` accepts active | inactive; `deleted` is what DELETE sets. */
     updateNote: builder.mutation({
       query: ({ id, ...body }) => ({
         url: API_ROUTES.NOTES.UPDATE(id),

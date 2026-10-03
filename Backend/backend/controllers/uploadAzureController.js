@@ -10,7 +10,7 @@ const {
   StorageSharedKeyCredential,
 } = require("@azure/storage-blob");
 
-const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
 // Azure Blob Service is built on first use, reading the env at call time so a
 // missing Azure config cannot crash the server at startup.
@@ -46,7 +46,6 @@ const getContainerClient = () => {
   return containerClient;
 };
 
-// Upload files to Azure
 const uploadFiles = (req, res) => {
   if (!isAzureConfigured()) {
     return sendResponse({
@@ -86,16 +85,11 @@ const uploadFiles = (req, res) => {
   });
 };
 
-// Upload multiple files
 const uploadFilesToAzure = async (files) => {
   const containerClient = getContainerClient();
 
   const uploadPromises = files.map(async (file) => {
     let fileBuffer = file.buffer;
-    //enable to compress
-    // if (fileBuffer.length > MAX_FILE_SIZE) {
-    //   fileBuffer = await compressImage(file.buffer);
-    // }
 
     const fileExtension = path.extname(file.originalname);
     const filename = `${uuidv4()}${fileExtension}`;
@@ -115,7 +109,6 @@ const uploadFilesToAzure = async (files) => {
   return Promise.all(uploadPromises);
 };
 
-// Compress image
 const compressImage = async (buffer) => {
   let quality = 80;
   let compressedBuffer = buffer;
@@ -134,7 +127,6 @@ const compressImage = async (buffer) => {
   return compressedBuffer;
 };
 
-// Delete file from Azure
 const deleteFiles = async (req, res) => {
   const { fileKey } = req.body;
   if (!fileKey) {

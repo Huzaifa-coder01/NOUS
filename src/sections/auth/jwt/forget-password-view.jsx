@@ -17,16 +17,12 @@ import { Form, Field } from 'src/components/hook-form';
 
 import { requestPasswordReset } from 'src/auth/context/jwt';
 
-// ----------------------------------------------------------------------
-
 export const ForgetPasswordSchema = zod.object({
   email: zod
     .string()
     .min(1, { message: 'Email is required!' })
     .email({ message: 'Email must be a valid email address!' }),
 });
-
-// ----------------------------------------------------------------------
 
 export function JwtForgetPasswordView() {
   const navigate = useNavigate();

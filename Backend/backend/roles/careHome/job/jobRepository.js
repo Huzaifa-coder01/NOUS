@@ -31,7 +31,6 @@ const getJobs = async ({
   // Permission object on the requester, e.g.
   // { careHome: false, careHomes: true, hospitals: true, ... }
   const servicePermissions = provideServicesToUser?.provideServicesTo || {};
-  // Keep only the userTypes whose permission is true
   const allowedUserTypes = Object.keys(servicePermissions).filter(
     (key) => servicePermissions[key] === true,
   );
@@ -88,7 +87,6 @@ const getJobs = async ({
       preserveNullAndEmptyArrays: true,
     },
   });
-  // Only show jobs whose owner's userType the requester is permitted to see
   pipeline.push({
     $match: {
       "user.accountState.userType": { $in: allowedUserTypes },
@@ -189,7 +187,7 @@ const getUserAndShift = async (jobId, shiftId) => {
   const job = await Job.findById(jobId).select("user shift");
   if (!job) return { user: null, shift: null };
 
-  const shift = job.shift.id(shiftId); // Mongoose subdoc lookup by _id
+  const shift = job.shift.id(shiftId);
   return { user: job.user, shift: shift || null,_id: shift ? shift._id : null };
 };
 

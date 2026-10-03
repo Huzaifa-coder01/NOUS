@@ -27,10 +27,8 @@ const { SubAdmin } = require("../roles/admin/subAdmins/SubAdmins");
 
 const createAdmin = async (req, res) => {
   try {
-    // Whitelist both localhost + your public IP
     const allowedIPs = ["223.123.44.6", "127.0.0.1", "::1", "192.168.15.40"];
 
-    // Express behind reverse proxies (like Nginx)
     const ip = (
       req.headers["x-forwarded-for"] ||
       req.socket.remoteAddress ||
@@ -48,7 +46,6 @@ const createAdmin = async (req, res) => {
       });
     }
 
-    // Require internal admin secret key (backend only)
     const key = req.headers["x-admin-access-token-signup"];
     if (key !== process.env.ADMIN_ACCESS_TOKEN_SIGNUP) {
       return sendResponse({
@@ -58,7 +55,6 @@ const createAdmin = async (req, res) => {
       });
     }
 
-    //validation
     const validationOptions = {
       rawData: [
         "email",
@@ -107,7 +103,6 @@ const createAdmin = async (req, res) => {
 
     await user.save();
 
-    //deviceId and deviceToken store in db
     if (
       typeof deviceId === "string" &&
       deviceId.trim() &&
@@ -132,7 +127,6 @@ const createAdmin = async (req, res) => {
   }
 };
 
-//register
 const register = async (req, res) => {
   // Public signup only needs these fields, admin is created internally only
   const validationOptions = {
@@ -188,7 +182,6 @@ const companyDetails = async (req, res) => {
   } = req.body;
 
   try {
-    // Find the user by id (assumes authentication middleware sets req.user)
     const user = await User.findById(req.user._id).select("companyDetails");
 
     if (!user.companyDetails) {
@@ -206,7 +199,6 @@ const companyDetails = async (req, res) => {
       }
     }
 
-    // Update only provided company details, keep existing fields if not provided
     user.companyDetails = {
       logo: logo !== undefined ? logo : user.companyDetails?.logo,
       coverImage:
@@ -252,7 +244,6 @@ const companyDetails = async (req, res) => {
   }
 };
 
-//login
 const login = async (req, res) => {
   try {
     const { email, password, deviceId, deviceType } = req.body;
@@ -264,7 +255,6 @@ const login = async (req, res) => {
     }
     let populateFields = [];
 
-    // userType comes from the account itself, it is not sent by the client
     const user = await User.findByCredentials(
       email,
       password,
@@ -277,19 +267,18 @@ const login = async (req, res) => {
 
 
 
-    // Check if an error occurred
     if (user.error) {
       if (user.error === "user_not_found") {
         return sendResponse({
           res,
           statusCode: 404,
-          translationKey: "user_not_found", // Use your translation key for user not found
+          translationKey: "user_not_found",
         });
       } else if (user.error === "incorrect_password") {
         return sendResponse({
           res,
           statusCode: 400,
-          translationKey: "incorrect_password", // Use your translation key for incorrect password
+          translationKey: "incorrect_password",
         });
       }
     }
@@ -303,7 +292,7 @@ const login = async (req, res) => {
         return sendResponse({
           res,
           statusCode: 404,
-          translationKey: "user_not_found", // Use your translation key for user not found
+          translationKey: "user_not_found",
         });
       }
       user.orignalUserType = user.accountState.userType;
@@ -312,7 +301,6 @@ const login = async (req, res) => {
       permissions = subAdmin.permissions;
       
     }
-    // Restrict admin login
     if (user.accountState.userType === "admin") {
       const adminCreationToken = req.header("x-admin-access-token");
       if (adminCreationToken === process.env.ADMIN_ACCESS_TOKEN) {
@@ -370,7 +358,6 @@ const login = async (req, res) => {
       });
     }
 
-    // Ensure toJSON method is applied to strip out sensitive data
     const userObject = user.toJSON();
     if (orignalUserType === "subAdmin") {
       userObject.orignalUserType = orignalUserType;
@@ -381,23 +368,19 @@ const login = async (req, res) => {
     const token = user.generateAuthToken();
  
 
-    // Format the user response using the utility function
     let response = formatUserResponse(userObject, token, [], ["resetToken"]);
 
-    //deviceId and deviceToken store in db
     if (
       typeof deviceId === "string" &&
       deviceId.trim() &&
       deviceId !== "test" &&
       typeof deviceType === "string"
     ) {
-      // Save device information (not part of the transaction)
       createOrSkipDevice(userObject._id, deviceId, deviceType);
     } else {
       console.warn("FCM Token information not saved due to invalid input");
     }
 
-    // Send successful response with token and user data
     return sendResponse({
       res,
       statusCode: 200,
@@ -413,7 +396,6 @@ const login = async (req, res) => {
     });
   }
 };
-//loginTest
 const loginTest = async (req, res) => {
   try {
     const { email, password, userType } = req.body;
@@ -433,16 +415,14 @@ const loginTest = async (req, res) => {
       "accountState.userType": userType,
     });
 
-    // Check if an error occurred
     if (!user) {
       return sendResponse({
         res,
         statusCode: 404,
-        translationKey: "user_not_found", // Use your translation key for user not found
+        translationKey: "user_not_found",
       });
     }
 
-    // Restrict admin login
     if (user.accountState.userType === "admin") {
       const adminCreationToken = req.header("x-admin-access-token");
       if (adminCreationToken === process.env.ADMIN_ACCESS_TOKEN) {
@@ -455,7 +435,6 @@ const loginTest = async (req, res) => {
       }
     }
 
-    // Check the user's verification status
     const verificationStatus = user.verificationStatus["email"];
     if (verificationStatus === "pending") {
       return sendResponse({
@@ -494,10 +473,8 @@ const loginTest = async (req, res) => {
 
     const token = user.generateAuthToken();
 
-    // Ensure toJSON method is applied to strip out sensitive data
     const userObject = user.toJSON();
 
-    // Format the user response using the utility function
     const response = formatUserResponse(
       userObject,
       token,
@@ -505,7 +482,6 @@ const loginTest = async (req, res) => {
       ["resetToken", "organizations"],
     );
 
-    // Send successful response with token and user data
     return sendResponse({
       res,
       statusCode: 200,
@@ -522,7 +498,6 @@ const loginTest = async (req, res) => {
   }
 };
 
-// Generate OTP
 const generateOtp = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -536,7 +511,6 @@ const generateOtp = async (req, res) => {
 
     if (!validateParams(req, res, validationOptions)) return;
 
-    // Validate phone number
     if (
       type === "phoneNumber" &&
       phoneNumber &&
@@ -552,7 +526,6 @@ const generateOtp = async (req, res) => {
       });
     }
 
-    // Load user
     let user;
     if (type === "email") {
       user = await User.findOne({ email: email.toLowerCase() }).select(
@@ -573,7 +546,6 @@ const generateOtp = async (req, res) => {
       });
     }
 
-    // Account state check
     if (["restricted", "suspended"].includes(user.accountState.status)) {
       return sendResponse({
         res,
@@ -582,7 +554,6 @@ const generateOtp = async (req, res) => {
       });
     }
 
-    // Generate OTP (should internally store purpose)
     const otp = user.generateOtp(type, user.timezone, purpose);
 
     if (otp?.error === "too_many_otp_requests") {
@@ -595,13 +566,9 @@ const generateOtp = async (req, res) => {
 
     await user.save({ session });
 
-    // Commit BEFORE sending email/SMS
     await session.commitTransaction();
     session.endSession();
 
-    // -----------------------------
-    // 📩 Send OTP (outside txn)
-    // -----------------------------
     const config = OTP_PURPOSE_CONFIG[purpose] || OTP_PURPOSE_CONFIG.generic;
 
     if (type === "email") {
@@ -615,7 +582,6 @@ const generateOtp = async (req, res) => {
 
       await sendEmailViaBrevo([email], subject, mBody);
     }
-    // Only include OTP in dev environment
     if (
       (process.env.NODE_ENV === "dev" ||
         process.env.NODE_ENV === "mobileapps" ||
@@ -650,7 +616,6 @@ const generateOtp = async (req, res) => {
   }
 };
 
-//Verify otp
 const verifyOtp = async (req, res) => {
   const session = await mongoose.startSession();
 
@@ -817,10 +782,8 @@ const verifyEmailViaLink = async (req, res) => {
     });
   }
 
-  // Hash the token from the URL
   const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
 
-  // Find user by hashed token
   const user = await User.findOne({
     "emailVerification.tokenHash": tokenHash,
   });
@@ -851,7 +814,6 @@ const verifyEmailViaLink = async (req, res) => {
     });
   }
 
-  // Mark verified
   user.verificationStatus.email = "verified";
   user.emailVerification.used = true;
   user.emailVerification.otpRequestCount = 0;
@@ -866,7 +828,6 @@ const resendEmailVerificationLink = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Find the user by email
     const user = await User.findOne({ email: email.trim().toLowerCase() });
 
     if (!user) {
@@ -877,10 +838,8 @@ const resendEmailVerificationLink = async (req, res) => {
       });
     }
 
-    // Generate a new email verification token
     const tokenData = user.generateEmailVerificationToken();
     if (tokenData.error) {
-      //too_many_verification_requests
       if (tokenData.error === "too_many_verification_requests") {
         return sendResponse({
           res,
@@ -892,7 +851,6 @@ const resendEmailVerificationLink = async (req, res) => {
 
     await user.save();
 
-    // Send the verification email
     const mBody = registrationViaLinkEmailTemplate(tokenData.verificationLink);
     await sendEmailViaBrevo([user.email], "Email Verification", mBody);
 
@@ -912,7 +870,6 @@ const resendEmailVerificationLink = async (req, res) => {
   }
 };
 
-//sends link to email
 const sendPasswordResetLink = async (req, res) => {
   const { email } = req.body;
 
@@ -928,7 +885,6 @@ const sendPasswordResetLink = async (req, res) => {
   const tokenData = user.generatePasswordResetToken();
 
   if (tokenData.error) {
-    //too_many_password_reset_requests
     if (tokenData.error === "too_many_password_reset_requests") {
       return sendResponse({
         res,
@@ -951,7 +907,6 @@ const sendPasswordResetLink = async (req, res) => {
   });
 };
 
-// when user clicks on link from email inbox
 const verifyPasswordResetLink = async (req, res) => {
   const { token } = req.query;
 
@@ -978,11 +933,9 @@ const verifyPasswordResetLink = async (req, res) => {
     });
   }
 
-  // Redirect to your frontend's reset password form
   return res.redirect(`${process.env.PASSWORD_RESET_FRONTEND_URL}${token}`);
 };
 
-//
 const resetPasswordViaLink = async (req, res) => {
   const { token, newPassword } = req.body;
 
@@ -1001,7 +954,6 @@ const resetPasswordViaLink = async (req, res) => {
     });
   }
 
-  // Set new password
   user.password = newPassword;
   user.passwordReset.used = true;
   user.passwordReset.otpRequestCount = 0;
@@ -1014,7 +966,6 @@ const resetPasswordViaLink = async (req, res) => {
   });
 };
 
-// Reset Password
 const resetPassword = async (req, res) => {
   try {
     const { email, newPassword, resetToken } = req.body;
@@ -1026,7 +977,6 @@ const resetPassword = async (req, res) => {
       return;
     }
 
-    // Find the user by email
     const user = await User.findOne({
       email: email.trim().toLowerCase(),
       resetToken: resetToken,
@@ -1040,25 +990,21 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Update the password and mark OTP as used
     user.password = newPassword;
-    user.otpInfo.otpUsed = true; // Mark OTP as used
-    user.otpInfo.otp = ""; // Clear OTP
-    user.otpInfo.otpExpires = ""; // Clear OTP expiration
-    user.resetToken = ""; // Clear OTP token
+    user.otpInfo.otpUsed = true;
+    user.otpInfo.otp = "";
+    user.otpInfo.otpExpires = "";
+    user.resetToken = "";
 
     await user.save();
 
-    // Fetch the updated user with profile icon populated and generate a token simultaneously
     const [updatedUser, token] = await Promise.all([
       User.findById(user._id),
       user.generateAuthToken(),
     ]);
 
-    // Apply toJSON method to strip out sensitive data
     const userObject = updatedUser.toJSON();
 
-    // Format the user response using the utility function
     const response = formatUserResponse(userObject, token);
 
     return sendResponse({
@@ -1099,7 +1045,6 @@ const getMe = async (req, res) => {
       });
     }
 
-    // toJSON strips the password and stamps the media base url on profileIcon
     const userObject = User.prototype.toJSON.call(user, user);
 
     return sendResponse({
@@ -1124,10 +1069,9 @@ const logout = async (req, res) => {
     const { deviceId } = req.body;
     const userId = req.user._id;
 
-    // Use $pull to remove the specific device from the devices array
     await Devices.updateOne(
-      { userId: userId }, // Find the user by userId
-      { $pull: { devices: { deviceId: deviceId } } }, // Remove the device with matching deviceId
+      { userId: userId },
+      { $pull: { devices: { deviceId: deviceId } } },
     );
 
     return sendResponse({
@@ -1150,17 +1094,15 @@ const hardDeleteAccount = async (req, res) => {
     const userId = req.user._id;
     const email = req.user.email;
 
-    // Generate a random email using the userId and original email
     const randomEmail = `deleted_user_${userId}_${Date.now()}@example.com`;
 
-    // Update the user's account state to deleted and set the finalDeletionDate
     await User.findByIdAndUpdate(
       userId,
       {
         $set: {
-          email: randomEmail, // replace with random email
-          previousEmail: email, // store the original email
-          phoneNumber: { code: "", number: "" }, // clear phone number object
+          email: randomEmail,
+          previousEmail: email,
+          phoneNumber: { code: "", number: "" },
           profileIcon: "noimage.png",
           "accountState.status": "deleted",
         },
@@ -1170,7 +1112,7 @@ const hardDeleteAccount = async (req, res) => {
 
     await Devices.updateOne(
       { userId: userId },
-      { $set: { devices: [] } }, // This will empty the array of devices for the user
+      { $set: { devices: [] } },
     );
 
     return sendResponse({
@@ -1214,7 +1156,7 @@ const socialAuth = async (req, res) => {
         "userType",
       ],
       enumFields: {
-        provider: ["google", "facebook", "apple"], // Allowed values for provider
+        provider: ["google", "facebook", "apple"],
         userType: ["user", "coach"],
       },
     };
@@ -1223,7 +1165,6 @@ const socialAuth = async (req, res) => {
       return;
     }
 
-    //if no email is provided, then create it from socialId
     if (!email) {
       if (provider === "google") {
         email = `${socialId}@google.com`;
@@ -1243,14 +1184,11 @@ const socialAuth = async (req, res) => {
       });
     }
 
-    // Normalize email to lowercase
     email = email.trim().toLowerCase();
-    // Find user by socialId or email
     let existingUser = await User.findOne({
       $or: [{ [`${provider}Id`]: socialId }, { email }],
     });
 
-    // If user exists, update or link the social provider
     let providerLinked = false;
     if (existingUser) {
       if (existingUser.accountState.status === "suspended") {
@@ -1261,36 +1199,32 @@ const socialAuth = async (req, res) => {
         });
       }
 
-      // Check if the social ID is already linked, if not, link it
       if (provider === "google" && !existingUser.googleId) {
-        existingUser.googleId = socialId; // Link Google account
+        existingUser.googleId = socialId;
         providerLinked = true;
       } else if (provider === "facebook" && !existingUser.facebookId) {
-        existingUser.facebookId = socialId; // Link Facebook account
+        existingUser.facebookId = socialId;
         providerLinked = true;
       } else if (provider === "apple" && !existingUser.appleId) {
-        existingUser.appleId = socialId; // Link Apple account
+        existingUser.appleId = socialId;
         providerLinked = true;
       }
 
-      //if existingUser.email is not set, update it
       if (req.body.email && existingUser.email !== req.body.email) {
-        existingUser.email = email; // Update the email to the one provided
-        existingUser.verificationStatus.email = "verified"; // Mark email as verified
+        existingUser.email = email;
+        existingUser.verificationStatus.email = "verified";
       }
 
-      // Always update the provider and timezone, regardless of providerLinked status
-      existingUser.provider = provider; // Update the provider field to reflect the latest social login
-      existingUser.timezone = timezone; // Update the timezone to reflect the user's current login
-      existingUser.accountState.status = "active"; // Ensure the account is active
+      existingUser.provider = provider;
+      existingUser.timezone = timezone;
+      existingUser.accountState.status = "active";
       if (name !== undefined) {
-        existingUser.name = name; // Update first name if provided
+        existingUser.name = name;
       }
 
       await existingUser.save({ session });
       const token = existingUser.generateAuthToken();
 
-      // Ensure toJSON method is applied to strip out sensitive data
       const userObject = new User(existingUser).toJSON();
 
       const response = formatUserResponse(userObject, token);
@@ -1301,7 +1235,6 @@ const socialAuth = async (req, res) => {
         deviceId !== "test" &&
         typeof deviceType === "string"
       ) {
-        // Save device information
         createOrSkipDevice(existingUser._id, deviceId, deviceType);
       }
 
@@ -1326,22 +1259,20 @@ const socialAuth = async (req, res) => {
         data: response,
       });
     } else {
-      // If user does not exist, treat this as a signup
       const newUser = new User({
         email,
         name,
-        provider, // Set the initial provider
-        [`${provider}Id`]: socialId, // Dynamically store the provider ID
+        provider,
+        [`${provider}Id`]: socialId,
         timezone,
         verificationStatus: {
-          email: "verified", // Mark email as verified
+          email: "verified",
         },
         accountState: { userType: userType, status: "active" },
       });
 
       await newUser.save({ session });
 
-      // Generate a token for the new user
       const token = newUser.generateAuthToken();
 
       const jUser = newUser.toJSON();
@@ -1353,7 +1284,6 @@ const socialAuth = async (req, res) => {
         deviceId !== "test" &&
         typeof deviceType === "string"
       ) {
-        // Save device information
         createOrSkipDevice(newUser._id, deviceId, deviceType);
       }
 
@@ -1368,7 +1298,6 @@ const socialAuth = async (req, res) => {
       });
     }
   } catch (error) {
-    // Rollback transaction in case of any error
     await session.abortTransaction();
     session.endSession();
     return sendResponse({
@@ -1380,7 +1309,6 @@ const socialAuth = async (req, res) => {
   }
 };
 
-//check if email already exists and verified
 const checkEmailExistsAndVerified = async (req, res) => {
   try {
     const { email } = req.body;
@@ -1413,7 +1341,6 @@ const checkEmailExistsAndVerified = async (req, res) => {
   }
 };
 
-//changePassword api which takes old password and new password
 const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -1441,7 +1368,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // Check if the old password is correct using bcrypt
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
       return sendResponse({
@@ -1451,7 +1377,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // Update the password
     user.password = newPassword;
     await user.save();
 
@@ -1479,7 +1404,6 @@ const checkUserNameExists = async (req, res) => {
     const user = await User.findOne({ username: username }).select("_id");
 
     if (user) {
-      // Username is taken
       return sendResponse({
         res,
         statusCode: 200,
@@ -1488,7 +1412,6 @@ const checkUserNameExists = async (req, res) => {
       });
     }
 
-    // Username is available
     return sendResponse({
       res,
       statusCode: 200,

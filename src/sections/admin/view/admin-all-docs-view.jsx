@@ -11,8 +11,6 @@ import { documentHooks, useUploadFileMutation } from 'src/store';
 import { EntityList } from '../components/entity-list';
 import { nameColumn, fileColumn, uploadedColumn } from '../components/doc-columns';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   {
     name: 'name',
@@ -28,14 +26,12 @@ const FIELDS = [
   },
 ];
 
-/** A relation is populated on these rows, but fall back to a bare id. */
 function nameOf(value) {
   if (!value) return null;
 
   return typeof value === 'object' ? value.name : null;
 }
 
-/** Where the document lives - the whole point of the cross-catalog modules. */
 const locationColumn = {
   id: 'course',
   label: 'Course / level / subject / chapter',
@@ -63,15 +59,6 @@ const locationColumn = {
   },
 };
 
-// ----------------------------------------------------------------------
-
-/**
- * Every document of one kind, wherever it sits, with the hierarchy it belongs
- * to. This is the notes management module the brief asks for - students upload
- * from the chapter page and everything else about a note happens here.
- *
- * Creating is left to the scoped screens, which know the parent ids.
- */
 export function AdminAllDocsView({ kind, heading, subheading }) {
   const navigate = useNavigate();
 
@@ -90,7 +77,6 @@ export function AdminAllDocsView({ kind, heading, subheading }) {
     fileColumn,
   ];
 
-  /** Jumps to the screen that owns the document. */
   const openOwner = (row) => {
     const courseId = idOf(row.course ?? row.courseId) ?? row.courseId;
     const levelId = idOf(row.level ?? row.levelId) ?? row.levelId;

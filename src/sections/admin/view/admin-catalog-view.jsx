@@ -19,8 +19,6 @@ import { Label } from 'src/components/label';
 
 import { EntityList } from '../components/entity-list';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   { name: 'name', label: 'Course name', required: true, helperText: 'Unique among courses' },
   {
@@ -68,8 +66,6 @@ const COLUMNS = [
 
 const DELETE_NOTE =
   'A delete is a soft delete: the course is marked deleted and everything under it is switched to inactive, never removed.';
-
-// ----------------------------------------------------------------------
 
 export function AdminCatalogView() {
   const navigate = useNavigate();

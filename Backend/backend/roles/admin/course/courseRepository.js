@@ -10,7 +10,6 @@ const {
   attachContentCount,
 } = require("../../../shared/courseContent/contentCounts");
 
-// Active levels of a course, plus the active subjects under those levels
 const withContentCount = async (courses) => {
   const ids = courses.map((course) => course._id);
 

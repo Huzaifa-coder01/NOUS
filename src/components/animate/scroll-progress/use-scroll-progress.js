@@ -1,8 +1,6 @@
 import { useRef, useMemo } from 'react';
 import { useScroll } from 'framer-motion';
 
-// ----------------------------------------------------------------------
-
 export function useScrollProgress(target = 'document') {
   const elementRef = useRef(null);
 

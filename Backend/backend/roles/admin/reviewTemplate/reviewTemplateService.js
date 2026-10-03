@@ -26,9 +26,6 @@ const updateReviewTemplate = async (id, data) => {
   }
   const allowedFields = ["question", "type", "options", "order", "status", "createdBy","category", "userType"];
 
-  // -----------------------------
-  // APPLY UPDATE FIELDS
-  // -----------------------------
   const updateData = {};
   for (const key of allowedFields) {
     if (data[key] !== undefined) {

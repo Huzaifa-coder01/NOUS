@@ -6,8 +6,6 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { BreadcrumbsLink } from './breadcrumb-link';
 
-// ----------------------------------------------------------------------
-
 export function CustomBreadcrumbs({
   links,
   action,
@@ -69,8 +67,6 @@ export function CustomBreadcrumbs({
     </Stack>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function Separator() {
   return (

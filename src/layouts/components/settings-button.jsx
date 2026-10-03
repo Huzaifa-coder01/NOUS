@@ -6,8 +6,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { useSettingsContext } from 'src/components/settings/context';
 
-// ----------------------------------------------------------------------
-
 export function SettingsButton({ sx, ...other }) {
   const settings = useSettingsContext();
 
@@ -24,7 +22,6 @@ export function SettingsButton({ sx, ...other }) {
           animate={{ rotate: 360 }}
           transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
         >
-          {/* https://icon-sets.iconify.design/solar/settings-bold-duotone/ */}
           <path
             fill="currentColor"
             fillRule="evenodd"

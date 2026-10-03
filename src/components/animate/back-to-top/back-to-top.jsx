@@ -5,8 +5,6 @@ import Fab from '@mui/material/Fab';
 
 import { Iconify } from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export function BackToTop({ value = 90, sx, ...other }) {
   const { scrollYProgress } = useScroll();
 
@@ -17,7 +15,7 @@ export function BackToTop({ value = 90, sx, ...other }) {
   };
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const isEnd = Math.floor(latest * 100) > value; // unit is %
+    const isEnd = Math.floor(latest * 100) > value;
     setShow(isEnd);
   });
 

@@ -1,7 +1,5 @@
 import { badgeClasses } from '@mui/material/Badge';
 
-// ----------------------------------------------------------------------
-
 const baseStyles = (theme) => ({
   width: 10,
   zIndex: 9,
@@ -17,13 +15,7 @@ const baseStyles = (theme) => ({
 });
 
 const MuiBadge = {
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @variant online
-     */
     {
       props: ({ ownerState }) => ownerState.variant === 'online',
       style: ({ theme }) => ({
@@ -33,9 +25,6 @@ const MuiBadge = {
         },
       }),
     },
-    /**
-     * @variant alway
-     */
     {
       props: ({ ownerState }) => ownerState.variant === 'alway',
       style: ({ theme }) => ({
@@ -47,9 +36,6 @@ const MuiBadge = {
         },
       }),
     },
-    /**
-     * @variant busy
-     */
     {
       props: ({ ownerState }) => ownerState.variant === 'busy',
       style: ({ theme }) => ({
@@ -60,9 +46,6 @@ const MuiBadge = {
         },
       }),
     },
-    /**
-     * @variant offline
-     */
     {
       props: ({ ownerState }) => ownerState.variant === 'offline',
       style: ({ theme }) => ({
@@ -73,21 +56,13 @@ const MuiBadge = {
         },
       }),
     },
-    /**
-     * @variant invisible
-     */
     {
       props: ({ ownerState }) => ownerState.variant === 'invisible',
       style: { [`& .${badgeClasses.badge}`]: { display: 'none' } },
     },
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: { dot: { borderRadius: '50%' } },
 };
-
-// ----------------------------------------------------------------------
 
 export const badge = { MuiBadge };

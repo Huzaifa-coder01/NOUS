@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { JwtForgetPasswordView } from 'src/sections/auth';
 
-// ----------------------------------------------------------------------
-
 const metadata = { title: `Forgot password - ${CONFIG.site.name}` };
 
 export default function Page() {

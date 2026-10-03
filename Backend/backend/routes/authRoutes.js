@@ -27,29 +27,25 @@ const roleMiddleware = require("../middlewares/roleMiddleware");
 const auth = require("../middlewares/authMiddleware");
 
 const router = express.Router();
-// Create a rate limiter for signup routes
-// Define rate limiters
-const signupRateLimiter = createRateLimiter("register", 15, 15); // 15 requests per 15 minutes
-const loginRateLimiter = createRateLimiter("login", 15, 15); // 15 requests per 15 minute
-const loginRateLimiterTest = createRateLimiter("loginTest", 15, 15); // 15 requests per 15 minute
-const generateOtpRateLimiter = createRateLimiter("forgotPassword", 15, 15); // 15 requests per 15 minutes
-const resendOtpRateLimiter = createRateLimiter("resendOtp", 15, 15); // 15 requests per 15 minutes
-const verifyOtpRateLimiter = createRateLimiter("verifyOtp", 15, 15); // 10 requests per 10 minutes
+const signupRateLimiter = createRateLimiter("register", 15, 15);
+const loginRateLimiter = createRateLimiter("login", 15, 15);
+const loginRateLimiterTest = createRateLimiter("loginTest", 15, 15);
+const generateOtpRateLimiter = createRateLimiter("forgotPassword", 15, 15);
+const resendOtpRateLimiter = createRateLimiter("resendOtp", 15, 15);
+const verifyOtpRateLimiter = createRateLimiter("verifyOtp", 15, 15);
 
-const resetPasswordRateLimiter = createRateLimiter("resetPassword", 15, 15); // 15 requests per 15 minutes
+const resetPasswordRateLimiter = createRateLimiter("resetPassword", 15, 15);
 
-const companyDetailsRateLimiter = createRateLimiter("companyDetails", 15, 15); // 15 requests per 15 minutes
+const companyDetailsRateLimiter = createRateLimiter("companyDetails", 15, 15);
 
-// Create a rate limiter for /links
-const linkRateLimiterEmail = createRateLimiter("link/verify-email", 15, 15); // 15 requests per 15 minutes
-const resendEmailVerificationLinkRateLimiter = createRateLimiter("link/resend-email", 15, 15); // 15 requests per 15 minutes
-const sendPasswordResetLinkRateLimiter = createRateLimiter("link/send-password-reset", 15, 15); // 15 requests per 15 minutes
-const verifyPasswordResetLinkRateLimiter = createRateLimiter("link/reset-password/verify", 15, 15); // 15 requests per 15 minutes
-const resetPasswordViaLinkRateLimiter = createRateLimiter("link/reset-password", 15, 15); // 15 requests per 15 minutes
+const linkRateLimiterEmail = createRateLimiter("link/verify-email", 15, 15);
+const resendEmailVerificationLinkRateLimiter = createRateLimiter("link/resend-email", 15, 15);
+const sendPasswordResetLinkRateLimiter = createRateLimiter("link/send-password-reset", 15, 15);
+const verifyPasswordResetLinkRateLimiter = createRateLimiter("link/reset-password/verify", 15, 15);
+const resetPasswordViaLinkRateLimiter = createRateLimiter("link/reset-password", 15, 15);
 
 const changePasswordRateLimiter = createRateLimiter("changePassword", 15, 10);
 
-// Apply rate limiters to routes
 router.post("/internal/admin/create", signupRateLimiter, createAdmin);
 router.post("/check-email-exists", checkEmailExistsAndVerified);
 router.post("/check-userName-exists", checkUserNameExists);
@@ -85,7 +81,6 @@ router.post("/verify-otp/phone", verifyOtpRateLimiter, (req, res, next) => {
 });
 router.post("/reset-password", resetPasswordRateLimiter, resetPassword);
 
-// Own profile, any signed in role
 router.get("/me", auth, getMe);
 
 router.post("/logout", auth, logout);

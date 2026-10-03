@@ -9,8 +9,6 @@ import { varAlpha, stylesMode } from 'src/theme/styles';
 import { Block } from './styles';
 import { SvgColor, svgColorClasses } from '../../svg-color';
 
-// ----------------------------------------------------------------------
-
 export function NavOptions({ options, value, onClickOption, hideNavColor, hideNavLayout }) {
   const theme = useTheme();
 
@@ -80,8 +78,6 @@ export function NavOptions({ options, value, onClickOption, hideNavColor, hideNa
     </Block>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function LayoutOption({ option, selected, sx, ...other }) {
   const renderNav = () => {
@@ -207,8 +203,6 @@ export function LayoutOption({ option, selected, sx, ...other }) {
     </ButtonBase>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function ColorOption({ option, selected, sx, ...other }) {
   return (

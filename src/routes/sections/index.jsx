@@ -7,19 +7,14 @@ import { authRoutes } from './auth';
 import { nousRoutes } from './nous';
 import { adminRoutes } from './admin';
 
-// ----------------------------------------------------------------------
-
 const NotFoundPage = lazy(() => import('src/pages/error/not-found'));
 
 export function Router() {
   return useRoutes([
-    // Public NOUS site
     ...nousRoutes,
 
-    // Sign in / sign up
     ...authRoutes,
 
-    // Admin panel (role: admin)
     ...adminRoutes,
 
     {

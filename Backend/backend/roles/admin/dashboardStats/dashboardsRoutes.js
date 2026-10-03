@@ -10,7 +10,6 @@ const router = express.Router();
 router.use(auth);
 
 
-// Get all dashboards with pagination
 router.get("/", roleMiddleware(["admin"]), getDashboard);
 
 

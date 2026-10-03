@@ -3,8 +3,6 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 
 import { layoutClasses } from '../classes';
 
-// ----------------------------------------------------------------------
-
 export function LayoutSection({
   sx,
   cssVars,

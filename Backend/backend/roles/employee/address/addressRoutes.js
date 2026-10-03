@@ -4,7 +4,7 @@ const {
   getAddress,
   updateAddress,
   deleteAddress,
-} = require("./addressController"); // Assuming you have a separate controller for promo codes
+} = require("./addressController");
 const createRateLimiter = require("../../../helperUtils/rateLimiter");
 const auth = require("../../../middlewares/authMiddleware");
 const roleMiddleware = require("../../../middlewares/roleMiddleware");
@@ -13,7 +13,6 @@ const router = express.Router();
 
 router.use(auth);
 
-// Create a rate limiter for Promo Codes
 const AddressRateLimiter = createRateLimiter("Addresss");
 
 

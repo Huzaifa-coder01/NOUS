@@ -1,7 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export function useTabs(defaultValue) {
   const [value, setValue] = useState(defaultValue);
 

@@ -75,7 +75,6 @@ const updateChapter = async (id, data) => {
   Object.assign(chapter, updateData);
   await chapter.save();
 
-  // Turning a node off turns everything under it off as well
   if (updateData.status === "inactive") {
     await cascadeFromChapter(chapter._id);
   }
@@ -90,7 +89,6 @@ const getChapterDetails = async (id, { onlyActive = false } = {}) => {
     return null;
   }
 
-  // A student only sees an active chapter whose whole chain is active
   if (onlyActive) {
     if (
       chapter.status !== "active" ||
@@ -109,7 +107,6 @@ const deleteChapter = async (id) => {
   if (!id) throw new Error("Chapter ID is required");
   const deleted = await ChapterRepo.deleteChapter(id);
 
-  // Children are kept, they just go inactive
   if (deleted) {
     await cascadeFromChapter(id);
   }

@@ -1,12 +1,7 @@
-// repositories/engagementRepository.js
 const EngagementEvents = require("@EngagementEventsModel");
 const { default: mongoose } = require("mongoose");
 const { generateMeta } = require("../../helperUtils/responseUtil");
 const { pipeline } = require("supertest/lib/test");
-
-/* =====================================================
-   CONFIG — TTL RULES
-   ===================================================== */
 
 const EVENT_TTL_HOURS = {
   profile_view: 24,
@@ -14,10 +9,6 @@ const EVENT_TTL_HOURS = {
   service_view: 24,
   engaged_click: 6,
 };
-
-/* =====================================================
-   INTERNAL HELPERS
-   ===================================================== */
 
 const getSinceDateForEventType = (eventType) => {
   const hours = EVENT_TTL_HOURS[eventType];
@@ -41,13 +32,6 @@ const buildEventTypeCondition = (eventTypeOrList) => {
   };
 };
 
-/* =====================================================
-   CREATE (SAFE ENTRY POINT)
-   ===================================================== */
-
-/**
- * Safely log engagement with dedup rules
- */
 const logEngagement = async ({
   entityType,
   entityId,
@@ -60,7 +44,6 @@ const logEngagement = async ({
   dedupeHourBucket = null,
   createdAt = new Date(),
 }) => {
-  // 1️⃣ Favorites → DB-level unique index handles it
   if (eventType === "profile_save") {
     try {
       return await EngagementEvents.create({
@@ -76,13 +59,11 @@ const logEngagement = async ({
         createdAt,
       });
     } catch (err) {
-      // Duplicate favorite → ignore silently
       if (err.code === 11000) return null;
       throw err;
     }
   }
 
-  // 2️⃣ Shares → always log
   if (eventType === "share") {
     return EngagementEvents.create({
       entityType,
@@ -98,7 +79,6 @@ const logEngagement = async ({
     });
   }
 
-  // 3️⃣ Views / Click / Open → TTL based
   const since = getSinceDateForEventType(eventType);
 
   if (userId && since) {
@@ -126,10 +106,6 @@ const logEngagement = async ({
     createdAt,
   });
 };
-
-/* =====================================================
-   COUNTS / ANALYTICS
-   ===================================================== */
 
 const countEngagementsByEntity = async ({
   entityType,
@@ -173,19 +149,12 @@ const getTrendingEntities = async ({
   ]);
 };
 
-/* =====================================================
-   CLEANUP
-   ===================================================== */
-
 const deleteEngagementsBefore = async (beforeDate) => {
   return EngagementEvents.deleteMany({
     createdAt: { $lt: beforeDate },
   });
 };
 
-/**
- * Get engagement counts for an entity with multiple actions in ONE query
- */
 const getEngagementCountsByEntity = async ({
   entityType,
   entityId,
@@ -215,7 +184,6 @@ const getEngagementCountsByEntity = async ({
     },
   ]);
 
-  // Normalize output (ensure all actions exist)
   const stats = eventTypes.reduce((acc, type) => {
     acc[type] = 0;
     return acc;
@@ -228,22 +196,6 @@ const getEngagementCountsByEntity = async ({
   return stats;
 };
 
-/**
- * Get weekly engagement stats (Mon → Sun)
- *
- * @param {String} entityType - "events" | "organizations" | "users"
- * @param {String|ObjectId} entityId
- * @param {String} action - "view" | "favorite" | "share" | "open"
- */
-
-/*  Example Usage:
-const weeklyViews = await getWeeklyEngagementStats({
-  entityType: "events",
-  entityId: eventId,
-  action: "view"
-});
-
-*/
 const getWeeklyEngagementStats = async ({
   entityType,
   entityId,
@@ -254,9 +206,8 @@ const getWeeklyEngagementStats = async ({
       ? new mongoose.Types.ObjectId(entityId)
       : entityId;
 
-  // ---- ISO Week (Mon → Sun) ----
   const now = new Date();
-  const utcDay = now.getUTCDay(); // 0=Sun, 1=Mon
+  const utcDay = now.getUTCDay();
   const diffToMonday = utcDay === 0 ? -6 : 1 - utcDay;
 
   const weekStart = new Date(
@@ -284,7 +235,7 @@ const getWeeklyEngagementStats = async ({
     },
     {
       $addFields: {
-        dayOfWeek: { $isoDayOfWeek: "$createdAt" }, // 1=Mon ... 7=Sun
+        dayOfWeek: { $isoDayOfWeek: "$createdAt" },
       },
     },
     {
@@ -295,7 +246,6 @@ const getWeeklyEngagementStats = async ({
     },
   ]);
 
-  // ---- Normalize output (Mon → Sun) ----
   const dayMap = {
     1: "Mon",
     2: "Tue",
@@ -370,7 +320,6 @@ const getLeadsByOwnerUser = async ({
       $match: matchStage,
     },
 
-    // lead user
     {
       $lookup: {
         from: "users",
@@ -395,7 +344,6 @@ const getLeadsByOwnerUser = async ({
       },
     },
 
-    // coach owner
     {
       $lookup: {
         from: "users",
@@ -419,7 +367,6 @@ const getLeadsByOwnerUser = async ({
       },
     },
 
-    // services
     {
       $lookup: {
         from: "coachservices",
@@ -442,7 +389,6 @@ const getLeadsByOwnerUser = async ({
       },
     },
 
-    // bookings/packages
     {
       $lookup: {
         from: "bookings",
@@ -466,7 +412,6 @@ const getLeadsByOwnerUser = async ({
     },
   ];
 
-  // keyword filter
   if (keyword) {
     pipeline.push({
       $match: {
@@ -554,28 +499,20 @@ const getLeadsByOwnerUser = async ({
 
 const getTotalEngagementEventsByOrganizationId = async (organizationId) => {
   try {
-    // Ensure the organizationId is converted to ObjectId if it's a string
     const objectId = new mongoose.Types.ObjectId(organizationId);
 
-    // Count the number of documents where entityType is "organization" and entityId matches the organizationId
     const eventCount = await EngagementEvents.countDocuments({
       entityType: "organizations",
-      action: "view", // You can change this to count different actions if needed
+      action: "view",
       entityId: objectId,
     });
 
-    return eventCount; // Return the total count of matching events
+    return eventCount;
   } catch (error) {
     console.error("Error fetching total engagement events:", error);
-    return 0; // Return 0 if there was an error
+    return 0;
   }
 };
-/**
- * Get total views count per event
- * @param {Array<string|ObjectId>} eventIds
- * @param {Date|null} since (optional time filter)
- * @returns {Array<{ event: ObjectId, totalViews: number }>}
- */
 const getEventsViewsStats = async (eventIds = [], since = null) => {
   if (!Array.isArray(eventIds) || eventIds.length === 0) {
     return [];
@@ -619,24 +556,24 @@ const getUserIdsForOrganization = async (eventId) => {
       {
         $match: {
           entityType: "events",
-          entityId: new mongoose.Types.ObjectId(eventId), // Match the organizationId
+          entityId: new mongoose.Types.ObjectId(eventId),
         },
       },
       {
         $group: {
           _id: null,
-          userIds: { $addToSet: "$userId" }, // Collect unique userIds in an array
+          userIds: { $addToSet: "$userId" },
         },
       },
       {
         $project: {
           _id: 0,
-          userIds: 1, // Return only the userIds array
+          userIds: 1,
         },
       },
     ]);
 
-    return users.length > 0 ? users[0].userIds : []; // Return the user IDs array or an empty array if no users
+    return users.length > 0 ? users[0].userIds : [];
   } catch (err) {
     console.error("Error fetching user IDs:", err);
     return [];
@@ -648,24 +585,24 @@ const getUserIdsForOrganizationOrganizaerView = async (organization) => {
       {
         $match: {
           entityType: "organizations",
-          entityId: new mongoose.Types.ObjectId(organization), // Match the organizationId
+          entityId: new mongoose.Types.ObjectId(organization),
         },
       },
       {
         $group: {
           _id: null,
-          userIds: { $addToSet: "$userId" }, // Collect unique userIds in an array
+          userIds: { $addToSet: "$userId" },
         },
       },
       {
         $project: {
           _id: 0,
-          userIds: 1, // Return only the userIds array
+          userIds: 1,
         },
       },
     ]);
 
-    return users.length > 0 ? users[0].userIds : []; // Return the user IDs array or an empty array if no users
+    return users.length > 0 ? users[0].userIds : [];
   } catch (err) {
     console.error("Error fetching user IDs:", err);
     return [];

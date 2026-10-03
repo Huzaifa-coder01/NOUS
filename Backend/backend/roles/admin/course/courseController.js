@@ -71,7 +71,6 @@ const getCourse = async (req, res) => {
   )
     return;
 
-  // A student only ever sees the active courses
   if (!isAdmin) {
     status = "active";
   }

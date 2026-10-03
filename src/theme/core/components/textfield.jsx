@@ -4,12 +4,7 @@ import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 import { varAlpha } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const MuiInputBase = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       [`&.${inputBaseClasses.disabled}`]: {
@@ -19,7 +14,6 @@ const MuiInputBase = {
     input: ({ theme }) => ({
       fontSize: theme.typography.pxToRem(15),
       [theme.breakpoints.down('sm')]: {
-        // This will prevent zoom in Safari min font size ~ 16px
         fontSize: theme.typography.pxToRem(16),
       },
       '&::placeholder': {
@@ -30,12 +24,7 @@ const MuiInputBase = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiInput = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     underline: ({ theme }) => ({
       '&::before': { borderBottomColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32) },
@@ -44,12 +33,7 @@ const MuiInput = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiOutlinedInput = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       [`&.${outlinedInputClasses.focused}`]: {
@@ -77,17 +61,9 @@ const MuiOutlinedInput = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 const MuiFilledInput = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { disableUnderline: true },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       borderRadius: theme.shape.borderRadius,
@@ -108,8 +84,6 @@ const MuiFilledInput = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const textfield = {
   MuiInput,

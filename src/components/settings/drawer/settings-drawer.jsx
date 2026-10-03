@@ -22,8 +22,6 @@ import { PresetsOptions } from './presets-options';
 import { defaultSettings } from '../config-settings';
 import { FullScreenButton } from './fullscreen-button';
 
-// ----------------------------------------------------------------------
-
 export function SettingsDrawer({
   sx,
   hideFont,

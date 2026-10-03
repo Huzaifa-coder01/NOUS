@@ -4,14 +4,6 @@ import Typography from '@mui/material/Typography';
 
 import { CONFIG } from 'src/config-global';
 
-// ----------------------------------------------------------------------
-
-/**
- * The decorative half of the auth screen: gradient, orbit rings and a frosted
- * panel. Unchanged from the original except that the CSS-variable colours
- * (`varAlpha(theme.vars.palette.common.whiteChannel, x)`) are written as plain
- * rgba, which renders identically without the css-vars theme.
- */
 const white = (opacity) => `rgba(255, 255, 255, ${opacity})`;
 
 export function Section({

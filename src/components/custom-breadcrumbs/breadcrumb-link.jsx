@@ -3,8 +3,6 @@ import Link from '@mui/material/Link';
 
 import { RouterLink } from 'src/routes/components';
 
-// ----------------------------------------------------------------------
-
 export function BreadcrumbsLink({ link, activeLast, disabled }) {
   const styles = {
     typography: 'body2',

@@ -1,13 +1,9 @@
-// ----------------------------------------------------------------------
-
 const DEFAULT_LOCALE = { code: 'en-US', currency: 'USD' };
 
 function processInput(inputValue) {
   if (inputValue == null || Number.isNaN(inputValue)) return null;
   return Number(inputValue);
 }
-
-// ----------------------------------------------------------------------
 
 export function fNumber(inputValue, options) {
   const locale = { code: 'en-US', currency: 'USD' };
@@ -23,8 +19,6 @@ export function fNumber(inputValue, options) {
 
   return fm;
 }
-
-// ----------------------------------------------------------------------
 
 export function fCurrency(inputValue, options) {
   const locale = { code: 'en-US', currency: 'USD' };
@@ -43,8 +37,6 @@ export function fCurrency(inputValue, options) {
   return fm;
 }
 
-// ----------------------------------------------------------------------
-
 export function fPercent(inputValue, options) {
   const locale = { code: 'en-US', currency: 'USD' };
 
@@ -61,8 +53,6 @@ export function fPercent(inputValue, options) {
   return fm;
 }
 
-// ----------------------------------------------------------------------
-
 export function fShortenNumber(inputValue, options) {
   const locale = { code: 'en-US', currency: 'USD' };
 
@@ -77,8 +67,6 @@ export function fShortenNumber(inputValue, options) {
 
   return fm.replace(/[A-Z]/g, (match) => match.toLowerCase());
 }
-
-// ----------------------------------------------------------------------
 
 export function fData(inputValue) {
   const number = processInput(inputValue);

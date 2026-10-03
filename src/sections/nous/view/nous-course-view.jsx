@@ -6,9 +6,6 @@ import { idOf, contentCount } from 'src/constants/nous';
 import { NousCard, PageTitle, BackButton, Breadcrumbs, ScreenError } from '../components';
 import { CardsGrid, EmptyState } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/** Step 2: `GET /levels?courseId=` - the active levels of the chosen course. */
 export function NousCourseView({ course, levels, error, onRetry }) {
   return (
     <>

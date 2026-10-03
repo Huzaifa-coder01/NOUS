@@ -42,7 +42,6 @@ const getAllUsers = async (req, res) => {
   const currentUser = req.user;
 
   if (currentUser.userType === "admin") {
-    // Admin can see all users
     try {
       const { users, meta } = await usersService.getAllUsers({
         page,
@@ -51,11 +50,6 @@ const getAllUsers = async (req, res) => {
         status,
         userType,
       });
-      // // Ensure toJSON method is applied to strip out sensitive data
-      // const sanitizedUsers = users.map((user) => {
-      //   // Use your updated toJSON (works for docs and plain objects)
-      //   return formatUserResponse(User.prototype.toJSON(user));
-      // });
 
       return sendResponse({
         res,
@@ -73,10 +67,7 @@ const getAllUsers = async (req, res) => {
       });
     }
   } else if (["manager", "organizer"].includes(currentUser.userType)) {
-    // Managers and Organizers can see users they created or users in their organizations
     try {
-      //only staff, manager userTypes accepted
-
       if (
         !validateParams(req, res, {
           enumFields: { userType: ["staff", "manager"] },
@@ -84,7 +75,6 @@ const getAllUsers = async (req, res) => {
       )
         return;
 
-      // Managers and Organizers can only see users they created or users in their organizations
       const { users, meta } = await usersService.getStaff({
         page,
         limit,
@@ -94,17 +84,14 @@ const getAllUsers = async (req, res) => {
         currentUser,
       });
 
-      // Filter users to only include those created by currentUser or in their organizations
       const filteredUsers = users.filter((user) => {
         if (currentUser.userType === "organizer") {
-          // Organizer: users in orgs they created
           return user.organizations?.some(
             (org) => org.creator.toString() === currentUser._id.toString(),
           );
         }
 
         if (currentUser.userType === "manager") {
-          // Manager: users in orgs where they're listed in staff
           return user.organizations?.some((org) =>
             org.staff.some(
               (s) => s.user.toString() === currentUser._id.toString(),
@@ -115,9 +102,7 @@ const getAllUsers = async (req, res) => {
         return false;
       });
 
-      // Ensure toJSON method is applied to strip out sensitive data
       const sanitizedUsers = filteredUsers.map((user) => {
-        // Use your updated toJSON (works for docs and plain objects)
         return formatUserResponse(User.prototype.toJSON(user));
       });
 
@@ -143,7 +128,7 @@ const getUsers = async (req, res) => {
   const { keyword, status, userType } = req.query;
   const currentUser = req.user
 
-  if (currentUser.userType === "admin") { // Admin can see all users
+  if (currentUser.userType === "admin") {
     try {
       const { users, meta } = await usersService.getAllUsers({
         page,
@@ -152,9 +137,7 @@ const getUsers = async (req, res) => {
         status,
         userType
       });
-      // Ensure toJSON method is applied to strip out sensitive data
       const sanitizedUsers = users.map(user => {
-        // Use your updated toJSON (works for docs and plain objects)
         return formatUserResponse(User.prototype.toJSON(user));
       });
 
@@ -173,10 +156,8 @@ const getUsers = async (req, res) => {
         error,
       });
     }
-  } else if (["manager", "organizer"].includes(currentUser.userType)) { // Managers and Organizers can see users they created or users in their organizations
+  } else if (["manager", "organizer"].includes(currentUser.userType)) {
     try {
-
-      //only staff, manager userTypes accepted
 
       if (
         !validateParams(req, res, {
@@ -185,7 +166,6 @@ const getUsers = async (req, res) => {
       )
         return;
 
-      // Managers and Organizers can only see users they created or users in their organizations
       const { users, meta } = await usersService.getStaff({
         page,
         limit,
@@ -195,17 +175,14 @@ const getUsers = async (req, res) => {
         currentUser
       });
 
-      // Filter users to only include those created by currentUser or in their organizations
       const filteredUsers = users.filter(user => {
         if (currentUser.userType === "organizer") {
-          // Organizer: users in orgs they created
           return user.organizations?.some(
             org => org.creator.toString() === currentUser._id.toString()
           );
         }
 
         if (currentUser.userType === "manager") {
-          // Manager: users in orgs where they're listed in staff
           return user.organizations?.some(
             org => org.staff.some(
               s => s.user.toString() === currentUser._id.toString()
@@ -216,9 +193,7 @@ const getUsers = async (req, res) => {
         return false;
       });
 
-      // Ensure toJSON method is applied to strip out sensitive data
       const sanitizedUsers = filteredUsers.map(user => {
-        // Use your updated toJSON (works for docs and plain objects)
         return formatUserResponse(User.prototype.toJSON(user));
       });
 
@@ -257,7 +232,6 @@ const updateUser = async (req, res) => {
     const currentUser = req.user;
 
 
-    // Only admin can update other users' profiles
     if (
       currentUser._id.toString() !== id &&
       !["admin"].includes(currentUser.userType)
@@ -375,7 +349,6 @@ const getUserDetails = async (req, res) => {
 
 
 
-// Setup 2FA (get QR code)
 const setupTwoFAController = async (req, res) => {
   const user = req.user;
   try {
@@ -391,7 +364,6 @@ const setupTwoFAController = async (req, res) => {
   }
 };
 
-// Confirm 2FA
 const confirmTwoFAController = async (req, res) => {
   const user = req.user;
   const { token } = req.body;
@@ -411,14 +383,14 @@ const confirmTwoFAController = async (req, res) => {
       return sendResponse({
         res,
         statusCode: 200,
-        translationKey: "2fa_enabled_successfully", // First time enabling
+        translationKey: "2fa_enabled_successfully",
       });
     }
 
     return sendResponse({
       res,
       statusCode: 200,
-      translationKey: "2fa_verified_successfully", // Already enabled, just validated
+      translationKey: "2fa_verified_successfully",
     });
   } catch (error) {
     return sendResponse({
@@ -431,7 +403,6 @@ const confirmTwoFAController = async (req, res) => {
 };
 
 
-// Disable 2FA
 const disableTwoFAController = async (req, res) => {
   const user = req.user;
   try {
@@ -453,7 +424,6 @@ const getAllAthletes = async (req, res) => {
   const currentUser = req.user;
 
   if (currentUser.userType === "admin") {
-    // Admin can see all users
     try {
       const { users, meta } = await usersService.getAllAthletes({
         page,
@@ -479,10 +449,7 @@ const getAllAthletes = async (req, res) => {
       });
     }
   } else if (["manager", "organizer"].includes(currentUser.userType)) {
-    // Managers and Organizers can see users they created or users in their organizations
     try {
-      //only staff, manager userTypes accepted
-
       if (
         !validateParams(req, res, {
           enumFields: { userType: ["staff", "manager"] },
@@ -490,7 +457,6 @@ const getAllAthletes = async (req, res) => {
       )
         return;
 
-      // Managers and Organizers can only see users they created or users in their organizations
       const { users, meta } = await usersService.getStaff({
         page,
         limit,
@@ -500,17 +466,14 @@ const getAllAthletes = async (req, res) => {
         currentUser,
       });
 
-      // Filter users to only include those created by currentUser or in their organizations
       const filteredUsers = users.filter((user) => {
         if (currentUser.userType === "organizer") {
-          // Organizer: users in orgs they created
           return user.organizations?.some(
             (org) => org.creator.toString() === currentUser._id.toString(),
           );
         }
 
         if (currentUser.userType === "manager") {
-          // Manager: users in orgs where they're listed in staff
           return user.organizations?.some((org) =>
             org.staff.some(
               (s) => s.user.toString() === currentUser._id.toString(),
@@ -521,9 +484,7 @@ const getAllAthletes = async (req, res) => {
         return false;
       });
 
-      // Ensure toJSON method is applied to strip out sensitive data
       const sanitizedUsers = filteredUsers.map((user) => {
-        // Use your updated toJSON (works for docs and plain objects)
         return formatUserResponse(User.prototype.toJSON(user));
       });
 

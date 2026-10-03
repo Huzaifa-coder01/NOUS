@@ -1,7 +1,3 @@
-/**
- * DB Bootstrap – versioned, safe, internal-only admin creation
- */
-
 const mongoose = require("mongoose");
 const { User } = require("@UsersModel");
 const AdminSettings = require("../../roles/admin/settings/models/AdminSettings");
@@ -9,9 +5,6 @@ const { registerUserUtility } = require("../../controllers/authUtil");
 
 const BOOTSTRAP_VERSION = 1;
 
-/* ----------------------------------
-   Bootstrap Marker
----------------------------------- */
 const bootstrapSchema = new mongoose.Schema(
     { version: { type: Number, default: 1 } },
     { timestamps: true }
@@ -20,10 +13,6 @@ const bootstrapSchema = new mongoose.Schema(
 const Bootstrap =
     mongoose.models.SystemBootstrap ||
     mongoose.model("SystemBootstrap", bootstrapSchema);
-
-/* ----------------------------------
-   HELPERS
----------------------------------- */
 
 async function createUserViaUtility(payload) {
     const fakeReq = {
@@ -38,22 +27,17 @@ async function createUserViaUtility(payload) {
 
     return registerUserUtility(fakeReq, fakeRes, {
         autoVerify: true,
-        allowAdminCreation: true, // 🔒 INTERNAL ONLY
+        allowAdminCreation: true,
     });
 }
 
-/* ----------------------------------
-   MAIN BOOTSTRAP
----------------------------------- */
 async function runDBBootstrap() {
     try {
-        // 🔒 VERSIONED ATOMIC LOCK
         const alreadyRan = await Bootstrap.findOne({ version: BOOTSTRAP_VERSION });
         if (alreadyRan) {
             return;
         }
 
-        // ✅ Mark as done (atomic — won't duplicate if unique index is set)
         const bootstrap = await Bootstrap.findOneAndUpdate(
             { version: { $lt: BOOTSTRAP_VERSION } },
             { $set: { version: BOOTSTRAP_VERSION } },
@@ -65,9 +49,6 @@ async function runDBBootstrap() {
             return;
         }
 
-        /* -----------------------------
-           Admin Settings
-        ------------------------------ */
         const settingsExists = await AdminSettings.findOne();
         if (!settingsExists) {
             await AdminSettings.create({
@@ -79,9 +60,6 @@ async function runDBBootstrap() {
             console.log("✅ Admin settings created");
         }
 
-        /* -----------------------------
-           Guest User
-        ------------------------------ */
         if (
             process.env.BOOTSTRAP_GUEST_EMAIL &&
             process.env.BOOTSTRAP_GUEST_PASSWORD
@@ -104,9 +82,6 @@ async function runDBBootstrap() {
             }
         }
 
-        /* -----------------------------
-           Admin User (CREATE or PROMOTE)
-        ------------------------------ */
         if (
             process.env.BOOTSTRAP_ADMIN_EMAIL &&
             process.env.BOOTSTRAP_ADMIN_PASSWORD

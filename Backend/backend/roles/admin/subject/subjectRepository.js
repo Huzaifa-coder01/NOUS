@@ -51,7 +51,6 @@ const createSubject = async (data) => {
       return { error: "level_not_found" };
     }
 
-    // A child added under a node that is not active starts out inactive too
     if (level.status !== "active") {
       data.status = "inactive";
     }
@@ -69,7 +68,6 @@ const createSubject = async (data) => {
   }
 };
 
-// Pulls the parent level and, nested inside it, the level's course
 const levelLookupStage = {
   $lookup: {
     from: "levels",
@@ -180,7 +178,6 @@ const getSubject = async ({
     },
   });
 
-  // A student only sees subjects whose level and course are both active
   if (onlyActiveParents) {
     pipeline.push({
       $match: {
@@ -225,7 +222,6 @@ const getSubject = async ({
   const subject = result[0]?.data || [];
   const totalFiltered = result[0]?.totalFiltered?.[0]?.count || 0;
 
-  // Counts stay scoped to the node the list is filtered by
   const countFilter = {
     ...(levelId && { level: new mongoose.Types.ObjectId(levelId) }),
   };

@@ -1,9 +1,4 @@
-// ----------------------------------------------------------------------
-
 const MuiDialog = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     paper: ({ ownerState, theme }) => ({
       boxShadow: theme.customShadows.dialog,
@@ -15,16 +10,10 @@ const MuiDialog = {
 };
 
 const MuiDialogTitle = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: { root: ({ theme }) => ({ padding: theme.spacing(3) }) },
 };
 
 const MuiDialogContent = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({ padding: theme.spacing(0, 3) }),
     dividers: ({ theme }) => ({
@@ -36,14 +25,8 @@ const MuiDialogContent = {
 };
 
 const MuiDialogActions = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { disableSpacing: true },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       padding: theme.spacing(3),
@@ -51,8 +34,6 @@ const MuiDialogActions = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const dialog = {
   MuiDialog,

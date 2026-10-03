@@ -21,8 +21,6 @@ import { HeaderBase } from '../core/header-base';
 import { LayoutSection } from '../core/layout-section';
 import { navData as dashboardNavData } from '../config-nav-dashboard';
 
-// ----------------------------------------------------------------------
-
 export function DashboardLayout({ sx, children, data }) {
   const theme = useTheme();
 
@@ -33,8 +31,6 @@ export function DashboardLayout({ sx, children, data }) {
   const navColorVars = useNavColorVars(theme, settings);
 
   const layoutQuery = 'lg';
-
-  // const navData = data?.nav ?? dashboardNavDataAdmin;
 
   const navData = useMemo(() => data?.nav ?? dashboardNavData, [data?.nav]);
 
@@ -54,9 +50,6 @@ export function DashboardLayout({ sx, children, data }) {
       />
 
       <LayoutSection
-        /** **************************************
-         * Header
-         *************************************** */
         headerSection={
           <HeaderBase
             layoutQuery={layoutQuery}
@@ -126,9 +119,6 @@ export function DashboardLayout({ sx, children, data }) {
             }}
           />
         }
-        /** **************************************
-         * Sidebar
-         *************************************** */
         sidebarSection={
           isNavHorizontal ? null : (
             <NavVertical
@@ -145,13 +135,7 @@ export function DashboardLayout({ sx, children, data }) {
             />
           )
         }
-        /** **************************************
-         * Footer
-         *************************************** */
         footerSection={null}
-        /** **************************************
-         * Style
-         *************************************** */
         cssVars={{
           ...navColorVars.layout,
           '--layout-transition-easing': 'linear',
@@ -181,8 +165,6 @@ export function DashboardLayout({ sx, children, data }) {
     </>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function useNavColorVars(theme, settings) {
   const {
@@ -222,18 +204,13 @@ function useNavColorVars(theme, settings) {
             },
           },
           section: {
-            // caption
             '--nav-item-caption-color': palette.grey[600],
-            // subheader
             '--nav-subheader-color': palette.grey[600],
             '--nav-subheader-hover-color': palette.common.white,
-            // item
             '--nav-item-color': palette.grey[500],
             '--nav-item-root-active-color': palette.primary.light,
             '--nav-item-root-open-color': palette.common.white,
-            // bullet
             '--nav-bullet-light-color': bulletColor.dark,
-            // sub
             ...(settings.navLayout === 'vertical' && {
               '--nav-item-sub-active-color': palette.common.white,
               '--nav-item-sub-open-color': palette.common.white,

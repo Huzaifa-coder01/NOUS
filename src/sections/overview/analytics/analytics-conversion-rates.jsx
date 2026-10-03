@@ -6,8 +6,6 @@ import { fNumber } from 'src/utils/format-number';
 
 import { Chart, useChart } from 'src/components/chart';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsConversionRates({ title, subheader, chart, ...other }) {
   const theme = useTheme();
 

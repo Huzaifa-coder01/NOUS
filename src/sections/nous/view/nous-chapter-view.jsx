@@ -6,15 +6,6 @@ import { idOf, contentCount, CHAPTER_SECTIONS } from 'src/constants/nous';
 import { PageTitle, BackButton, Breadcrumbs, SectionCard } from '../components';
 import { ResourcesGrid } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Step 5: the three cards every chapter offers.
- *
- * The counts come straight off the chapter row's `contentCount`
- * ({ activeSyllabus, activeNotes, activePastPapers }), so this screen needs no
- * extra calls - exactly what the API documents it for.
- */
 export function NousChapterView({ course, level, subject, chapter }) {
   const ids = [idOf(course), idOf(level), idOf(subject), idOf(chapter)];
 

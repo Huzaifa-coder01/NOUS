@@ -9,8 +9,6 @@ import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 import { NavUl, NavLi, Subheader } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function NavSectionVertical({
   sx,
   data,
@@ -43,8 +41,6 @@ export function NavSectionVertical({
     </Stack>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function Group({ items, render, subheader, slotProps, enabledRootRedirect }) {
   const [open, setOpen] = useState(true);

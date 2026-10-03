@@ -9,7 +9,6 @@ const USERS_ONBOARDING_RESPONSES_USER_CACHE_KEY = `${USERS_ONBOARDING_RESPONSES_
 const getUserCachePrefix = (userId) =>
   `${USERS_ONBOARDING_RESPONSES_USER_CACHE_KEY}:userId=${userId}`;
 
-// Find by user
 const findUsersOnboardingResponseByUser = async (userId) => {
   return cache({
     namespace: USERS_ONBOARDING_RESPONSES_USER_CACHE_KEY,
@@ -50,7 +49,6 @@ const findCoachOnboardingResponseByUser = async (userId) => {
 };
 
 
-// Update by user
 const updateUsersOnboardingResponseByUser = async (userId, data) => {
   const doc = await UsersOnboardingResponsesModel.findOne({ user: userId });
   if (!doc) return null;
@@ -76,7 +74,6 @@ const updateUsersOnboardingResponseByUser = async (userId, data) => {
   merge(doc, data);
   await doc.save();
 
-  // Update user name first (if provided)
   if (data.name) {
     await User.findByIdAndUpdate(userId, { name: data.name }).exec();
   }
@@ -84,7 +81,6 @@ const updateUsersOnboardingResponseByUser = async (userId, data) => {
   await invalidate(getUserCachePrefix(userId));
   await invalidate(USERS_ONBOARDING_RESPONSES_CACHE_KEY);
 
-  // Re-fetch with all populates so user.name is included naturally
   let onboardingData = await UsersOnboardingResponsesModel.findOne({ user: userId })
     .populate("credentials")
     .populate("specialities")
@@ -98,7 +94,7 @@ const updateUsersOnboardingResponseByUser = async (userId, data) => {
     .populate("powerLifting.divisions");
 
   onboardingData = onboardingData.toObject();
-  onboardingData.name = data.name || onboardingData.name; // Ensure name is included at top-level
+  onboardingData.name = data.name || onboardingData.name;
   return onboardingData;
 };
 
@@ -106,7 +102,7 @@ const createUsersOnboardingResponse = async (data) => {
   const { user: userId } = data;
   const response = new UsersOnboardingResponsesModel(data);
   if (data.name) {
-    User.findByIdAndUpdate(userId, { name: data.name }).exec(); // Update user name if provided
+    User.findByIdAndUpdate(userId, { name: data.name }).exec();
   }
   const saved = await response.save();
   if (saved?.user) {
@@ -179,7 +175,6 @@ const updateUsersOnboardingResponseById = async (id, data) => {
   }
   await invalidate(USERS_ONBOARDING_RESPONSES_CACHE_KEY);
 
-  // Re-fetch with all populates
   return UsersOnboardingResponsesModel.findOne({ user: doc.user })
     .populate("user").select("name")
     .populate("credentials")

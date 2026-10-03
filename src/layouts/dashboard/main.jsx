@@ -6,8 +6,6 @@ import { layoutClasses } from 'src/layouts/classes';
 
 import { useSettingsContext } from 'src/components/settings';
 
-// ----------------------------------------------------------------------
-
 export function Main({ children, isNavHorizontal, sx, ...other }) {
   return (
     <Box
@@ -28,8 +26,6 @@ export function Main({ children, isNavHorizontal, sx, ...other }) {
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function DashboardContent({ sx, children, disablePadding, maxWidth = 'lg', ...other }) {
   const theme = useTheme();

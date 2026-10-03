@@ -24,8 +24,6 @@ import { Form, Field } from 'src/components/hook-form';
 import { signUp } from 'src/auth/context/jwt';
 import { useUploadFileMutation, useDeleteFileMutation } from 'src/store';
 
-// ----------------------------------------------------------------------
-
 export const SignUpSchema = zod.object({
   firstName: zod.string().min(1, { message: 'First name is required!' }),
   lastName: zod.string().min(1, { message: 'Last name is required!' }),
@@ -38,8 +36,6 @@ export const SignUpSchema = zod.object({
     .min(1, { message: 'Password is required!' })
     .min(6, { message: 'Password must be at least 6 characters!' }),
 });
-
-// ----------------------------------------------------------------------
 
 export function JwtSignUpView() {
   const navigate = useNavigate();
@@ -90,7 +86,6 @@ export function JwtSignUpView() {
     } catch (error) {
       console.error(error);
 
-      // nothing owns this file now that sign up failed
       if (uploaded?.file) deleteFile(uploaded.file);
 
       setErrorMsg(error instanceof Error ? error.message : error);

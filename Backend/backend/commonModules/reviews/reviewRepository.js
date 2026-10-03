@@ -38,14 +38,9 @@ const createReview = async (data = {}) => {
 const findReviewByUniqueScope = async ({ bookingId, subject, object }) => {
   return Review.findOne({ bookingId, subject, object });
 };
-/**
- * Enrich reviews with question details and selectedOptionDetails
- * @param {Array} reviews - Array of review objects from DB
- */
 const enrichReviewsWithSelectedFlag = async (reviews) => {
   if (!reviews || !reviews.length) return [];
 
-  // 1️⃣ Collect all unique question IDs
   const questionIdsSet = new Set();
   reviews.forEach((review) => {
     review.reviewTemplate?.forEach((answer) => {
@@ -55,7 +50,6 @@ const enrichReviewsWithSelectedFlag = async (reviews) => {
   const questionIds = Array.from(questionIdsSet);
   if (!questionIds.length) return reviews;
 
-  // 2️⃣ Fetch all questions with their options
   const questionsData = await ReviewTemplate.find({ _id: { $in: questionIds } })
     .select("question type options category")
     .lean();
@@ -65,13 +59,11 @@ const enrichReviewsWithSelectedFlag = async (reviews) => {
     questionsMap[q._id.toString()] = q;
   });
 
-  // 3️⃣ Enrich each review
   const enrichedReviews = reviews.map((review) => {
     review.reviewTemplate = review.reviewTemplate?.map((answer) => {
       const questionData = questionsMap[answer.question.toString()];
       if (!questionData) return answer;
 
-      // Build options with selected flag
       const optionsWithSelected = (questionData.options || []).map((opt) => ({
         _id: opt._id,
         label: opt.label,
@@ -80,7 +72,6 @@ const enrichReviewsWithSelectedFlag = async (reviews) => {
           answer.selectedOption?.some((sel) => sel.equals(opt._id)) || false,
       }));
 
-      // Final structure for this answer
       return {
         _id: answer._id,
         question: questionData.question,
@@ -106,7 +97,6 @@ const getReviews = async (
   const pipeline = [
     { $match: filter },
 
-    // Populate reviewer
     {
       $lookup: {
         from: "users",
@@ -118,7 +108,6 @@ const getReviews = async (
     },
     { $unwind: { path: "$subject", preserveNullAndEmptyArrays: true } },
 
-    // Populate service object
     {
       $lookup: {
         from: "coachservices",
@@ -148,7 +137,6 @@ const getReviews = async (
       },
     },
 
-    // Populate user object
     {
       $lookup: {
         from: "users",
@@ -198,7 +186,6 @@ const getReviews = async (
       },
     },
 
-    // Populate reviewed user
     {
       $lookup: {
         from: "users",

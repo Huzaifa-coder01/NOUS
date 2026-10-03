@@ -2,8 +2,6 @@ import { sliderClasses } from '@mui/material/Slider';
 
 import { varAlpha, stylesMode } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const SIZE = {
   rail: { small: 6, medium: 10 },
   thumb: { small: 16, medium: 20 },
@@ -11,18 +9,9 @@ const SIZE = {
 };
 
 const MuiSlider = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { size: 'small' },
 
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @color inherit
-     */
     {
       props: ({ ownerState }) => ownerState.color === 'inherit',
       style: ({ theme }) => ({
@@ -33,9 +22,6 @@ const MuiSlider = {
         },
       }),
     },
-    /**
-     * @state disabled
-     */
     {
       props: ({ ownerState }) => !!ownerState.disabled,
       style: ({ theme }) => ({
@@ -49,9 +35,6 @@ const MuiSlider = {
     },
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       [`& .${sliderClasses.thumb}`]: {
@@ -104,8 +87,6 @@ const MuiSlider = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const slider = {
   MuiSlider,

@@ -5,14 +5,13 @@ const LocationSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: ["Point"],
-      default: "Point", // Default type is 'Point'
+      default: "Point",
     },
     coordinates: {
       type: [Number],
       required: false,
       validate: {
         validator: function (arr) {
-          // Only validate if coordinates are provided
           if (!arr || arr.length === 0) return true;
           return arr.length === 2;
         },
@@ -20,23 +19,23 @@ const LocationSchema = new mongoose.Schema(
       },
     },
     fullAddress: {
-      type: String, // Full formatted address, e.g., "13th Street 47, NY 10011, USA"
+      type: String,
       default: "",
     },
     city: {
-      type: String, // City name
+      type: String,
       default: "",
     },
     country: {
-      type: String, // Country name
+      type: String,
       default: "",
     },
     state: {
-      type: String, // State name
+      type: String,
       default: "",
     },
     postalCode: {
-      type: String, // Postal code
+      type: String,
       default: "",
     },
   },

@@ -1,8 +1,6 @@
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 import { useRef, useMemo, useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export function useScrollOffSetTop(top = 0) {
   const elementRef = useRef(null);
 
@@ -36,15 +34,3 @@ export function useScrollOffSetTop(top = 0) {
 
   return memoizedValue;
 }
-
-/*
- * 1: Applies to top <header/>
- * const { offsetTop } = useScrollOffSetTop(80);
- *
- * Or
- *
- * 2: Applies to element
- * const { offsetTop, elementRef } = useScrollOffSetTop(80);
- * <div ref={elementRef} />
- *
- */

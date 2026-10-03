@@ -6,9 +6,6 @@ const { buildRevenueOverTime } = require("./utils/buildRevenueOverTime");
 const { buildUserGrowthOverTime } = require("./utils/buildUserGrowthOverTime");
 
 
-/**
- * DASHBOARD – Load all cards at once
- */
 const getDashboard = async ({ timezone, user }) => {
   const promises = [
     dashboardRepo.getStats({ timezone, user }),
@@ -45,7 +42,6 @@ const getDashboard = async ({ timezone, user }) => {
 
   return {
     stats: [
-      // // ---------------- USERS ----------------
       {
         key: "totalCoaches",
         title: DASHBOARD_KEYS.totalCoaches.title,
@@ -58,7 +54,6 @@ const getDashboard = async ({ timezone, user }) => {
         totalAthletes: stats.totalAthletes || 0,
         athletesThisMonth: stats.athletesThisMonth || "0 this month",
       },
-      // // ---------------- REVENUE ----------------
       {
         key: "totalSessions",
         title: DASHBOARD_KEYS.totalSessions.title,

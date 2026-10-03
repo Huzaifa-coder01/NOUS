@@ -12,24 +12,10 @@ import { Iconify } from 'src/components/iconify';
 
 import { AVATAR_ACCEPT, AVATAR_MAX_SIZE, assertAvatar } from 'src/store';
 
-// ----------------------------------------------------------------------
-
 const MAX_MB = Math.round(AVATAR_MAX_SIZE / (1024 * 1024));
 
 export const AVATAR_HELPER_TEXT = `Allowed *.jpeg, *.jpg, *.png, *.gif — max ${MAX_MB} MB`;
 
-/**
- * Circular avatar picker.
- *
- * It owns everything local to choosing a picture: the file dialog, type and
- * size validation, the preview, and the error message. Sending the file is the
- * caller's job - `onSelect` is awaited, so a rejection from it (a failed
- * upload, a server-side rule) shows in the same place as a validation error and
- * the preview rolls back.
- *
- * `value` is the image to show once it is stored, so a caller can hand back the
- * url the upload API returned and the circle keeps showing it across renders.
- */
 export function UploadAvatar({
   value,
   onSelect,
@@ -56,8 +42,6 @@ export function UploadAvatar({
     [preview]
   );
 
-  // the local blob only covers the wait between picking a file and the caller
-  // storing it; once there is a real url that is what the avatar should be
   useEffect(() => {
     if (value) setPreview(null);
   }, [value]);
@@ -70,7 +54,6 @@ export function UploadAvatar({
     async (event) => {
       const file = event.target.files?.[0] ?? null;
 
-      // let the same file be chosen again after a failure
       event.target.value = '';
 
       if (!file) return;
@@ -95,7 +78,6 @@ export function UploadAvatar({
       } catch (uploadError) {
         setError(uploadError?.message ?? 'That image could not be uploaded');
 
-        // nothing was stored, so stop showing it as though it was
         setPreview(null);
       } finally {
         setBusy(false);
@@ -134,7 +116,6 @@ export function UploadAvatar({
             )}`,
           transition: (theme) => theme.transitions.create(['border-color', 'opacity']),
           '&:hover': { borderColor: disabled ? undefined : 'primary.main' },
-          // the overlay only appears over an existing picture
           '&:hover .upload-avatar__overlay': { opacity: shown ? 1 : 0 },
         }}
       >

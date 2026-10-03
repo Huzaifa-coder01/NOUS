@@ -26,14 +26,10 @@ import { syllabusApi } from './Reducer/syllabus';
 import { dashboardApi } from './Reducer/dashboard';
 import { pastPapersApi } from './Reducer/past-papers';
 
-// ----------------------------------------------------------------------
-
-/** Only the signed-in account survives a reload; server state is refetched. */
 const persistConfig = { key: 'root', storage, whitelist: ['user'] };
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
-/** Every RTK Query api registered in the store. */
 const apis = [
   authApi,
   coursesApi,
@@ -83,14 +79,6 @@ export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
 
-// ----------------------------------------------------------------------
-
-/**
- * Deactivating or deleting a catalog node cascades to every descendant on the
- * server, so one mutation can change rows in several of these apis at once.
- * Tags cannot cross a `createApi` boundary, so this clears the lot - it is the
- * price of a reducer per domain, and it only runs after a cascading write.
- */
 export const invalidateCatalog = () => (dispatch) => {
   dispatch(coursesApi.util.invalidateTags(['Courses']));
   dispatch(levelsApi.util.invalidateTags(['Levels']));
@@ -101,7 +89,6 @@ export const invalidateCatalog = () => (dispatch) => {
   dispatch(notesApi.util.invalidateTags(['Notes']));
 };
 
-/** Drops every cached response - used when a session ends. */
 export const resetAllApiState = () => (dispatch) => {
   apis.forEach((api) => dispatch(api.util.resetApiState()));
 };

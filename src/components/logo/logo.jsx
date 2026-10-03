@@ -8,13 +8,6 @@ import { RouterLink } from 'src/routes/components';
 
 import { logoClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
-/**
- * The NOUS mark: an inline SVG monogram tinted with the theme's primary colour.
- * It is drawn rather than loaded so it can never 404 and needs no asset in
- * `public/`.
- */
 export const Logo = forwardRef(
   ({ width = 45, height = 52, disableLink = false, className, href = '/', sx, ...other }, ref) => {
     const theme = useTheme();
@@ -39,10 +32,8 @@ export const Logo = forwardRef(
 
         <rect width="64" height="64" rx="16" fill={`url(#${gradientId})`} />
 
-        {/* N monogram */}
         <path fill="#fff" d="M20 45V19h5.6l12.2 16.4V19H43v26h-5.5L25.3 28.6V45H20z" />
 
-        {/* the open book NOUS is built around */}
         <path
           fill="#fff"
           fillOpacity="0.55"

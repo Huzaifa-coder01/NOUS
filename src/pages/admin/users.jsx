@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { UserListView } from 'src/sections/user/view';
 
-// ----------------------------------------------------------------------
-
 const metadata = { title: `Users - ${CONFIG.site.name}` };
 
 export default function Page() {

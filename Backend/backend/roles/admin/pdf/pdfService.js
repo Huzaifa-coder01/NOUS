@@ -5,10 +5,6 @@ const {
   chainHasInactive,
 } = require("../../../shared/courseContent/hierarchy");
 
-/**
- * The ancestors are derived from the deepest node the caller names, so a stored
- * PDF can never point at a chain that does not line up.
- */
 const createPdf = async ({
   type,
   name,
@@ -127,7 +123,6 @@ const getPdfDetails = async (id, type, { onlyActive = false } = {}) => {
     return null;
   }
 
-  // A student only ever sees an active PDF whose whole chain is active
   if (onlyActive) {
     const chain = [pdf.course, pdf.level, pdf.subject, pdf.chapter].filter(
       Boolean,

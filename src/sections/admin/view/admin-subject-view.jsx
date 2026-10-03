@@ -16,8 +16,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { EntityList } from '../components/entity-list';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   {
     name: 'chapterNumber',
@@ -29,8 +27,6 @@ const FIELDS = [
 ];
 
 const DELETE_NOTE = 'A soft delete: the chapter is marked deleted and its past papers, syllabus and notes are switched to inactive.';
-
-// ----------------------------------------------------------------------
 
 export function AdminSubjectView({ course, level, subject }) {
   const navigate = useNavigate();

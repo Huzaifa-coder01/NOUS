@@ -64,7 +64,6 @@ const updateLevel = async (id, data) => {
   Object.assign(level, updateData);
   await level.save();
 
-  // Turning a node off turns everything under it off as well
   if (updateData.status === "inactive") {
     await cascadeFromLevel(level._id);
   }
@@ -79,7 +78,6 @@ const getLevelDetails = async (id, { onlyActive = false } = {}) => {
     return null;
   }
 
-  // A student only sees an active level under an active course
   if (onlyActive) {
     if (level.status !== "active" || level.course?.status !== "active") {
       return null;
@@ -93,7 +91,6 @@ const deleteLevel = async (id) => {
   if (!id) throw new Error("Level ID is required");
   const deleted = await LevelRepo.deleteLevel(id);
 
-  // Children are kept, they just go inactive
   if (deleted) {
     await cascadeFromLevel(id);
   }

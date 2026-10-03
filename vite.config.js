@@ -3,21 +3,14 @@ import checker from 'vite-plugin-checker';
 import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
-// ----------------------------------------------------------------------
-
 const PORT = 3030;
 
 const env = loadEnv('all', process.cwd());
 
 export default defineConfig({
-  // base: env.VITE_BASE_PATH,
   plugins: [
     react(),
     checker({
-      // Commented out the eslint config to disable it
-      // eslint: {
-      //   lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
-      // },
       overlay: {
         position: 'tl',
         initialIsOpen: false,

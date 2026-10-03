@@ -1,9 +1,4 @@
-// ----------------------------------------------------------------------
-
 const MuiBreadcrumbs = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     ol: ({ theme }) => ({ rowGap: theme.spacing(0.5), columnGap: theme.spacing(2) }),
 
@@ -11,7 +6,5 @@ const MuiBreadcrumbs = {
     separator: { margin: 0 },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const breadcrumbs = { MuiBreadcrumbs };

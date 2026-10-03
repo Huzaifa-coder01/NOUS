@@ -3,8 +3,6 @@ import Skeleton from '@mui/material/Skeleton';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
-// ----------------------------------------------------------------------
-
 export function TableSkeleton({ ...other }) {
   return (
     <TableRow {...other}>

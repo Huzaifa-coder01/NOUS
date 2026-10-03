@@ -32,7 +32,6 @@ const createReviewTemplate = async (req, res) => {
   } = req.body;
 
 
-  // Basic validation
   if (!question || !type || !options) {
     return sendResponse({
       res,
@@ -51,7 +50,6 @@ const createReviewTemplate = async (req, res) => {
   }
 
   const MAX_OPTIONS = 10;
-  // Select types must have options
   if (["single_select", "multi_select"].includes(type)) {
     if (!options || options.length === 0) {
       return sendResponse({
@@ -69,7 +67,6 @@ const createReviewTemplate = async (req, res) => {
     }
   }
 
-  // Boolean → auto fix options
   const finalOptions =
     type === "boolean"
       ? [
@@ -161,7 +158,6 @@ const updateReviewTemplate = async (req, res) => {
 
   let { question, type, options, order, status } = req.body;
 
-  // Prepare finalOptions if type is boolean or select type
   let finalOptions = options;
   if (type === "boolean") {
     finalOptions = [
@@ -175,7 +171,6 @@ const updateReviewTemplate = async (req, res) => {
     }));
   }
 
-  // Build update object dynamically
   const data = {};
   if (question !== undefined) data.question = question.trim();
   if (type !== undefined) data.type = type;
@@ -184,7 +179,7 @@ const updateReviewTemplate = async (req, res) => {
   if (finalOptions !== undefined) data.options = finalOptions;
   if (order !== undefined) data.order = order;
   if (status !== undefined) data.status = status;
-  data.createdBy = userId; // optional: track last updater
+  data.createdBy = userId;
 
   try {
     const updated = await reviewTemplateService.updateReviewTemplate(id, data);

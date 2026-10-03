@@ -1,7 +1,5 @@
 import { varTranExit, varTranEnter } from './transition';
 
-// ----------------------------------------------------------------------
-
 export const varScale = (props) => {
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;
@@ -9,7 +7,6 @@ export const varScale = (props) => {
   const easeOut = props?.easeOut;
 
   return {
-    // IN
     in: {
       initial: { scale: 0, opacity: 0 },
       animate: { scale: 1, opacity: 1, transition: varTranEnter({ durationIn, easeIn }) },
@@ -26,7 +23,6 @@ export const varScale = (props) => {
       exit: { scaleY: 0, opacity: 0, transition: varTranExit({ durationOut, easeOut }) },
     },
 
-    // OUT
     out: {
       initial: { scale: 1, opacity: 1 },
       animate: { scale: 0, opacity: 0, transition: varTranEnter({ durationIn, easeIn }) },

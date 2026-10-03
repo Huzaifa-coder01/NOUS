@@ -24,7 +24,7 @@ const getMonthlyRevenueComparison = async (coachId = null) => {
   const thisYear = now.getFullYear();
   const lastYear = thisYear - 1;
 
-  const COMMISSION_RATE = 0.1; // 10% platform cut
+  const COMMISSION_RATE = 0.1;
 
   const getRevenueForYear = async (year) => {
     const start = new Date(`${year}-01-01T00:00:00.000Z`);
@@ -82,7 +82,6 @@ const getSessions = async ({ timezone, user, dateFilter = "thisWeek" }) => {
 
   const coachId = new mongoose.Types.ObjectId(user);
 
-  // ---- helper: count + revenue for a given date range (null = all time) ----
   const getStats = async (range) => {
     const matchStage = {
       ...(range ? { createdAt: { $gte: range.start, $lt: range.end } } : {}),
@@ -99,14 +98,12 @@ const getSessions = async ({ timezone, user, dateFilter = "thisWeek" }) => {
     return { count, revenue };
   };
 
-  // ---- date ranges ----
   const [weekRange, thisMonthRange, lastMonthRange] = await Promise.all([
     getDateRanges({ dateFilter: "thisWeek", timezone }),
     getDateRanges({ dateFilter: "thisMonth", timezone }),
     getDateRanges({ dateFilter: "lastMonth", timezone }),
   ]);
 
-  // ---- queries ----
   const [allTime, thisWeek, thisMonth, lastMonth] = await Promise.all([
     getStats(null),
     getStats(weekRange),
@@ -114,17 +111,15 @@ const getSessions = async ({ timezone, user, dateFilter = "thisWeek" }) => {
     getStats(lastMonthRange),
   ]);
 
-  // ---- platform fee = 10% of all bookings revenue ----
   const PLATFORM_FEE_RATE = 0.1;
   const platformRevenue = allTime.revenue * PLATFORM_FEE_RATE;
 
-  // ---- month-over-month % change (on platform fee) ----
   const thisMonthFee = thisMonth.revenue * PLATFORM_FEE_RATE;
   const lastMonthFee = lastMonth.revenue * PLATFORM_FEE_RATE;
 
   let percentChange;
   if (lastMonthFee === 0) {
-    percentChange = thisMonthFee > 0 ? 100 : 0; // avoid divide-by-zero
+    percentChange = thisMonthFee > 0 ? 100 : 0;
   } else {
     percentChange = ((thisMonthFee - lastMonthFee) / lastMonthFee) * 100;
   }
@@ -134,7 +129,7 @@ const getSessions = async ({ timezone, user, dateFilter = "thisWeek" }) => {
   return {
     totalBookings: allTime.count,
     thisWeekBookings: "+" + thisWeek.count + " this week",
-    platformRevenue: Math.round(platformRevenue * 100) / 100, // 2 decimals
+    platformRevenue: Math.round(platformRevenue * 100) / 100,
     revenueGrowth: sign + percentChange.toFixed(1) + "% from last month",
   };
 };
@@ -165,7 +160,6 @@ const getBookingStatusCounts = async (coachId = null) => {
     },
   ]);
 
-  // Map results for quick lookup
   const counts = result.reduce((acc, r) => {
     acc[r._id] = r.count;
     return acc;
@@ -188,7 +182,6 @@ const getBookingStatusCounts = async (coachId = null) => {
 const Genders = ["Male", "Female", "Other"];
 
 const getUserGenderCounts = async () => {
-  // Group by gender within a single collection
   const groupByGender = async (Model) => {
     const result = await Model.aggregate([
       {
@@ -199,7 +192,6 @@ const getUserGenderCounts = async () => {
       },
     ]);
     return result.reduce((acc, r) => {
-      // Treat "" (unset) as "Other"
       const key = r._id && r._id.trim() ? r._id : "Other";
       acc[key] = (acc[key] || 0) + r.count;
       return acc;
@@ -211,7 +203,6 @@ const getUserGenderCounts = async () => {
     groupByGender(UsersOnboardingResponsesModel),
   ]);
 
-  // Merge the three buckets across both collections
   const byGender = Genders.reduce((acc, g) => {
     acc[g] = (coachCounts[g] || 0) + (athleteCounts[g] || 0);
     return acc;
@@ -254,7 +245,6 @@ const getMonthlyUserGrowthComparison = async () => {
       { $sort: { _id: 1 } },
     ]);
 
-    // fill missing months with 0
     return Array.from({ length: 12 }, (_, i) => {
       const monthData = result.find((r) => r._id === i + 1);
       return {
@@ -277,10 +267,8 @@ const getMonthlyUserGrowthComparison = async () => {
 
 const getTopCoaches = async (limit = 6) => {
   const result = await User.aggregate([
-    // 1. Only coaches
     { $match: { "accountState.userType": "coach" } },
 
-    // 2. Reviews for this coach -> avg rating + total reviews
     {
       $lookup: {
         from: "reviews",
@@ -296,14 +284,13 @@ const getTopCoaches = async (limit = 6) => {
       },
     },
 
-    // 3. Bookings -> count unique users who booked their services
     {
       $lookup: {
         from: "bookings",
         let: { coachId: "$_id" },
         pipeline: [
           { $match: { $expr: { $eq: ["$coach", "$$coachId"] } } },
-          { $group: { _id: "$user" } }, // unique users
+          { $group: { _id: "$user" } },
           { $count: "count" },
         ],
         as: "bookingStats",
@@ -317,7 +304,6 @@ const getTopCoaches = async (limit = 6) => {
       },
     },
 
-    // 4. Onboarding response -> priceRange
     {
       $lookup: {
         from: "coachonboardingresponses",
@@ -333,11 +319,9 @@ const getTopCoaches = async (limit = 6) => {
       },
     },
 
-    // 5. Sort by best coaches first
     { $sort: { averageRating: -1, totalReviews: -1, uniqueClients: -1, createdAt: -1 } },
     { $limit: limit },
 
-    // 6. Return only the fields you asked for
     {
       $project: {
         _id: 0,
@@ -371,7 +355,7 @@ const getStats = async ({ timezone, user, dateFilter = "thisMonth" }) => {
   const getUserCount = async (role, range) => {
     const matchStage = {
       "accountState.status": "active",
-      "accountState.userType": role, // 👈 adjust to your schema if needed (e.g. "accountState.accountType")
+      "accountState.userType": role,
       ...(range ? { createdAt: { $gte: range.start, $lt: range.end } } : {}),
     };
 
@@ -428,9 +412,9 @@ const getRatingStats = async ({ timezone, user, dateFilter = "thisMonth" }) => {
   const totalReviews = result[0]?.totalReviews || 0;
 
   return {
-    averageRating: +averageRating.toFixed(2), // number
+    averageRating: +averageRating.toFixed(2),
 
-    totalReviews: `+${totalReviews} this month`, // string
+    totalReviews: `+${totalReviews} this month`,
   };
 };
 
@@ -486,8 +470,8 @@ const getServicesBookedCount = async () => {
 
 const getRetentionRate = async (userType) => {
   const now = new Date();
-  const startThisPeriod = new Date(now.getFullYear(), 0, 1);      // Jan 1 this year
-  const startLastPeriod = new Date(now.getFullYear() - 1, 0, 1);  // Jan 1 last year
+  const startThisPeriod = new Date(now.getFullYear(), 0, 1);
+  const startLastPeriod = new Date(now.getFullYear() - 1, 0, 1);
 
   const field = userType === "coach" ? "coach" : "user";
 
@@ -527,11 +511,10 @@ const getPlatformMetrics = async () => {
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - 7);
 
-  const PLATFORM_TAKE_RATE = 0.1; // 10% — config constant
+  const PLATFORM_TAKE_RATE = 0.1;
 
   const [revenueAgg, ratingAgg, sessionsAgg, coachCount, ticketAgg] =
     await Promise.all([
-      // Avg Revenue / Coach (this month, gross booking amount per coach)
       Bookings.aggregate([
         {
           $match: {
@@ -545,12 +528,10 @@ const getPlatformMetrics = async () => {
         { $group: { _id: null, avgRevenue: { $avg: "$coachRevenue" } } },
       ]),
 
-      // Avg Coach Rating (overall average across all reviews)
       Review.aggregate([
         { $group: { _id: null, avgRating: { $avg: "$rating" } } },
       ]),
 
-      // Avg Sessions / Athlete / week (bookings in last 7 days ÷ distinct athletes)
       Bookings.aggregate([
         { $unwind: "$weeklySlots" },
         { $unwind: "$weeklySlots.slots" },
@@ -574,10 +555,8 @@ const getPlatformMetrics = async () => {
         },
       ]),
 
-      // Coach count (for the revenue average denominator sanity / display)
       User.countDocuments({ userType: "coach" }),
 
-      // Support tickets — assumes a SupportTickets collection exists
       SupportRequest.aggregate([
         {
           $group: {
@@ -592,7 +571,7 @@ const getPlatformMetrics = async () => {
                   {
                     $divide: [
                       { $subtract: ["$updatedAt", "$createdAt"] },
-                      1000 * 60 * 60, // ms → hours
+                      1000 * 60 * 60,
                     ],
                   },
                   null,

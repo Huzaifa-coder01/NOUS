@@ -11,12 +11,9 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { NousSubjectPapersView } from 'src/sections/nous/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   const { ids, course, level, subject, loading, notFound } = useCatalogChain();
 
-  // no chapterId: the API returns every paper under this subject
   const docs = useGetPastPapersQuery(
     {
       courseId: ids.courseId,

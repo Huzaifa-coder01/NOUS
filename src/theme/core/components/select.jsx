@@ -1,11 +1,5 @@
 import SvgIcon from '@mui/material/SvgIcon';
 
-// ----------------------------------------------------------------------
-
-/**
- * Icons
- * https://icon-sets.iconify.design/eva/arrow-ios-downward-fill/
- */
 const ArrowDownIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -15,17 +9,9 @@ const ArrowDownIcon = (props) => (
   </SvgIcon>
 );
 
-// ----------------------------------------------------------------------
-
 const MuiSelect = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { IconComponent: ArrowDownIcon },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     icon: {
       right: 10,
@@ -35,18 +21,10 @@ const MuiSelect = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 const MuiNativeSelect = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: { IconComponent: ArrowDownIcon },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     icon: {
       right: 10,
@@ -56,7 +34,5 @@ const MuiNativeSelect = {
     },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const select = { MuiSelect, MuiNativeSelect };

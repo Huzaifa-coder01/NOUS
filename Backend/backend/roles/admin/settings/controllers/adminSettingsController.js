@@ -26,7 +26,6 @@ const ADMIN_SETTING_SCOPES = {
   FAQS: "faqs",
 };
 
-// Get Terms and Conditions
 const getTermsAndConditions = async (req, res) => {
   try {
     const cacheKey = buildAdminSettingsCacheKey({
@@ -35,7 +34,7 @@ const getTermsAndConditions = async (req, res) => {
 
     const settings = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         return AdminSettings.findOne({}, "terms_and_conditions");
@@ -73,7 +72,7 @@ const getReviewTermsAndConditions = async (req, res) => {
 
     const settings = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         return AdminSettings.findOne({}, "review_terms_and_conditions");
@@ -104,7 +103,6 @@ const getReviewTermsAndConditions = async (req, res) => {
   }
 };
 
-// Get About Us
 const getAboutUs = async (req, res) => {
   try {
     const cacheKey = buildAdminSettingsCacheKey({
@@ -113,7 +111,7 @@ const getAboutUs = async (req, res) => {
 
     const settings = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         return AdminSettings.findOne({}, "about_us");
@@ -144,7 +142,6 @@ const getAboutUs = async (req, res) => {
   }
 };
 
-// Get Privacy Policy
 const getPrivacyPolicy = async (req, res) => {
   try {
     const cacheKey = buildAdminSettingsCacheKey({
@@ -153,7 +150,7 @@ const getPrivacyPolicy = async (req, res) => {
 
     const settings = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         return AdminSettings.findOne({}, "privacy_policy");
@@ -184,7 +181,6 @@ const getPrivacyPolicy = async (req, res) => {
   }
 };
 
-// Get Privacy Policy
 const getFaqs = async (req, res) => {
   try {
     const { page, limit } = parsePaginationParams(req);
@@ -202,7 +198,7 @@ const getFaqs = async (req, res) => {
 
     const result = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         let queryConditions = {};
@@ -251,10 +247,8 @@ const getFaqs = async (req, res) => {
   }
 };
 
-// Create Admin Settings
 const createAdminSettings = async (req, res) => {
   try {
-    // invalidate only relevant sections
     await Promise.all([
       invalidateAdminSettingsScope(ADMIN_SETTING_SCOPES.TERMS),
       invalidateAdminSettingsScope(ADMIN_SETTING_SCOPES.ABOUT_US),
@@ -304,7 +298,6 @@ const createAdminSettings = async (req, res) => {
   }
 };
 
-// Update Admin Settings (Optional: To update multiple fields at once)
 const updateAdminSettings = async (req, res) => {
   const { id } = req.params;
   const updateData = {};
@@ -337,7 +330,6 @@ const updateAdminSettings = async (req, res) => {
     invalidations.push("privacy_policy");
   }
 
-  // invalidate only touched scopes
     await Promise.all([
       invalidateAdminSettingsScope(ADMIN_SETTING_SCOPES.TERMS),
       invalidateAdminSettingsScope(ADMIN_SETTING_SCOPES.ABOUT_US),
@@ -394,7 +386,7 @@ const getCustomerTermsAndConditions = async (req, res) => {
 
     const settings = await cache({
       namespace: cacheKey,
-      ttl: 86400, // 1 day
+      ttl: 86400,
 
       fetchFn: async () => {
         return AdminSettings.findOne({}, "customer_terms_and_conditions");

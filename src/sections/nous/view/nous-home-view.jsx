@@ -9,14 +9,6 @@ import { useAuthContext } from 'src/auth/hooks';
 import { Hero, NousCard, ScreenError } from '../components';
 import { CardsGrid, EmptyState } from '../styles';
 
-// ----------------------------------------------------------------------
-
-/**
- * Step 1 of the student flow: every course from `GET /courses`.
- *
- * The API forces `status=active` for a student, so nothing is filtered here -
- * whatever comes back is what a student is allowed to see.
- */
 export function NousHomeView({ courses, totals, error, onRetry }) {
   const { user } = useAuthContext();
 

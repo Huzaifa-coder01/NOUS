@@ -56,7 +56,6 @@ const pdfSchema = new mongoose.Schema(
       default: null,
       index: true,
     },
-    // Students upload notes, an admin uploads past papers and syllabus
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -81,7 +80,6 @@ pdfSchema.pre("validate", function (next) {
   next();
 });
 
-// Listing is always "this type, under this node, newest first"
 pdfSchema.index({ type: 1, subject: 1, status: 1, createdAt: -1 });
 pdfSchema.index({ type: 1, chapter: 1, status: 1, createdAt: -1 });
 

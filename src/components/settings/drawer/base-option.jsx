@@ -10,8 +10,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { SvgColor } from '../../svg-color';
 
-// ----------------------------------------------------------------------
-
 export function BaseOption({ icon, label, tooltip, selected, ...other }) {
   return (
     <ButtonBase

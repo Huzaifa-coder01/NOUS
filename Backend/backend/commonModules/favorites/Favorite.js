@@ -26,7 +26,6 @@ const favoriteSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// Prevent duplicate favorites by the same user
 favoriteSchema.index({ user: 1, targetId: 1, targetType: 1 }, { unique: true });
 
 const Favorites = mongoose.model("Favorites", favoriteSchema);

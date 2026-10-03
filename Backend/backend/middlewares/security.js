@@ -1,4 +1,3 @@
-// security.js
 const helmet = require("helmet");
 const hpp = require("hpp");
 const cors = require("cors");
@@ -7,12 +6,11 @@ const express = require("express");
 const { isDev, connectSrc } = require("../config/origins");
 const securityMiddleware = (app, options = {}) => {
   const {
-    allowedOrigins = [], // CORS allowed origins
-    adminIPWhitelist = [], // IP whitelist for admin routes e.g "/api/admin" //  ["127.0.0.1", "203.0.113.42"], // Example whitelist
-    maxRequestSize = "10mb", // Max request size for body parser
+    allowedOrigins = [],
+    adminIPWhitelist = [],
+    maxRequestSize = "10mb",
   } = options;
 
-  // Security headers with Helmet
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -32,17 +30,13 @@ const securityMiddleware = (app, options = {}) => {
     })
   );
 
-  // Prevent HTTP Parameter Pollution
   app.use(hpp());
 
-  // Enable GZIP compression
   app.use(compression());
 
-  // Body parser limits (Express)
   app.use(express.json({ limit: maxRequestSize }));
   app.use(express.urlencoded({ extended: true, limit: maxRequestSize }));
 
-  // CORS
   const isDev =
     process.env.NODE_ENV === "dev" ||
     process.env.NODE_ENV === "mobileapps";
@@ -68,7 +62,6 @@ const securityMiddleware = (app, options = {}) => {
   app.use(cors(corsOptions));
   app.options("*", cors(corsOptions));
 
-  // Optional JSON error for CORS
   app.use((err, req, res, next) => {
     if (err && err.message === "CORS Forbidden") {
       return res.status(403).json({ message: "CORS Forbidden" });
@@ -78,7 +71,6 @@ const securityMiddleware = (app, options = {}) => {
 
 
 
-  // Optional: Admin IP whitelist for sensitive routes
   if (adminIPWhitelist.length > 0) {
     app.use("/api/admin", (req, res, next) => {
       const clientIP =
@@ -90,7 +82,6 @@ const securityMiddleware = (app, options = {}) => {
     });
   }
 
-  // Optional: Log suspicious requests
   app.use((req, res, next) => {
     if (!req.ip || !req.method || !req.path) {
       console.warn("Suspicious request detected:", req.ip, req.method, req.path);

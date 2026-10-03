@@ -15,7 +15,6 @@ const apiRateLimiter = createRateLimiter("UsersOnboardingResponses");
 
 router.get("/", apiRateLimiter, getUsersOnboardingResponses);
 router.get("/:id", apiRateLimiter, getUsersOnboardingResponseById);
-// Single upsert route for create/update by user
 router.post("/", upsertUsersOnboardingResponse);
 router.delete("/:id", deleteUsersOnboardingResponse);
 

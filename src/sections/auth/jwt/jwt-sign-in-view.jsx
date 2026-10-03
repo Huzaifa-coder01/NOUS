@@ -26,8 +26,6 @@ import { getLandingPath } from 'src/auth/utils';
 import { signIn } from 'src/auth/context/jwt';
 import { useAuthContext } from 'src/auth/hooks';
 
-// ----------------------------------------------------------------------
-
 export const SignInSchema = zod.object({
   email: zod
     .string()
@@ -38,8 +36,6 @@ export const SignInSchema = zod.object({
     .min(1, { message: 'Password is required!' })
     .min(6, { message: 'Password must be at least 6 characters!' }),
 });
-
-// ----------------------------------------------------------------------
 
 export function JwtSignInView() {
   const { checkUserSession } = useAuthContext();
@@ -77,7 +73,6 @@ export function JwtSignInView() {
 
       const role = user?.accountState?.userType === 'admin' ? 'admin' : 'user';
 
-      // admins land in the panel, students on the study site
       navigate(getLandingPath(role, searchParams.get('returnTo')), { replace: true });
     } catch (error) {
       console.error(error);

@@ -11,22 +11,12 @@ const { Services } = require("@ServicesModel");
 
 
 
-// ✅ Base web URL for universal links
 const BASE_WEB_URL = process.env.API_BASE_URL;
 
-/**
- * Helper to generate one universal share URL
- * Example: https://pleisapp.com/open?type=event&id=XYZabc123
- */
 function generateShareLink(user, objectId, objectType) {
   return `${BASE_WEB_URL}app/share?id=${user}&objectId=${objectId}&objectType=${objectType}`;
 }
 router.use(auth);
-/**
- * ✅ Generate shareable link
- * Example: GET /api/share/event/68ff18ed8cd2d2f52b25be1a
- * Uses Mongo _id (uuid) → returns link with publicId
- */
 router.get("/:objectType/:objectId", async (req, res) => {
   try {
     const { objectType, objectId } = req.params;
@@ -124,10 +114,8 @@ router.get("/share", async (req, res) => {
       });
     }
 
-    // Save referral if needed
     await saveUserReferralData(id, req.ip);
 
-    // Deep link for app
     const appLink = `coachcritic://share?objectId=${objectId}&objectType=${objectType}&referrer=${id}`;
 
     const iosFallback = "https://apps.apple.com/app/coachcritic/id1234567890";

@@ -3,20 +3,11 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Levels - a level belongs to a course.
-//
-// Rows carry their parent `course` populated plus `contentCount`
-// { activeSubjects, activeChapters }.
-//
-// ----------------------------------------------------------------------
-
 export const levelsApi = createApi({
   reducerPath: 'levels',
   baseQuery: createCustomFetchBaseQuery(),
   tagTypes: ['Levels'],
   endpoints: (builder) => ({
-    // List - page / limit / keyword / status plus the parent ids that narrow it
     getLevels: builder.query({
       query: (query) => ({
         url: API_ROUTES.LEVELS.ALL,
@@ -43,7 +34,6 @@ export const levelsApi = createApi({
       invalidatesTags: ['Levels'],
     }),
 
-    /** `status` accepts active | inactive here; `deleted` is what DELETE sets. */
     updateLevel: builder.mutation({
       query: ({ id, ...body }) => ({
         url: API_ROUTES.LEVELS.UPDATE(id),
@@ -54,7 +44,6 @@ export const levelsApi = createApi({
       invalidatesTags: ['Levels'],
     }),
 
-    /** A soft delete: the record is marked deleted and its children deactivated. */
     deleteLevel: builder.mutation({
       query: (id) => ({ url: API_ROUTES.LEVELS.DELETE(id), method: 'DELETE' }),
       invalidatesTags: ['Levels'],

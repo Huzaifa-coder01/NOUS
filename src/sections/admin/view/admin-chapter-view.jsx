@@ -17,13 +17,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { AdminPageHeader } from '../components/admin-page-header';
 
-// ----------------------------------------------------------------------
-
-/**
- * A chapter is a container for its three document sections, so this page is a
- * hub. The counts come from the chapter row's `contentCount`, which the
- * chapters API fills in for exactly this screen.
- */
 export function AdminChapterView({ course, level, subject, chapter }) {
   const navigate = useNavigate();
 

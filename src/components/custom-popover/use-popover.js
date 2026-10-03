@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export function usePopover() {
   const [anchorEl, setAnchorEl] = useState(null);
 

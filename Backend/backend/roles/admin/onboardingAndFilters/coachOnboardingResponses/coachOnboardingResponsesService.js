@@ -18,19 +18,17 @@ const getUsersOnboardingResponseById = async (id) => {
 };
 
 
-// Upsert by user: if exists, update; else, create
 const upsertUsersOnboardingResponseByUser = async (userId, data) => {
   let existing = await usersOnboardingResponsesRepo.findUsersOnboardingResponseByUser(userId);
   if (data.name) {
-    //update user name in users collection if name is provided in onboarding response
     await User.findByIdAndUpdate(userId, { name: data.name });
   }
   if (existing) {
-    data.isOnboardingCompleted = true; // Mark onboarding as completed when updating existing response
+    data.isOnboardingCompleted = true;
     let updatedResponse = await usersOnboardingResponsesRepo.updateUsersOnboardingResponseByUser(userId, data);
     return formatOnboardingResponse(updatedResponse);
   } else {
-    data.isOnboardingCompleted = true; // Mark onboarding as completed when creating new response
+    data.isOnboardingCompleted = true;
     let newResponse = await usersOnboardingResponsesRepo.createUsersOnboardingResponse(data);
     return formatOnboardingResponse(newResponse);
   }

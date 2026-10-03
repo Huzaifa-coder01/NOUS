@@ -22,8 +22,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { EntityList } from '../components/entity-list';
 
-// ----------------------------------------------------------------------
-
 const FIELDS = [
   { name: 'name', label: 'Subject name', required: true },
   {
@@ -36,8 +34,6 @@ const FIELDS = [
 
 const DELETE_NOTE =
   'A soft delete: the subject is marked deleted and its chapters and PDFs are switched to inactive.';
-
-// ----------------------------------------------------------------------
 
 export function AdminLevelView({ course, level }) {
   const navigate = useNavigate();

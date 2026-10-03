@@ -9,16 +9,12 @@ const getSupportRequest = async ({ timezone, page, limit, keyword, status, userI
 
   const pipeline = [];
 
-  // Apply filters
-
-  // Status filter
   if (status) {
     pipeline.push({ $match: { status } });
   } else {
     pipeline.push({ $match: { status: { $ne: "deleted" } } });
   }
 
-  // Date filter
   if (date) {
     const start = new Date(date);
     const end = new Date(new Date(date).setDate(start.getDate() + 1));
@@ -29,14 +25,13 @@ const getSupportRequest = async ({ timezone, page, limit, keyword, status, userI
     });
   }
 
-  // Lookup user details and unwind
   pipeline.push({
     $lookup: {
       from: 'users',
-      localField: 'user', // Reference field in the SupportRequest collection
-      foreignField: '_id', // Match the field in the User collection
+      localField: 'user',
+      foreignField: '_id',
       pipeline: [
-        { $project: { name: 1, email: 1, profileIcon: 1 } } // Project the necessary fields
+        { $project: { name: 1, email: 1, profileIcon: 1 } }
       ],
       as: 'user',
     },
@@ -52,19 +47,17 @@ const getSupportRequest = async ({ timezone, page, limit, keyword, status, userI
     pipeline.push({
       $match: {
         $or: [
-            { subject: { $regex: keyword, $options: 'i' } },  // Match keyword in the subject
-          { message: { $regex: keyword, $options: 'i' } },  // Match keyword in the message
+            { subject: { $regex: keyword, $options: 'i' } },
+          { message: { $regex: keyword, $options: 'i' } },
 
-          { 'user.name': { $regex: keyword, $options: 'i' } },  // Match keyword in user's first name
+          { 'user.name': { $regex: keyword, $options: 'i' } },
         ],
       },
     });
   }
 
-  // Sort by createdAt in descending order
   pipeline.push({ $sort: { createdAt: -1 } });
 
-  // Apply pagination and counts using $facet
   pipeline.push({
     $facet: {
       data: [
@@ -75,13 +68,11 @@ const getSupportRequest = async ({ timezone, page, limit, keyword, status, userI
     }
   });
 
-  // Run the aggregation pipeline
   const result = await SupportRequest.aggregate(pipeline);
 
   let supportRequests = result[0]?.data || [];
   const totalFiltered = result[0]?.totalFiltered[0]?.count || 0;
 
-  // Additional counts for meta (active/inactive/total by userId as creator)
   const [total, deleted, pending, responded, resolved, closed] = await Promise.all([
     SupportRequest.countDocuments({
       ...(userId && { userId: userId }),
@@ -109,11 +100,9 @@ const getSupportRequest = async ({ timezone, page, limit, keyword, status, userI
     }),
   ]);
 
-  // Generate pagination meta information
   const meta = generateMeta(page, limit, totalFiltered);
   meta.supportRequestsCount = { total, pending, responded, resolved, closed, deleted };
 const formattedSupportRequests = supportRequests.map(formatUpdate);
-  // Return the response
   return { supportRequests: formattedSupportRequests, meta };
 };
 module.exports = {

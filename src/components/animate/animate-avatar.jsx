@@ -3,8 +3,6 @@ import { m } from 'framer-motion';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 
-// ----------------------------------------------------------------------
-
 export function AnimateAvatar({ sx, slotProps, children, width = 40, ...other }) {
   const borderWidth = slotProps?.overlay?.border ?? 2;
 

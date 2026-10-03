@@ -11,8 +11,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { NousCourseView } from 'src/sections/nous/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   const { ids, course, loading, notFound } = useCatalogChain();
 

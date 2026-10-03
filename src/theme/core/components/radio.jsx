@@ -1,11 +1,6 @@
 import SvgIcon from '@mui/material/SvgIcon';
 import { radioClasses } from '@mui/material/Radio';
 
-// ----------------------------------------------------------------------
-
-/**
- * Icons
- */
 export const RadioIcon = (props) => (
   <SvgIcon {...props}>
     <path
@@ -26,21 +21,13 @@ export const RadioCheckedIcon = (props) => (
   </SvgIcon>
 );
 
-// ----------------------------------------------------------------------
-
 const MuiRadio = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: {
     size: 'small',
     icon: <RadioIcon />,
     checkedIcon: <RadioCheckedIcon />,
   },
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ ownerState, theme }) => ({
       padding: theme.spacing(1),
@@ -51,7 +38,5 @@ const MuiRadio = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const radio = { MuiRadio };

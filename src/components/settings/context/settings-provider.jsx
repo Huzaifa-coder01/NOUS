@@ -3,8 +3,6 @@ import { useMemo, useState, useCallback, useEffect } from 'react';
 import { STORAGE_KEY } from '../config-settings';
 import { SettingsContext } from './settings-context';
 
-// ----------------------------------------------------------------------
-
 function readStored(defaultSettings) {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -15,13 +13,6 @@ function readStored(defaultSettings) {
   }
 }
 
-/**
- * Theme settings (color scheme, nav layout, font, ...) persisted per browser.
- *
- * The template shipped this in `src/components/settings/context/`, which an old
- * blanket `context/` rule in .gitignore kept out of the repo, so it is
- * reimplemented here against the same API the theme and drawer already use.
- */
 export function SettingsProvider({ children, settings: defaultSettings }) {
   const [state, setState] = useState(() => readStored(defaultSettings));
 
@@ -31,7 +22,6 @@ export function SettingsProvider({ children, settings: defaultSettings }) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
-      // storage unavailable (private mode) - settings stay in memory
     }
   }, [state]);
 

@@ -1,6 +1,5 @@
 const { User } = require("@UsersModel");
 
-// ---------------- USERS ----------------
 const getUserStats = async () => {
   const getCount = async (Model, baseMatch, extra) => {
     const finalMatch = {
@@ -11,9 +10,6 @@ const getUserStats = async () => {
     return Model.countDocuments(finalMatch);
   };
 
-  // =========================
-  // 🚀 GLOBAL USERS (NO COACH)
-  // =========================
   const baseMatch = {
     "accountState.status": { $ne: "deleted" },
     "verificationStatus.email": "verified",

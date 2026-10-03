@@ -6,8 +6,6 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { varAlpha, bgGradient } from 'src/theme/styles';
 
-// ----------------------------------------------------------------------
-
 export function ProfileCover({ name, avatarUrl, role, coverUrl }) {
   const theme = useTheme();
 

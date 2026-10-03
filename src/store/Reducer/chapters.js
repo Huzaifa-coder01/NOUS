@@ -3,22 +3,11 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Chapters - the leaves of the catalog.
-//
-// `chapterNumber` is a whole number from 1, unique inside the subject. Rows
-// come back sorted by it, carry the full subject > level > course chain, and
-// carry `contentCount` { activeSyllabus, activeNotes, activePastPapers } - the
-// three numbers the chapter screen shows.
-//
-// ----------------------------------------------------------------------
-
 export const chaptersApi = createApi({
   reducerPath: 'chapters',
   baseQuery: createCustomFetchBaseQuery(),
   tagTypes: ['Chapters'],
   endpoints: (builder) => ({
-    // List - page / limit / keyword / status plus the parent ids that narrow it
     getChapters: builder.query({
       query: (query) => ({
         url: API_ROUTES.CHAPTERS.ALL,
@@ -49,7 +38,6 @@ export const chaptersApi = createApi({
       invalidatesTags: ['Chapters'],
     }),
 
-    /** `status` accepts active | inactive here; `deleted` is what DELETE sets. */
     updateChapter: builder.mutation({
       query: ({ id, ...body }) => ({
         url: API_ROUTES.CHAPTERS.UPDATE(id),
@@ -60,7 +48,6 @@ export const chaptersApi = createApi({
       invalidatesTags: ['Chapters'],
     }),
 
-    /** A soft delete: the record is marked deleted and its children deactivated. */
     deleteChapter: builder.mutation({
       query: (id) => ({ url: API_ROUTES.CHAPTERS.DELETE(id), method: 'DELETE' }),
       invalidatesTags: ['Chapters'],

@@ -2,8 +2,6 @@ import ApexChart from 'react-apexcharts';
 
 import Box from '@mui/material/Box';
 
-// ----------------------------------------------------------------------
-
 export function Chart({ sx, type, series, height, options, width = '100%', ...other }) {
   return (
     <Box

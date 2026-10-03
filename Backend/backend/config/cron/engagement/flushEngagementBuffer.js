@@ -13,7 +13,6 @@ const flushEngagementBuffer = async () => {
 
     if (!batch.length) break;
 
-    //remove duplicates that might have been added due to retries
     const uniqueBatch = Array.from(new Set(batch.map(JSON.stringify))).map(JSON.parse);
 
     try {
@@ -37,7 +36,6 @@ const flushEngagementBuffer = async () => {
       }
     }
 
-    // Safety stop to prevent runaway jobs
     if (totalInserted > 50000) break;
   }
 

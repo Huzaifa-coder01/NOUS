@@ -10,15 +10,6 @@ const router = express.Router();
 
 router.use(auth);
 
-/* 
-example log engagement request body:
-{
-  "entityType": "coachservices",
-  "entityId": "691580a7750069869d13db94",
-  "eventType": "service_view"
-}
-
-*/
 router.post("/log", logEngagement);
 router.get("/trending", getTrending);
 router.get("/leads", getLeads);

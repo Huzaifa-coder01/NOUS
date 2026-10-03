@@ -3,13 +3,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { API_ROUTES } from '../apiRoutes';
 import { params, unwrap, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Settings and the help centre.
-//
-// There is no single "get settings" call - each document has its own GET, and
-// create / update take them all together.
-// ----------------------------------------------------------------------
-
 export const settingsApi = createApi({
   reducerPath: 'settings',
   baseQuery: createCustomFetchBaseQuery(),

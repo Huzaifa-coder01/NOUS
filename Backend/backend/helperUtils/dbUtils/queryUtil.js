@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-/**
- * Generic query utilities for Mongoose models.
- * Supports named parameters for flexibility.
- */
 async function createWithAutoOrder({ model, data, orderField = "order", match = { status: { $ne: "deleted" } } }) {
   const lastDoc = await model.findOne(match).sort({ [orderField]: -1 }).select(orderField);
   const nextOrder = lastDoc ? lastDoc[orderField] + 1 : 1;
@@ -12,9 +8,6 @@ async function createWithAutoOrder({ model, data, orderField = "order", match = 
 }
 
 
-/**
- * Recursively builds lookup pipelines, supporting nested subLookups and $in for arrays
- */
 function buildLookupPipeline(lookup) {
   if (!lookup.subLookups || !Array.isArray(lookup.subLookups)) return [];
 
@@ -44,7 +37,6 @@ function buildLookupPipeline(lookup) {
       },
     });
 
-    // 👇 Automatically convert single-reference lookups to an object
     if (sub.single) {
       stages.push({
         $unwind: { path: `$${sub.as}`, preserveNullAndEmptyArrays: true },
@@ -56,10 +48,6 @@ function buildLookupPipeline(lookup) {
 }
 
 
-/**
- * Generic dynamic aggregation-based query util
- * Supports refPath-based dynamic lookups, nested subLookups, and array refs
-  */
 async function getWithFilters({
   model,
   query = {},
@@ -79,7 +67,6 @@ async function getWithFilters({
   const skip = limit === 0 ? 0 : (page - 1) * limit;
   const baseMatch = { $match: query };
 
-  // If no dynamic refPath, fallback to standard Mongoose query
   if (!refPath || Object.keys(refLookups).length === 0) {
     let q = model.find(query).sort(sort).skip(skip).limit(limit);
     if (select) q = q.select(select);
@@ -87,7 +74,6 @@ async function getWithFilters({
     return q.lean().exec();
   }
 
-  // Build pipelines per ref type
   const typePipelines = Object.entries(refLookups).map(([type, lookup]) => {
     const lookupStage = {
       $lookup: {
@@ -122,7 +108,6 @@ async function getWithFilters({
     ];
   });
 
-  // Add fallback for types not in refLookups (like “Other”)
   typePipelines.push([
     baseMatch,
     { $match: { [refPath]: { $nin: Object.keys(refLookups) } } },
@@ -148,26 +133,15 @@ async function getWithFilters({
   return model.aggregate(pipeline);
 }
 
-/**
- * Count documents based on query
- */
 async function countDocuments({ model, query = {} }) {
   return model.countDocuments(query);
 }
 
-/**
- * Return global and filtered counts for statuses (active/inactive/etc)
- * @param {object} params
- * @param {MongooseModel} params.model - The model to query
- * @param {object} [params.filterQuery={}] - The filter for filtered count
- * @param {object} [params.statusMap={ status: ["active", "inactive"] }] - Field and values for facet counts
- */
 async function getModelCounts({
   model,
   filterQuery = {},
   statusMap = { status: ["active", "inactive"] },
 }) {
-  // Build facets dynamically from the statusMap
   const facetStages = {
     total: [
       { $match: { status: { $ne: "deleted" } } },
@@ -175,7 +149,6 @@ async function getModelCounts({
     ],
   };
 
-  // For each field/value pair, create a facet entry
   for (const [field, values] of Object.entries(statusMap)) {
     for (const value of values) {
       facetStages[value] = [
@@ -226,27 +199,18 @@ const [filteredCount, globalCounts] = await Promise.all([
   };
 }
 
-/**
- * Find by ID with optional population
- */
 async function findById({ model, id, populate = [] }) {
   let q = model.findById(id);
   populate.forEach((p) => (q = q.populate(p)));
   return q.lean().exec();
 }
 
-/**
- * Find by ID and update with optional population
- */
 async function findByIdAndUpdate({ model, id, data, populate = [] }) {
   let q = model.findByIdAndUpdate(id, data, { new: true });
   populate.forEach((p) => (q = q.populate(p)));
   return q.lean().exec();
 }
 
-/**
- * Delete (soft or hard)
- */
 async function deleteOne(doc, soft = false) {
   if (!doc) return null;
   return soft
@@ -254,16 +218,10 @@ async function deleteOne(doc, soft = false) {
     : doc.deleteOne();
 }
 
-/**
- * Update many
- */
 async function updateMany({ model, filter, data }) {
   return model.updateMany(filter, data);
 }
 
-/**
- * Normalize sequential order fields
- */
 async function normalizeOrders({ model, orderField = "order" }) {
   const docs = await model.find({ status: { $ne: "deleted" } }).sort(orderField);
   const ops = docs.map((doc, i) => ({

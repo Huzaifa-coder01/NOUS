@@ -9,16 +9,8 @@ import { Section } from './section';
 import { Main, Content } from './main';
 import { LayoutSection } from '../core/layout-section';
 
-// ----------------------------------------------------------------------
-
 const layoutQuery = 'md';
 
-/**
- * The original layout mounted `HeaderBase` with every slot disabled
- * (account, workspaces, searchbar, notifications, ... all `false`), so the only
- * thing it ever rendered here was the logo. It is a plain logo header now, which
- * keeps the same result without the popover/drawer/settings tree behind it.
- */
 function Header() {
   return (
     <Box
@@ -52,8 +44,6 @@ function Header() {
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
 
 export function AuthSplitLayout({ sx, section, children }) {
   return (

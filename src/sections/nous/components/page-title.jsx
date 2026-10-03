@@ -1,7 +1,5 @@
 import { PageTitleRoot } from '../styles';
 
-// ----------------------------------------------------------------------
-
 export function PageTitle({ title, subtitle }) {
   return (
     <PageTitleRoot>

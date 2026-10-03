@@ -42,7 +42,7 @@ const getHelpCenters = async ({keyword}) => {
   let { helperCenter } = result;
 
   if (keyword && keyword.trim()) {
-    const regex = new RegExp(keyword, "i"); // "i" = case-insensitive
+    const regex = new RegExp(keyword, "i");
 
     helperCenter = helperCenter.filter((item) => {
       return regex.test(item.title || "");

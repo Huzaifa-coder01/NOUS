@@ -9,7 +9,6 @@ router.use(auth);
 
 const rateLimiter = createRateLimiter("PastPaper");
 
-// A past paper hangs off a subject, optionally narrowed to one chapter
 const pastPapers = makePdfController({
   type: "pastPaper",
   key: "past_paper",

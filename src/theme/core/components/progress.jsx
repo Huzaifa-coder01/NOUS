@@ -1,10 +1,6 @@
 import { varAlpha } from '../../styles';
 
-// ----------------------------------------------------------------------
-
 const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
-
-// ----------------------------------------------------------------------
 
 function styleColors(ownerState, styles) {
   const outputStyle = COLORS.reduce((acc, color) => {
@@ -18,9 +14,6 @@ function styleColors(ownerState, styles) {
 }
 
 const MuiLinearProgress = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme, ownerState }) => {
       const styled = {
@@ -42,7 +35,5 @@ const MuiLinearProgress = {
     bar: { borderRadius: 'inherit' },
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const progress = { MuiLinearProgress };

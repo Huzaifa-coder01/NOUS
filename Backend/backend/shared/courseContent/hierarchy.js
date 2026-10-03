@@ -3,12 +3,6 @@ const Level = require("../../roles/admin/level/LevelModel");
 const Subject = require("../../roles/admin/subject/SubjectModel");
 const Chapter = require("../../roles/admin/chapter/ChapterModel");
 
-/**
- * The content tree is course > level > subject > chapter.
- * A PDF only has to name its deepest node, the ancestors are derived here so a
- * client can never store a mismatched chain (e.g. a chapter under the wrong course).
- */
-
 const isDeleted = (doc) => !doc || doc.status === "deleted";
 
 // True when any node of the chain is not active, used to decide whether a new
@@ -39,10 +33,6 @@ const resolveFromChapter = async (chapterId) => {
   return { chain: { ...resolved.chain, chapter } };
 };
 
-/**
- * Resolves the chain a PDF hangs off. chapterId is optional for past papers,
- * which can sit straight on a subject.
- */
 const resolvePdfChain = async ({ subjectId, chapterId }) => {
   if (chapterId) {
     const resolved = await resolveFromChapter(chapterId);

@@ -7,8 +7,6 @@ import { fNumber } from 'src/utils/format-number';
 
 import { Chart, useChart, ChartLegends } from 'src/components/chart';
 
-// ----------------------------------------------------------------------
-
 export function AnalyticsCurrentVisits({ title, subheader, chart, ...other }) {
   const theme = useTheme();
 

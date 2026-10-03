@@ -7,13 +7,6 @@ import { API_ROUTES } from '../apiRoutes';
 import { flattenUser } from '../slices/userSlice';
 import { params, unwrap, unwrapList, createCustomFetchBaseQuery } from '../baseQuery';
 
-// ----------------------------------------------------------------------
-// Users (admin). `userType` filters student | admin.
-//
-// The backend nests a user record - basicInfo / accountState / metadata - so
-// rows are flattened here rather than in every table that shows one.
-// ----------------------------------------------------------------------
-
 const flattenRows = (response) => {
   const list = unwrapList(response);
 

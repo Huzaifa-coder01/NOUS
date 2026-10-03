@@ -1,4 +1,3 @@
-// models/FAQ.js
 const mongoose = require("mongoose");
 
 const HelpCenterSchema = new mongoose.Schema(

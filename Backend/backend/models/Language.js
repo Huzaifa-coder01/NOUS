@@ -4,7 +4,7 @@ const languageSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "language_title_required"], // Custom error message key
+      required: [true, "language_title_required"],
     },
     transliteration: {
       type: String,
@@ -18,7 +18,7 @@ const languageSchema = new mongoose.Schema(
     },
     code: {
       type: String,
-      required: [true, "language_code_required"], // Custom error message key
+      required: [true, "language_code_required"],
     },
     status: {
       type: String,
@@ -31,12 +31,10 @@ const languageSchema = new mongoose.Schema(
   }
 );
 
-// Exclude sensitive fields when returning language object
 languageSchema.methods.toJSON = function () {
   const language = this;
   const languageObject = language.toObject();
 
-  // Attach base URL to flag
   const baseUrl = `${process.env.MEDIA_BASE_URL || process.env.S3_BASE_URL}`;
   if (languageObject.flag && !languageObject.flag.startsWith("http")) {
     languageObject.flag = `${baseUrl}${languageObject.flag}`;

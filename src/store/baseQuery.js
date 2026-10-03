@@ -5,15 +5,6 @@ import { CONFIG } from 'src/config-global';
 import { logout } from './slices/userSlice';
 import { handleApiError } from './handleApiError';
 
-// ----------------------------------------------------------------------
-
-/**
- * The base query every reducer in `Reducer/` is built on.
- *
- * It reads the bearer token out of the persisted user slice, so a reload keeps
- * the session without any separate storage, and it turns a 401 into a single
- * sign out rather than each screen guessing.
- */
 export const createCustomFetchBaseQuery = () => {
   const baseQuery = fetchBaseQuery({
     baseUrl: CONFIG.api.baseUrl,
@@ -35,16 +26,12 @@ export const createCustomFetchBaseQuery = () => {
     if (result.error) {
       const { status } = result.error;
 
-      // a request cut short by a navigation or a sign out surfaces as a
-      // transport error; the screens still show it, but it is not a fault
       if (typeof status === 'number') {
         console.error('[api]', handleApiError(result.error));
       } else {
         console.warn('[api]', handleApiError(result.error));
       }
 
-      // an expired or rejected token ends the session; the route guards then
-      // send the person to sign in, so there is no hard reload here
       if (status === 401) {
         const onAuthPage =
           typeof window !== 'undefined' && window.location.pathname.startsWith('/auth');
@@ -57,25 +44,12 @@ export const createCustomFetchBaseQuery = () => {
   };
 };
 
-// ----------------------------------------------------------------------
-// Shared response helpers - every endpoint answers `{ message, data, meta? }`
-// ----------------------------------------------------------------------
-
-/** `{ data }` -> the row. */
 export function unwrap(response) {
   if (response == null || typeof response !== 'object') return response;
 
   return 'data' in response ? response.data : response;
 }
 
-/**
- * Shapes a paginated response for the tables.
- *
- * `meta` carries two different totals and they are not interchangeable:
- * `totalRecords` is how many rows match the current filter (what the pager
- * needs), while `<x>Count.totalRecord` counts every row of that kind whatever
- * its status (what the status tabs need).
- */
 export function unwrapList(response) {
   const data = unwrap(response);
 
@@ -106,7 +80,6 @@ export function unwrapList(response) {
   };
 }
 
-/** Drops blank filters so `status=` is never sent. */
 export function params(query = {}) {
   return Object.fromEntries(
     Object.entries(query).filter(

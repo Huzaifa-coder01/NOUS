@@ -1,8 +1,3 @@
-/**
- * ------------------------------------------------
- * Unified Logging (FIRST – before anything else)
- * ------------------------------------------------
- */
 require("./config/logging");
 const {
   logger,
@@ -10,14 +5,8 @@ const {
   accessLogger,
 } = require("./config/logging");
 
-// expose globally (safe + intentional)
 global.logger = logger;
 
-/**
- * ------------------------------------------------
- * Env
- * ------------------------------------------------
- */
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV || "dev"}`,
 });
@@ -28,24 +17,13 @@ const morgan = require("morgan");
 const path = require("path");
 const fs = require("fs");
 const moduleAlias = require("module-alias");
-// require("./config/bullmq/workers/bookingWorker");
 
-/**
- * ------------------------------------------------
- * Module aliases
- * ------------------------------------------------
- */
 const aliases = require("../aliasConfig/pathAliases.config");
 for (const [alias, target] of Object.entries(aliases)) {
   moduleAlias.addAlias(alias, path.join(__dirname, "..", target));
 }
 require("module-alias/register");
 
-/**
- * ------------------------------------------------
- * App & Infra Imports
- * ------------------------------------------------
- */
 const { i18nConfig } = require("./config/i18nConfig");
 
 const { securityMiddleware } = require("./middlewares/security");
@@ -58,14 +36,8 @@ const { sendResponse } = require("./helperUtils/responseUtil");
 const connectToDB = require("./helperUtils/server-setup");
 const { backupMongoDB } = require("./helperUtils/dataBaseBackup");
 const { getRedisClient } = require("./config/redis/redisConfig");
-// const { startCrons } = require("./config/cron");
 
 
-/**
- * ------------------------------------------------
- * Swagger
- * ------------------------------------------------
- */
 const swaggerUi = require("swagger-ui-express");
 const swaggerFilePath = path.join(__dirname, "..", "swagger", "swagger_output.json");
 
@@ -81,21 +53,10 @@ if (!fs.existsSync(swaggerFilePath)) {
 const swaggerFile = require(swaggerFilePath);
 const { allowedOrigins } = require("./config/origins");
 
-/**
- * =======================================================
- * Express App
- * =======================================================
- */
-
 const app = express();
 app.set("trust proxy", 1);
 
 
-/**
- * ------------------------------------------------
- * Health & Root
- * ------------------------------------------------
- */
 app.get("/api", (req, res) => {
   res.json({
     name: "CoachCritic API",
@@ -111,11 +72,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-/**
- * =======================================================
- * Security
- * =======================================================
- */
 securityMiddleware(app, {
   allowedOrigins,
   adminIPWhitelist: [],
@@ -123,17 +79,10 @@ securityMiddleware(app, {
 });
 
 
-/**
- * =======================================================
- * Middlewares
- * =======================================================
- */
 app.use(i18nConfig.init);
 
-// ✅ unified access logs
 app.use(accessLogger);
 
-// keep existing middleware (unchanged)
 if (process.env.NODE_ENV !== "prod") {
   app.use(morgan("dev"));
 }
@@ -148,19 +97,12 @@ const globalLimiter = createRateLimiter("api-v1-global", 15, 200, {
 app.use("/api/v1", globalLimiter);
 
 
-/**
- * ------------------------------------------------
- * Routes
- * ------------------------------------------------
- */
 app.use("/api/v1/web", require("./roles/index"));   
 app.use("/api/v1/app", require("./roles/index"));   
 app.use("/api/v1", require("./routes"));     
 
-// Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-// Fallback
 app.use((req, res) => {
   sendResponse({
     res,
@@ -169,11 +111,6 @@ app.use((req, res) => {
   });
 });
 
-/**
- * =======================================================
- * Global Express Error Handler
- * =======================================================
- */
 app.use((err, req, res, next) => {
   logger.error("Request error", {
     method: req.method,
@@ -187,18 +124,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-/**
- * =======================================================
- * Start Server AFTER DB Connection
- * =======================================================
- */
-
 (async () => {
   try {
     await connectToDB();
     await initTextModeration();
     getRedisClient();
-    // startCrons();
 
     setInterval(backupMongoDB, 24 * 60 * 60 * 1000);
   } catch (err) {
@@ -210,11 +140,6 @@ app.use((err, req, res, next) => {
   }
 })();
 
-/**
- * =======================================================
- * HTTP server
- * =======================================================
- */
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
@@ -226,11 +151,6 @@ app.listen(PORT, () => {
 
 
 
-/**
- * =======================================================
- * Graceful shutdown (expected)
- * =======================================================
- */
 const shutdown = async (signal) => {
   logger.warn("Shutdown signal received", { signal });
 
@@ -252,18 +172,12 @@ const shutdown = async (signal) => {
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
 
-/**
- * =======================================================
- * Crash handlers (unexpected)
- * =======================================================
- */
 process.on("unhandledRejection", (reason, promise) => {
   crashLogger.fatal("Unhandled Promise Rejection", {
     reason: reason?.message || reason,
     stack: reason?.stack,
   });
 
-  // Give logger time to flush
   setTimeout(() => {
     process.exit(1);
   }, 100);

@@ -11,8 +11,6 @@ import { Iconify } from 'src/components/iconify';
 
 import { openFile, fileUrlOf, fileNameOf, downloadFile, formatFileSize } from 'src/store';
 
-// ----------------------------------------------------------------------
-
 export function DocFileActions({ doc }) {
   const [busy, setBusy] = useState(false);
 
@@ -56,9 +54,6 @@ export function DocFileActions({ doc }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-/** The record's title, then the file name itself - never the storage key. */
 export const nameColumn = {
   id: 'name',
   label: 'PDF',

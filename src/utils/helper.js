@@ -1,10 +1,3 @@
-/**
- * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_flatten
- * https://github.com/you-dont-need-x/you-dont-need-lodash
- */
-
-// ----------------------------------------------------------------------
-
 export function flattenArray(list, key = 'children') {
   let children = [];
 
@@ -18,8 +11,6 @@ export function flattenArray(list, key = 'children') {
   return flatten?.concat(children.length ? flattenArray(children, key) : children);
 }
 
-// ----------------------------------------------------------------------
-
 export function flattenDeep(array) {
   const isArray = array && Array.isArray(array);
 
@@ -28,8 +19,6 @@ export function flattenDeep(array) {
   }
   return [];
 }
-
-// ----------------------------------------------------------------------
 
 export function orderBy(array, properties, orders) {
   return array.slice().sort((a, b) => {
@@ -47,8 +36,6 @@ export function orderBy(array, properties, orders) {
   });
 }
 
-// ----------------------------------------------------------------------
-
 export function keyBy(array, key) {
   return (array || []).reduce((result, item) => {
     const keyValue = key ? item[key] : item;
@@ -57,13 +44,9 @@ export function keyBy(array, key) {
   }, {});
 }
 
-// ----------------------------------------------------------------------
-
 export function sumBy(array, iteratee) {
   return array.reduce((sum, item) => sum + iteratee(item), 0);
 }
-
-// ----------------------------------------------------------------------
 
 export function isEqual(a, b) {
   if (a === null || a === undefined || b === null || b === undefined) {
@@ -99,8 +82,6 @@ export function isEqual(a, b) {
 
   return false;
 }
-
-// ----------------------------------------------------------------------
 
 function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);

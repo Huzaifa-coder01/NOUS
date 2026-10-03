@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 
 import { borderGradient } from 'src/theme/styles';
 
-// ----------------------------------------------------------------------
-
 export function AnimateBorder({ animate, sx }) {
   const rootRef = useRef(null);
 

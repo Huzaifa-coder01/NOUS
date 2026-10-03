@@ -19,8 +19,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { resetPassword } from 'src/auth/context/jwt';
 
-// ----------------------------------------------------------------------
-
 export const ResetPasswordSchema = zod
   .object({
     newPassword: zod.string().min(6, { message: 'New password must be at least 6 characters!' }),
@@ -30,8 +28,6 @@ export const ResetPasswordSchema = zod
     message: 'Passwords do not match!',
     path: ['confirmPassword'],
   });
-
-// ----------------------------------------------------------------------
 
 export function JwtResetPasswordView() {
   const navigate = useNavigate();

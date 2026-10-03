@@ -4,8 +4,6 @@ import { CONFIG } from 'src/config-global';
 
 import { AdminCatalogView } from 'src/sections/admin/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   return (
     <>

@@ -1,9 +1,3 @@
-/**
- * Every route the NOUS backend exposes, in one place.
- *
- * Taken from `postman_collection/NOUS.postman_collection.json`. Paths are
- * relative to VITE_BASE_URL, which already carries the `/api/v1` prefix.
- */
 export const API_ROUTES = {
   AUTH: {
     REGISTER: 'auth/register',

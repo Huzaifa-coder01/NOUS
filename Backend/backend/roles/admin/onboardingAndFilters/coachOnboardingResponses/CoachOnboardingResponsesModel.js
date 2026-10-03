@@ -25,7 +25,7 @@ const coachOnboardingResponses = new mongoose.Schema(
       type: LocationSchema,
       default: {
         type: "Point",
-        coordinates: [0, 0], // VALID but meaningless
+        coordinates: [0, 0],
       },
     },
 
@@ -167,7 +167,6 @@ const coachOnboardingResponses = new mongoose.Schema(
       },
     ],
 
-    //check onboarding completed
     isOnboardingCompleted: {
       type: Boolean,
       default: false,

@@ -39,18 +39,6 @@ import {
 import { EntityDialog } from './entity-dialog';
 import { StatusSwitch } from './status-switch';
 
-// ----------------------------------------------------------------------
-
-/**
- * The shared admin list page, driven by the API rather than by an in-memory
- * array: search, status filtering and paging are all query params the backend
- * applies, and the row counters come from the response `meta`.
- *
- * `list` is a `useListRequest(...)` result, which owns the query state.
- *
- * There is no reorder or sort column here on purpose - the API exposes neither,
- * and sorting one page of many would be misleading.
- */
 export function EntityList({
   heading,
   links,
@@ -85,7 +73,6 @@ export function EntityList({
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState(query.keyword);
 
-  // let the admin finish typing before asking the server again
   useEffect(() => {
     if (search === query.keyword) return undefined;
 
@@ -95,7 +82,6 @@ export function EntityList({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
-  // a page or filter change invalidates whatever was ticked
   useEffect(() => {
     setSelected([]);
   }, [query.page, query.keyword, query.status]);
@@ -163,7 +149,6 @@ export function EntityList({
     { id: '', width: 140 },
   ];
 
-  /** Tab counters come from `meta`; fall back to the page when it is absent. */
   const countFor = (value) => {
     if (!counts?.total) return value === '' ? total : undefined;
 

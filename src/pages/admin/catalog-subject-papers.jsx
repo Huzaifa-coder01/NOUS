@@ -10,8 +10,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { AdminSubjectPapersView } from 'src/sections/admin/view';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   const { course, level, subject, loading, notFound } = useCatalogChain();
 

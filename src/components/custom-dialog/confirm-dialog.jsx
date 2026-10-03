@@ -4,8 +4,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-// ----------------------------------------------------------------------
-
 export function ConfirmDialog({ title, content, action, open, onClose, ...other }) {
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>

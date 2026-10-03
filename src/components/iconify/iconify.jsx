@@ -6,8 +6,6 @@ import NoSsr from '@mui/material/NoSsr';
 
 import { iconifyClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export const Iconify = forwardRef(({ className, width = 20, sx, ...other }, ref) => {
   const baseStyles = {
     width,
@@ -37,5 +35,4 @@ export const Iconify = forwardRef(({ className, width = 20, sx, ...other }, ref)
   );
 });
 
-// https://iconify.design/docs/iconify-icon/disable-cache.html
 disableCache('local');

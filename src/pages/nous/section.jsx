@@ -12,13 +12,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 import { NousSectionView } from 'src/sections/nous/view';
 
-// ----------------------------------------------------------------------
-
-/**
- * One hook per section kind, all three called unconditionally with only the one
- * that matches the url enabled - hooks cannot be chosen at runtime, and `skip`
- * means the other two never hit the network.
- */
 function useSectionDocs(section, filters) {
   const results = CHAPTER_SECTIONS.map((entry) =>
     documentHooks[entry.kind].useList(filters, {

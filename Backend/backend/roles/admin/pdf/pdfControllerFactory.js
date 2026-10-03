@@ -15,18 +15,6 @@ const NOT_FOUND_ERRORS = [
   "pdf_not_found",
 ];
 
-/**
- * Past papers, syllabus and notes are the same record with a different type,
- * so they share one controller set. config carries what actually differs.
- *
- * @param {object} config
- * @param {string} config.type            pastPaper | syllabus | note
- * @param {string} config.key             translation key prefix, e.g. past_paper
- * @param {boolean} config.chapterRequired syllabus and notes need a chapter
- * @param {boolean} config.studentCanCreate only notes are student uploadable
- * @param {string[]} [config.readTypes]     what the listing shows, defaults to
- *   just `type`. The syllabus screen also shows the notes students uploaded.
- */
 const makePdfController = ({
   type,
   key,
@@ -35,7 +23,6 @@ const makePdfController = ({
   readTypes,
 }) => {
   const notFoundKey = `${key}_not_found`;
-  // Writes always stay on the owning type, only reads may span types
   const listTypes = readTypes || type;
 
   const create = async (req, res) => {
@@ -69,7 +56,6 @@ const makePdfController = ({
         subjectId,
         chapterId,
         uploadedBy: req.user._id,
-        // A student may only upload under a fully active chain
         requireActiveChain: !isAdmin,
       });
 
@@ -121,9 +107,6 @@ const makePdfController = ({
     )
       return;
 
-    // A student only ever sees active PDFs, and the cascade keeps anything
-    // under an inactive node inactive too. mine=true narrows the list to the
-    // student's own uploads, which is how a "my notes" screen is built.
     if (!isAdmin) {
       status = "active";
       uploadedBy = mine === "true" ? req.user._id : undefined;

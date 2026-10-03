@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 
 import { scrollbarClasses } from './classes';
 
-// ----------------------------------------------------------------------
-
 export const Scrollbar = forwardRef(
   ({ slotProps, children, fillContent, naturalScroll, sx, ...other }, ref) => (
     <Box

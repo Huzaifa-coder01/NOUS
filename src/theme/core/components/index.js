@@ -40,8 +40,6 @@ import { buttonGroup } from './button-group';
 import { autocomplete } from './autocomplete';
 import { toggleButton } from './button-toggle';
 
-// ----------------------------------------------------------------------
-
 export const components = {
   ...fab,
   ...card,

@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export const stylesMode = {
   light: '[data-mui-color-scheme="light"] &',
   dark: '[data-mui-color-scheme="dark"] &',
@@ -13,30 +11,18 @@ export const mediaQueries = {
   upXl: '@media (min-width:1536px)',
 };
 
-/**
- * Set font family
- */
 export function setFont(fontName) {
   return `"${fontName}",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`;
 }
 
-/**
- * Converts rem to px
- */
 export function remToPx(value) {
   return Math.round(parseFloat(value) * 16);
 }
 
-/**
- * Converts px to rem
- */
 export function pxToRem(value) {
   return `${value / 16}rem`;
 }
 
-/**
- * Responsive font sizes
- */
 export function responsiveFontSizes({ sm, md, lg }) {
   return {
     [mediaQueries.upSm]: { fontSize: pxToRem(sm) },
@@ -45,9 +31,6 @@ export function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-/**
- * Converts a hex color to RGB channels
- */
 export function hexToRgbChannel(hex) {
   if (!/^#[0-9A-F]{6}$/i.test(hex)) {
     throw new Error(`Invalid hex color: ${hex}`);
@@ -60,9 +43,6 @@ export function hexToRgbChannel(hex) {
   return `${r} ${g} ${b}`;
 }
 
-/**
- * Converts a hex color to RGB channels
- */
 export function createPaletteChannel(hexPalette) {
   const channelPalette = {};
 
@@ -73,9 +53,6 @@ export function createPaletteChannel(hexPalette) {
   return { ...hexPalette, ...channelPalette };
 }
 
-/**
- * Color with alpha channel
- */
 export function varAlpha(color, opacity = 1) {
   const unsupported =
     color.startsWith('#') ||

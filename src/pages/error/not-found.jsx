@@ -11,8 +11,6 @@ import { CONFIG } from 'src/config-global';
 
 import { NOUS_COLORS } from 'src/theme/palette';
 
-// ----------------------------------------------------------------------
-
 export default function Page() {
   return (
     <>

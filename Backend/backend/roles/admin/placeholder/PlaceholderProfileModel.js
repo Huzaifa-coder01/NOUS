@@ -69,7 +69,6 @@ const PlaceholderProfileSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// unique only when status is pending or active
 PlaceholderProfileSchema.index(
   { instagramHandle: 1 },
   {

@@ -4,8 +4,6 @@ import { varAlpha, stylesMode } from '../../styles';
 
 const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 
-// ----------------------------------------------------------------------
-
 const softVariant = {
   colors: COLORS.map((color) => ({
     props: ({ ownerState }) =>
@@ -38,26 +36,12 @@ const softVariant = {
   ],
 };
 
-// ----------------------------------------------------------------------
-
 const MuiPagination = {
-  /** **************************************
-   * VARIANTS
-   *************************************** */
   variants: [
-    /**
-     * @variant soft
-     */
     ...[...softVariant.standardColor, ...softVariant.colors],
   ],
 
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
-    /**
-     * @variant text
-     */
     text: ({ ownerState, theme }) => ({
       [`& .${paginationItemClasses.root}`]: {
         [`&.${paginationItemClasses.selected}`]: {
@@ -74,9 +58,6 @@ const MuiPagination = {
         },
       },
     }),
-    /**
-     * @variant outlined
-     */
     outlined: ({ ownerState, theme }) => ({
       [`& .${paginationItemClasses.root}`]: {
         borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.24),
@@ -91,7 +72,5 @@ const MuiPagination = {
     }),
   },
 };
-
-// ----------------------------------------------------------------------
 
 export const pagination = { MuiPagination };
