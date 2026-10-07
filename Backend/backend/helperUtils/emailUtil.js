@@ -11,7 +11,7 @@ const sendEmailViaBrevo = async (emails, subject, body, config = {}) => {
   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
   sendSmtpEmail.subject = subject;
   sendSmtpEmail.htmlContent = body;
-  sendSmtpEmail.sender = { email: "noreply@coachcritic.com", name: "CoachCritic" };
+  sendSmtpEmail.sender = { email: "noreply@coachcritic.com", name: "Nous" };
 
   sendSmtpEmail.to = emails.map(email => ({ email }));
   try {

@@ -15,6 +15,14 @@ const NOT_FOUND_ERRORS = [
   "pdf_not_found",
 ];
 
+// The client posts the stored upload key as `file`, the model keeps it as
+// `fileName`. Accept either so both create and update work.
+const normalizeFileField = (req) => {
+  if (req.body && req.body.fileName === undefined && req.body.file !== undefined) {
+    req.body.fileName = req.body.file;
+  }
+};
+
 const makePdfController = ({
   type,
   key,
@@ -26,6 +34,7 @@ const makePdfController = ({
   const listTypes = readTypes || type;
 
   const create = async (req, res) => {
+    normalizeFileField(req);
     const { name, fileName, subjectId, chapterId } = req.body;
     const isAdmin = req.user.userType === "admin";
 
@@ -187,6 +196,7 @@ const makePdfController = ({
   };
 
   const update = async (req, res) => {
+    normalizeFileField(req);
     const { id } = req.params;
     const { name, fileName, status } = req.body;
 

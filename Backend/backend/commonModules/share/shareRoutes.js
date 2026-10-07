@@ -129,7 +129,7 @@ router.get("/share", async (req, res) => {
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Opening CoachCritic...</title>
+          <title>Opening Nous...</title>
           <script>
             function openApp() {
               const appLink = '${appLink}';
@@ -162,7 +162,7 @@ router.get("/share", async (req, res) => {
         </head>
         <body>
           <p style="text-align:center;margin-top:40vh;font-family:sans-serif;">
-            Opening CoachCritic...
+            Opening Nous...
           </p>
         </body>
       </html>
