@@ -1,4 +1,4 @@
-const APP_NAME = "CoachCritic App";
+const APP_NAME = "Nous App";
 const currentYear = new Date().getFullYear();
 
 const reservationConfirmationEmailTemplate = ({

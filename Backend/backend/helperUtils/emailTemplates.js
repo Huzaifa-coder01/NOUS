@@ -1,4 +1,4 @@
-const APP_NAME = "CoachCritic App";
+const APP_NAME = "Nous App";
 const currentYear = new Date().getFullYear();
 
 const OTP_PURPOSE_CONFIG = {
@@ -507,7 +507,7 @@ const stripeEmailTemplate = ({ name, link }) => `
          <p style="font-family: 'Montserrat', sans-serif; font-size: 15px;">
         Best Regards,
         <br>
-         CoachCritic Team
+         Nous Team
         </p>
 		</td>
 	</tr>
